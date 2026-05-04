@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(cd /tmp)",
+      "Bash(cp \"C:/Users/cheri/.claude/projects/D--DothanGroup-KeiwaBot-landing-page/eaeae4e4-9a31-4403-9d51-aeb74c211157/tool-results/webfetch-1777133867694-trzvhr.bin\" design.gz)",
+      "Bash(gunzip design.gz)",
+      "Bash(tar xf *)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(npm install *)",
+      "Bash(npm list *)",
+      "Bash(node -e \"const pkg = require\\('./node_modules/lenis/package.json'\\); console.log\\(JSON.stringify\\(pkg.exports, null, 2\\)\\)\")"
+    ]
+  }
+}
