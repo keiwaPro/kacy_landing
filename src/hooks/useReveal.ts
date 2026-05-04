@@ -23,19 +23,23 @@ export default function useReveal() {
 
     els.forEach((el) => io.observe(el));
 
-    // Reveal above-the-fold immediately
+    // Stagger above-the-fold reveals for entrance animation
     requestAnimationFrame(() => {
+      const aboveFold: HTMLElement[] = [];
       els.forEach((el) => {
         const r = el.getBoundingClientRect();
         if (r.top < window.innerHeight + 100) {
-          el.style.transition = "none";
+          aboveFold.push(el);
+        }
+      });
+
+      aboveFold.forEach((el, i) => {
+        const delay = i * 120; // 120ms stagger between each element
+        setTimeout(() => {
           el.classList.add("in");
           if (el.classList.contains("timeline-row"))
             el.classList.add("in-view");
-          requestAnimationFrame(() => {
-            el.style.transition = "";
-          });
-        }
+        }, delay);
       });
     });
 
