@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 // import AiMascot from "./AiMascot";
 
 export default function Footer() {
@@ -29,9 +30,9 @@ export default function Footer() {
           </div>
           <div className="foot-col">
             <h4>Légal</h4>
-            <a href="#">CGU</a>
-            <a href="#">Confidentialité</a>
-            <a href="#">Mentions légales</a>
+            <Link href="/legal/cgu">CGU</Link>
+            <Link href="/legal/cgv">CGV</Link>
+            <Link href="/legal/privacy">Confidentialité</Link>
           </div>
         </div>
         <div className="foot-bottom">
