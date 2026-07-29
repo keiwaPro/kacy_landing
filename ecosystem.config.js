@@ -7,6 +7,7 @@ module.exports = {
       cwd: __dirname,
       env: {
         NODE_ENV: 'production',
+        API_URL: 'https://api.kacyai.co',
       },
     },
   ],
