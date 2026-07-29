@@ -2,20 +2,45 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+const TOTAL_PLACES = 50;
+
+const BUSINESS_TYPES = [
+  { value: "restaurant", label: "Restaurant / Maquis" },
+  { value: "hotel", label: "Hôtel / Auberge" },
+  { value: "beauty", label: "Salon de coiffure / beauté" },
+  { value: "other", label: "Autre" },
+] as const;
+
 export default function CTAFinal() {
   const [step, setStep] = useState(1);
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [whatsapp, setWhatsapp] = useState("");
-  const [places, setPlaces] = useState("37 / 50");
+  const [establishmentName, setEstablishmentName] = useState("");
+  const [businessType, setBusinessType] = useState<string>(BUSINESS_TYPES[0].value);
+
+  const [taken, setTaken] = useState<number | null>(null);
   const fillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    fetch("/api/waitlist")
+      .then((res) => res.json())
+      .then((data: { count: number | null }) => {
+        if (typeof data.count === "number") setTaken(data.count);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     const fill = fillRef.current;
-    if (!fill) return;
+    if (!fill || taken === null) return;
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          fill.style.width = "74%";
+          const pct = Math.min(100, Math.round((taken / TOTAL_PLACES) * 100));
+          fill.style.width = `${pct}%`;
           io.unobserve(e.target);
         }
       },
@@ -23,19 +48,49 @@ export default function CTAFinal() {
     );
     io.observe(fill);
     return () => io.disconnect();
-  }, []);
+  }, [taken]);
+
+  const remaining = taken === null ? null : Math.max(0, TOTAL_PLACES - taken);
+  const places = remaining === null ? "— / 50" : `${remaining} / ${TOTAL_PLACES}`;
 
   const goToStep2 = () => {
-    if (whatsapp.trim().length < 8) {
-      alert("Merci de saisir un numéro WhatsApp valide.");
+    const digits = whatsapp.replace(/\D/g, "");
+    if (digits.length < 8) {
+      setError("Merci de saisir un numéro WhatsApp valide.");
       return;
     }
+    setError(null);
     setStep(2);
   };
 
-  const submitForm = () => {
-    setSuccess(true);
-    setTimeout(() => setPlaces("36 / 50"), 500);
+  const submitForm = async () => {
+    if (!establishmentName.trim()) {
+      setError("Merci d'indiquer le nom de votre établissement.");
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          whatsapp,
+          establishment_name: establishmentName.trim(),
+          business_type: businessType,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Une erreur est survenue, réessayez.");
+      }
+      setSuccess(true);
+      setTaken((t) => (t === null ? null : t + 1));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue, réessayez.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const formTitle = success
@@ -113,9 +168,13 @@ export default function CTAFinal() {
                 id="whatsapp"
                 placeholder="+225 07 00 00 00 00"
                 value={whatsapp}
-                onChange={(e) => setWhatsapp(e.target.value)}
+                onChange={(e) => {
+                  setWhatsapp(e.target.value);
+                  if (error) setError(null);
+                }}
               />
             </div>
+            {error && step === 1 && <p className="form-error">{error}</p>}
             <button className="submit-btn" onClick={goToStep2}>
               Continuer →
             </button>
@@ -126,20 +185,39 @@ export default function CTAFinal() {
             className={`form-step${step === 2 && !success ? " active" : ""}`}
           >
             <div className="field">
-              <label>Nom de votre établissement</label>
-              <input type="text" placeholder="Maquis Chez Rita" />
+              <label htmlFor="establishment">Nom de votre établissement</label>
+              <input
+                type="text"
+                id="establishment"
+                placeholder="Maquis Chez Rita"
+                value={establishmentName}
+                onChange={(e) => {
+                  setEstablishmentName(e.target.value);
+                  if (error) setError(null);
+                }}
+              />
             </div>
             <div className="field">
-              <label>Type d&apos;activité</label>
-              <select>
-                <option>Restaurant / Maquis</option>
-                <option>Hôtel / Auberge</option>
-                <option>Salon de coiffure / beauté</option>
-                <option>Autre</option>
+              <label htmlFor="business-type">Type d&apos;activité</label>
+              <select
+                id="business-type"
+                value={businessType}
+                onChange={(e) => setBusinessType(e.target.value)}
+              >
+                {BUSINESS_TYPES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
               </select>
             </div>
-            <button className="submit-btn" onClick={submitForm}>
-              Réserver ma place
+            {error && step === 2 && <p className="form-error">{error}</p>}
+            <button
+              className="submit-btn"
+              onClick={submitForm}
+              disabled={submitting}
+            >
+              {submitting ? "Envoi…" : "Réserver ma place"}
             </button>
           </div>
 
