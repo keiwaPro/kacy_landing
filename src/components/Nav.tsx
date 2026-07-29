@@ -31,11 +31,8 @@ export default function Nav() {
         <a href="#product">Produit</a>
         <a href="#pricing">Tarifs</a>
         <a href="#faq">FAQ</a>
-        <a 
-          href={process.env.NODE_ENV === "production" ? "https://app.kacyai.co/" : "http://localhost:5173/"} 
-          className="nav-cta"
-        >
-          Se connecter →
+        <a href="#reserver" className="nav-cta">
+          Réserver ma place →
         </a>
       </div>
     </nav>

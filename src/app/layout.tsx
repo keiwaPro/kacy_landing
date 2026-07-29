@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
 import "lenis/dist/lenis.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -12,17 +11,10 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const geist = Geist({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
-
-const chillax = localFont({
-  src: "../../public/assets/fonts/Chillax-Variable.woff2",
-  variable: "--font-chillax",
-  weight: "200 700",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-geist",
   display: "swap",
 });
 
@@ -43,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${bricolage.variable} ${chillax.variable} ${jetbrainsMono.variable}`}
+      className={`${bricolage.variable} ${geist.variable}`}
     >
       <body>
         <SmoothScroll>{children}</SmoothScroll>
