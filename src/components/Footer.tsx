@@ -36,7 +36,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-bottom">
-          <span>© 2026 Kacy · Abidjan, Côte d&apos;Ivoire</span>
+          <span>© 2026 Kacy · Abidjan, Côte d&apos;Ivoire · 05 01 67 69 69</span>
           <span>Faire mieux, simplement.</span>
         </div>
       </div>

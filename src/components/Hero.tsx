@@ -24,7 +24,7 @@ export default function Hero() {
       <div className="hero-wrap">
         <div className="hero-tag reveal">
           <span className="hero-tag-badge">BETA</span>
-          Accès anticipé · 50 places pour Abidjan
+          Accès anticipé · 100 places pour Abidjan
           <span className="arrow">→</span>
         </div>
 

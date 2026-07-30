@@ -1,4 +1,4 @@
-const TOTAL_PLACES = 50;
+const TOTAL_PLACES = 100;
 
 async function getRemainingPlaces(): Promise<number> {
   const apiUrl = process.env.API_URL ?? "http://localhost:3010";
@@ -23,7 +23,7 @@ export default async function Banner() {
       <span className="dot" />
       <strong>{remaining} places restantes</strong> sur {TOTAL_PLACES}
       <span className="sep">·</span>
-      Offre lancement jusqu&apos;au <strong>15.05.2026</strong>
+      Offre lancement jusqu&apos;au <strong>31.08.2026</strong>
     </div>
   );
 }
