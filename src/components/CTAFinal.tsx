@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-const TOTAL_PLACES = 50;
+const TOTAL_PLACES = 100;
 
 const BUSINESS_TYPES = [
   { value: "restaurant", label: "Restaurant / Maquis" },
@@ -51,7 +51,7 @@ export default function CTAFinal() {
   }, [taken]);
 
   const remaining = taken === null ? null : Math.max(0, TOTAL_PLACES - taken);
-  const places = remaining === null ? "— / 50" : `${remaining} / ${TOTAL_PLACES}`;
+  const places = remaining === null ? `— / ${TOTAL_PLACES}` : `${remaining} / ${TOTAL_PLACES}`;
 
   const goToStep2 = () => {
     const digits = whatsapp.replace(/\D/g, "");
