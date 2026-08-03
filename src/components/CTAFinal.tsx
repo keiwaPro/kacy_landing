@@ -101,7 +101,7 @@ export default function CTAFinal() {
   const formSub = success
     ? ""
     : step === 1
-      ? "On vous rappelle sous 2h ouvrées."
+      ? "On vous rappelle sur WhatsApp."
       : "Quelques infos pour mieux configurer Kacy.";
 
   return (
@@ -124,8 +124,8 @@ export default function CTAFinal() {
             Avant que Kacy soit complet.
           </h2>
           <p className="reveal reveal-d-2">
-            2 minutes pour vous inscrire. On vous rappelle sous 2h ouvrées. Pas
-            de carte bancaire, pas d&apos;engagement.
+            2 minutes pour vous inscrire. Pas de carte bancaire, pas
+            d&apos;engagement.
           </p>
           <div className="cta-meta reveal reveal-d-3">
             <span>
@@ -223,9 +223,9 @@ export default function CTAFinal() {
 
           <div className={`form-success${success ? " active" : ""}`}>
             <div className="check">✓</div>
-            <h3>C&apos;est noté.</h3>
+            <h3>Merci !</h3>
             <p>
-              On vous rappelle sous 2h ouvrées sur WhatsApp.
+              Votre inscription a bien été prise en compte.
               <br />
               Bienvenue chez Kacy.
             </p>
