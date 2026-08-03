@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { scrollToId } from "@/lib/lenis";
+import { prefillWhatsapp } from "@/lib/prefill";
 
 export default function ExitModal() {
   const [open, setOpen] = useState(false);
@@ -21,12 +23,13 @@ export default function ExitModal() {
   const close = () => setOpen(false);
 
   const submit = () => {
-    if (whatsapp.trim().length < 8) {
+    if (whatsapp.replace(/\D/g, "").length < 8) {
       alert("Merci de saisir un numéro valide.");
       return;
     }
-    alert("Merci. La démo et votre 1 mois bonus arrivent sur WhatsApp.");
     close();
+    prefillWhatsapp(whatsapp);
+    scrollToId("#reserver");
   };
 
   return (

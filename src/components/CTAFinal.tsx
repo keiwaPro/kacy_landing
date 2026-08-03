@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { onPrefillWhatsapp } from "@/lib/prefill";
 
-const TOTAL_PLACES = 50;
+const TOTAL_PLACES = 100;
 
 const BUSINESS_TYPES = [
   { value: "restaurant", label: "Restaurant / Maquis" },
@@ -26,12 +27,19 @@ export default function CTAFinal() {
 
   useEffect(() => {
     fetch("/api/waitlist")
-      .then((res) => res.json())
-      .then((data: { count: number | null }) => {
-        if (typeof data.count === "number") setTaken(data.count);
+      .then((res) => {
+        console.log(`[landing][cta] GET /api/waitlist → ${res.status}`);
+        return res.json();
       })
-      .catch(() => {});
+      .then((data: { count: number | null }) => {
+        console.log("[landing][cta] places:", data);
+        if (typeof data.count === "number") setTaken(data.count);
+        else console.error(`[landing][cta] count non numérique → affichage « — / ${TOTAL_PLACES} »`);
+      })
+      .catch((err) => console.error("[landing][cta] échec GET /api/waitlist:", err));
   }, []);
+
+  useEffect(() => onPrefillWhatsapp(setWhatsapp), []);
 
   useEffect(() => {
     const fill = fillRef.current;
@@ -51,7 +59,7 @@ export default function CTAFinal() {
   }, [taken]);
 
   const remaining = taken === null ? null : Math.max(0, TOTAL_PLACES - taken);
-  const places = remaining === null ? "— / 50" : `${remaining} / ${TOTAL_PLACES}`;
+  const places = remaining === null ? `— / ${TOTAL_PLACES}` : `${remaining} / ${TOTAL_PLACES}`;
 
   const goToStep2 = () => {
     const digits = whatsapp.replace(/\D/g, "");
@@ -80,13 +88,15 @@ export default function CTAFinal() {
           business_type: businessType,
         }),
       });
+      const data = await res.json().catch(() => ({}));
+      console.log(`[landing][cta] POST /api/waitlist → ${res.status}`, data);
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Une erreur est survenue, réessayez.");
       }
       setSuccess(true);
       setTaken((t) => (t === null ? null : t + 1));
     } catch (err) {
+      console.error("[landing][cta] échec POST /api/waitlist:", err);
       setError(err instanceof Error ? err.message : "Une erreur est survenue, réessayez.");
     } finally {
       setSubmitting(false);
@@ -101,7 +111,7 @@ export default function CTAFinal() {
   const formSub = success
     ? ""
     : step === 1
-      ? "On vous rappelle sous 2h ouvrées."
+      ? "On vous rappelle sur WhatsApp."
       : "Quelques infos pour mieux configurer Kacy.";
 
   return (
@@ -124,12 +134,12 @@ export default function CTAFinal() {
             Avant que Kacy soit complet.
           </h2>
           <p className="reveal reveal-d-2">
-            2 minutes pour vous inscrire. On vous rappelle sous 2h ouvrées. Pas
-            de carte bancaire, pas d&apos;engagement.
+            2 minutes pour vous inscrire. Pas de carte bancaire, pas
+            d&apos;engagement.
           </p>
           <div className="cta-meta reveal reveal-d-3">
             <span>
-              <span className="bullet" />3 mois offerts
+              <span className="bullet" />Installation offerte
             </span>
             <span>
               <span className="bullet" />
@@ -223,9 +233,9 @@ export default function CTAFinal() {
 
           <div className={`form-success${success ? " active" : ""}`}>
             <div className="check">✓</div>
-            <h3>C&apos;est noté.</h3>
+            <h3>Merci !</h3>
             <p>
-              On vous rappelle sous 2h ouvrées sur WhatsApp.
+              Votre inscription a bien été prise en compte.
               <br />
               Bienvenue chez Kacy.
             </p>

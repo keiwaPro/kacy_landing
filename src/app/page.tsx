@@ -12,6 +12,7 @@ import FAQ from "@/components/FAQ";
 import CTAFinal from "../components/CTAFinal";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import BackToTop from "@/components/BackToTop";
 import ExitModal from "@/components/ExitModal";
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
       <CTAFinal />
       <Footer />
       <WhatsAppFloat />
+      <BackToTop />
       <ExitModal />
     </>
   );

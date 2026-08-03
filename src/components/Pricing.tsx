@@ -1,3 +1,5 @@
+import { apiFetch, describeError } from "@/lib/api";
+
 type PlanFeature =
   | "reservations"
   | "analytics"
@@ -21,10 +23,11 @@ type Plan = {
 };
 
 const PLAN_TAGLINE: Record<string, string> = {
-  starter: "Pour démarrer sur les canaux essentiels.",
-  pro: "Tous les modules métier activés.",
-  business: "Multi-établissements et intégrations avancées.",
-  enterprise: "Déploiement sur mesure et support dédié.",
+  starter: "Testez sur votre vrai commerce, sans carte bancaire.",
+  pro: "Pour démarrer : Kacy répond sur WhatsApp.",
+  business: "Kacy répond partout où sont vos clients.",
+  premium: "Kacy répond même au téléphone.",
+  corporate: "Pour les groupes, hôtels, cliniques et multi-établissements.",
 };
 
 const FEATURE_LABEL: Record<PlanFeature, string> = {
@@ -38,14 +41,21 @@ const FEATURE_LABEL: Record<PlanFeature, string> = {
 };
 
 async function getPlans(): Promise<Plan[]> {
-  const apiUrl = process.env.API_URL ?? "http://localhost:3010";
   try {
-    const res = await fetch(`${apiUrl}/api/plans`, {
+    const res = await apiFetch("pricing", "/api/plans", {
       signal: AbortSignal.timeout(3000),
     });
-    if (!res.ok) return [];
-    return res.json();
-  } catch {
+    if (!res.ok) {
+      console.error(`[landing][pricing] HTTP ${res.status} → grille de tarifs VIDE`);
+      return [];
+    }
+    const plans: Plan[] = await res.json();
+    console.log(
+      `[landing][pricing] ${plans.length} plan(s) reçu(s): ${plans.map((p) => p.id).join(", ") || "aucun"}`,
+    );
+    return plans;
+  } catch (err) {
+    console.error(`[landing][pricing] échec → grille de tarifs VIDE · ${describeError(err)}`);
     return [];
   }
 }
@@ -72,7 +82,7 @@ function planFeatures(plan: Plan): string[] {
       ? "Établissements illimités"
       : `${plan.max_restaurants} établissement(s)`,
     plan.max_messages_per_month === null
-      ? "Crédits IA illimités"
+      ? "Volume de crédits négocié"
       : `${plan.max_messages_per_month.toLocaleString("fr-FR")} crédits IA inclus / mois`,
     plan.max_products === null ? "Produits illimités" : `${plan.max_products} produits`,
   ];
@@ -99,7 +109,7 @@ export default async function Pricing() {
         <div className="pricing-grid">
           {plans.map((p, i) => {
             const price = formatPrice(p);
-            const featured = p.id === "pro";
+            const featured = p.id === "business";
             const hasPromo = Boolean(p.discount_percent && p.discount_percent > 0);
             return (
               <div

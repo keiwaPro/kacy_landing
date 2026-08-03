@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Si je ne suis pas content, je peux arrêter quand ?",
-    a: "<strong>À tout moment, sans frais ni préavis.</strong> Pas de contrat d'engagement. Pendant vos 3 mois offerts, vous testez sans aucun risque.",
+    a: "<strong>À tout moment, sans frais ni préavis.</strong> Pas de contrat d'engagement. Avec vos 500 crédits offerts, vous testez sans aucun risque.",
   },
   {
     q: "Ça marche en nouchi et en français d'Abidjan ?",

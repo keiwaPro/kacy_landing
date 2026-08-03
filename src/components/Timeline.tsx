@@ -1,6 +1,6 @@
 const steps = [
   { num: "00", active: true, title: "Vous réservez votre place", body: "2 minutes maintenant. Gratuit, sans engagement." },
-  { num: "01", title: "On vous rappelle sous 2h", body: "Appel court pour comprendre votre activité et vos besoins." },
+  { num: "01", title: "On vous rappelle", body: "Appel court pour comprendre votre activité et vos besoins." },
   { num: "02", title: "Configuration de Kacy", body: "Menu, prix, horaires, politique client. On configure tout, vous validez." },
   { num: "03", title: "Mise en service", body: "48h après. Premiers clients, premières conversations, vous observez." },
   { num: "04", title: "Bilan à 30 jours", body: "On affine ensemble selon vos retours et vos statistiques." },

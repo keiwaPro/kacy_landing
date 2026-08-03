@@ -2,12 +2,18 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import PhoneChat from "./PhoneChat";
+import { Iphone } from "./ui/iphone";
 import { WordRotate } from "./ui/word-rotate";
 import { Highlighter } from "./ui/highlighter";
+import useParallax from "@/hooks/useParallax";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
 export default function Hero() {
+  const leftPhone = useParallax<HTMLDivElement>(90);
+  const rightPhone = useParallax<HTMLDivElement>(140);
+  const centerPhone = useParallax<HTMLDivElement>(40);
+
   return (
     <section className="hero">
       <div className="hero-grid-bg" />
@@ -24,7 +30,7 @@ export default function Hero() {
       <div className="hero-wrap">
         <div className="hero-tag reveal">
           <span className="hero-tag-badge">BETA</span>
-          Accès anticipé · 50 places pour Abidjan
+          Accès anticipé · 100 places pour Abidjan
           <span className="arrow">→</span>
         </div>
 
@@ -69,7 +75,7 @@ export default function Hero() {
 
         <div className="hero-meta reveal reveal-d-4">
           <span>
-            <span className="bullet" />3 mois offerts
+            <span className="bullet" />Installation offerte
           </span>
           <span>
             <span className="bullet" />
@@ -85,17 +91,28 @@ export default function Hero() {
           </span>
         </div>
 
-        <div className="hero-phone-row">
-          <div className="hero-phone-side reveal reveal-d-2">
-            <CounterNum target={24} />
-            <p>réponses traitées par Kacy pendant que vous lisez cette page.</p>
+        <div className="hero-stage">
+          <div className="hero-stage-side left reveal reveal-d-4" ref={leftPhone}>
+            <span className="hero-stage-tag">Votre tableau de bord</span>
+            <Iphone src="/screens/dashboard.png" />
           </div>
 
-          <div className="reveal reveal-d-3">
+          <div className="hero-stage-center reveal reveal-d-3" ref={centerPhone}>
             <PhoneChat />
           </div>
 
-          <div className="hero-phone-side right reveal reveal-d-4">
+          <div className="hero-stage-side right reveal reveal-d-5" ref={rightPhone}>
+            <span className="hero-stage-tag">Toutes vos conversations</span>
+            <Iphone src="/screens/conversations.png" />
+          </div>
+        </div>
+
+        <div className="hero-stats reveal reveal-d-2">
+          <div className="hero-phone-side">
+            <CounterNum target={24} />
+            <p>réponses traitées par Kacy pendant que vous lisez cette page.</p>
+          </div>
+          <div className="hero-phone-side">
             <CounterNum target={98} suffix="%" />
             <p>de questions clients résolues sans intervention humaine.</p>
           </div>
