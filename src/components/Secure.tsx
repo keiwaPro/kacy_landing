@@ -57,6 +57,40 @@ export default function Secure() {
                       <stop offset="55%" stopColor="var(--shield-mid)" />
                       <stop offset="100%" stopColor="var(--shield-bottom)" />
                     </linearGradient>
+                    {/* Ombre interne : le cadenas paraît creusé dans le
+                        bouclier au lieu d'être posé dessus. */}
+                    <filter
+                      id="secuLockInset"
+                      x="-40%"
+                      y="-40%"
+                      width="180%"
+                      height="180%"
+                    >
+                      <feOffset dy="0.7" />
+                      <feGaussianBlur stdDeviation="0.7" result="blurred" />
+                      <feComposite
+                        operator="out"
+                        in="SourceGraphic"
+                        in2="blurred"
+                        result="inverse"
+                      />
+                      <feFlood
+                        floodColor="var(--shield-inset)"
+                        floodOpacity="0.55"
+                        result="tint"
+                      />
+                      <feComposite
+                        operator="in"
+                        in="tint"
+                        in2="inverse"
+                        result="inset"
+                      />
+                      <feComposite
+                        operator="over"
+                        in="inset"
+                        in2="SourceGraphic"
+                      />
+                    </filter>
                     <filter
                       id="secuShieldShadow"
                       x="0.217"
@@ -142,6 +176,7 @@ export default function Secure() {
                   <g
                     className="secu-shield-lock"
                     transform="translate(78.8 74) scale(3.6)"
+                    filter="url(#secuLockInset)"
                   >
                     <path
                       className="secu-lock-shackle"

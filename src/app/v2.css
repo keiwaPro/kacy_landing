@@ -1841,23 +1841,26 @@ html.dark .sp-badge.info {
   --shield-top: #ffffff;
   --shield-mid: #f4faea;
   --shield-bottom: #e4f0d2;
+  --shield-inset: #5a8f2e;
 }
 html.dark {
   --shield-top: #2c3325;
   --shield-mid: #242b1d;
   --shield-bottom: #1c2117;
+  --shield-inset: #000000;
 }
 .secu-shield-body {
   fill: url(#secuShieldFill);
   stroke: var(--green-soft);
   stroke-width: 1.2;
 }
+/* Cadenas à la couleur du fond : c'est l'ombre interne qui le dessine. */
 .secu-lock-body {
-  fill: var(--green-deep);
+  fill: var(--white);
 }
 .secu-lock-shackle {
-  stroke: var(--green-deep);
-  stroke-width: 0.72;
+  stroke: var(--white);
+  stroke-width: 1.05;
 }
 /* Passage de relais Kacy → humain. */
 .hbeam {
