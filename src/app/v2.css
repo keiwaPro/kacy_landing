@@ -1723,6 +1723,13 @@ html.dark .sp-badge.info {
 .submit-btn {
   padding: 11px 18px;
 }
+/* Les champs suivent la même pilule que les boutons. */
+.field input,
+.field select {
+  border-radius: 100px;
+  padding: 11px 18px;
+  font-size: 13.5px;
+}
 .btn-primary::before {
   border-radius: inherit;
 }
@@ -2037,11 +2044,28 @@ html.dark .price-card.featured .price-features li {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 44px;
+  gap: 36px;
+}
+/* Marque géante au trait, comme la forme du modèle. */
+.cta-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(760px, 108%);
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  color: rgba(255, 255, 255, 0.42);
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
 }
 .cta-left {
   position: relative;
+  z-index: 1;
   max-width: 720px;
+}
+.cta-left h2 {
+  margin-bottom: 0;
 }
 .cta-left .eyebrow,
 .cta-left .eyebrow::before {
@@ -2068,14 +2092,71 @@ html.dark .price-card.featured .price-features li {
 .cta-meta .bullet {
   background: var(--yellow);
 }
+/* Formulaire posé à même la bande : ni carte, ni padding. */
 .cta-form {
   position: relative;
-  background: var(--white);
+  z-index: 1;
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: #fff;
 }
-html.dark .cta-form {
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.55);
+.cta-form .cta-places-label,
+.cta-form .cta-places-count {
+  color: rgba(255, 255, 255, 0.9);
+}
+.cta-form .cta-places-bar {
+  background: rgba(255, 255, 255, 0.22);
+}
+.cta-form .cta-places-fill {
+  background: #fff;
+}
+.cta-form .field label {
+  color: rgba(255, 255, 255, 0.9);
+}
+.cta-form .field input,
+.cta-form .field select {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+.cta-form .field input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+.cta-form .field input:focus,
+.cta-form .field select:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+.cta-form .field select option {
+  color: var(--ink);
+}
+.cta-form .submit-btn {
+  background: #fff;
+  color: var(--ink);
+}
+.cta-form .submit-btn:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+.cta-form .form-trust {
+  color: rgba(255, 255, 255, 0.75);
+}
+.cta-form .form-error {
+  color: #ffdcd6;
+}
+.cta-form .form-success h3 {
+  color: #fff;
+}
+.cta-form .form-success p {
+  color: rgba(255, 255, 255, 0.85);
+}
+.cta-form .form-success .check {
+  background: #fff;
+  color: var(--green-deep);
 }
 
 /* =========================================

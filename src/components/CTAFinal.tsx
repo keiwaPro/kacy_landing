@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { onPrefillWhatsapp } from "@/lib/prefill";
 
 const TOTAL_PLACES = 100;
@@ -103,53 +102,28 @@ export default function CTAFinal() {
     }
   };
 
-  const formTitle = success
-    ? ""
-    : step === 1
-      ? "Réservez en 2 minutes."
-      : "Presque terminé.";
-  const formSub = success
-    ? ""
-    : step === 1
-      ? "On vous rappelle sur WhatsApp."
-      : "Quelques infos pour mieux configurer Kacy.";
-
   return (
     <section className="cta-final" id="reserver">
       <div className="cta-final-bg" />
-      <Image
-        src="/logo.png"
-        alt=""
-        width={320}
-        height={320}
-        className="cta-final-mark"
-      />
 
       <div className="cta-wrap">
+        <svg
+          className="cta-watermark"
+          viewBox="0 0 414 410"
+          fill="none"
+          aria-hidden
+        >
+          <path
+            d="M200 0C240.83 0 275.943 24.4709 291.478 59.5459C298.716 57.8797 306.255 57 314 57C369.228 57 414 101.772 414 157C414 188.588 399.353 216.754 376.481 235.08C385.693 250.214 391 267.987 391 287C391 342.228 346.228 387 291 387C267.044 387 245.057 378.575 227.837 364.528C209.996 391.903 179.112 410 144 410C88.7715 410 44 365.228 44 310C44 301.339 45.1013 292.936 47.1709 284.922C18.848 267.265 0 235.834 0 200C0 144.772 44.7715 100 100 100C100 44.7715 144.772 0 200 0Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
         <div className="cta-left">
           <span className="eyebrow reveal">Accès anticipé</span>
-          <h2 className="reveal reveal-d-1">
-            Réservez votre place.
-            <br />
-            Avant que Kacy soit complet.
-          </h2>
-          <p className="reveal reveal-d-2">
-            2 minutes pour vous inscrire. Pas de carte bancaire, pas
-            d&apos;engagement.
-          </p>
-          <div className="cta-meta reveal reveal-d-3">
-            <span>
-              <span className="bullet" />Installation offerte
-            </span>
-            <span>
-              <span className="bullet" />
-              Tarif bloqué à vie
-            </span>
-            <span>
-              <span className="bullet" />
-              Déploiement prioritaire
-            </span>
-          </div>
+          <h2 className="reveal reveal-d-1">Réservez votre place.</h2>
         </div>
 
         <div className="cta-form reveal reveal-d-2">
@@ -160,13 +134,6 @@ export default function CTAFinal() {
           <div className="cta-places-bar">
             <div className="cta-places-fill" ref={fillRef} />
           </div>
-
-          {!success && (
-            <>
-              <div className="cta-form-title">{formTitle}</div>
-              <p className="cta-form-sub">{formSub}</p>
-            </>
-          )}
 
           <div
             className={`form-step${step === 1 && !success ? " active" : ""}`}
@@ -188,7 +155,6 @@ export default function CTAFinal() {
             <button className="submit-btn" onClick={goToStep2}>
               Continuer →
             </button>
-            <p className="form-trust">🔒 Aucun spam. Un seul appel.</p>
           </div>
 
           <div
