@@ -1273,6 +1273,8 @@ html.dark .hero-wash {
 .step-item:last-child {
   border-bottom: 1px solid var(--line);
 }
+/* La barre de gauche sert de minuteur : elle descend pendant la durée de
+   l'étape, puis la suivante prend le relais. */
 .step-item::before {
   content: "";
   position: absolute;
@@ -1283,10 +1285,23 @@ html.dark .hero-wash {
   background: var(--green);
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 0.4s var(--ease);
 }
 .step-item.active::before {
-  transform: scaleY(1);
+  animation: step-fill var(--step-ms, 7000ms) linear forwards;
+}
+@keyframes step-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-item.active::before {
+    animation: none;
+    transform: scaleY(1);
+  }
 }
 .step-btn {
   width: 100%;
@@ -1337,6 +1352,8 @@ html.dark .hero-wash {
 .steps-panel {
   position: relative;
 }
+/* Les quatre maquettes sont superposées : on croise les opacités au lieu
+   de remplacer le contenu d'un coup. */
 .sp-frame {
   position: relative;
   min-height: 400px;
@@ -1344,12 +1361,32 @@ html.dark .hero-wash {
   border-radius: 18px;
   background: var(--white);
   box-shadow: var(--shadow-pop);
+  font-size: 12.5px;
+  overflow: hidden;
+}
+.sp-slide {
+  position: absolute;
+  inset: 0;
   padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-size: 12.5px;
-  animation: convo-in 0.45s var(--ease);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+.sp-slide.active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-slide {
+    transition: none;
+  }
 }
 .sp-head {
   display: flex;

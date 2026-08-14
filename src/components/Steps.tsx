@@ -1,5 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+/** Durée d'une étape. La barre verticale se remplit sur ce temps. */
+const STEP_MS = 7000;
 
 const STEPS = [
   {
@@ -27,8 +30,16 @@ const STEPS = [
 export default function Steps() {
   const [active, setActive] = useState(0);
 
+  useEffect(() => {
+    const t = setTimeout(
+      () => setActive((i) => (i + 1) % STEPS.length),
+      STEP_MS,
+    );
+    return () => clearTimeout(t);
+  }, [active]);
+
   return (
-    <section id="comment">
+    <section id="comment" style={{ "--step-ms": `${STEP_MS}ms` } as React.CSSProperties}>
       <div className="wrap">
         <div className="sec-head-center">
           <h2 className="reveal reveal-d-1">Tout se pilote au même endroit.</h2>
@@ -62,10 +73,15 @@ export default function Steps() {
 
           <div className="steps-panel reveal reveal-d-1">
             <div className="sp-frame">
-              {active === 0 && <ProductsMock />}
-              {active === 1 && <AgentMock />}
-              {active === 2 && <OrdersMock />}
-              {active === 3 && <CreditsMock />}
+              {MOCKS.map((Mock, i) => (
+                <div
+                  key={i}
+                  className={`sp-slide${i === active ? " active" : ""}`}
+                  aria-hidden={i !== active}
+                >
+                  <Mock />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -73,6 +89,8 @@ export default function Steps() {
     </section>
   );
 }
+
+const MOCKS = [ProductsMock, AgentMock, OrdersMock, CreditsMock];
 
 function MockHead({
   title,
