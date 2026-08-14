@@ -782,9 +782,13 @@ html.dark .hero-wash {
 .radar-icon img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 26%;
+  object-fit: contain;
   filter: drop-shadow(0 6px 14px rgba(26, 24, 24, 0.22));
+}
+.radar-icon-app {
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  border-radius: 26%;
+  box-shadow: 0 6px 14px rgba(26, 24, 24, 0.22);
 }
 .radar-fade {
   position: absolute;
@@ -794,11 +798,7 @@ html.dark .hero-wash {
   height: 110px;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--white) 82%);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  mask-image: linear-gradient(to bottom, transparent, black 45%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 45%);
+  background: linear-gradient(to bottom, transparent, var(--white) 85%);
 }
 .radar .radar-center {
   z-index: 3;

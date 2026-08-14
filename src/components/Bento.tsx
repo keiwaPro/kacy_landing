@@ -7,12 +7,6 @@ const INNER_ICONS = [
   { name: "SMS", src: "/assets/images/logo/message.png" },
 ];
 
-const OUTER_ICONS = [
-  { name: "Appel vocal", src: "/assets/images/logo/phone.png" },
-  { name: "Wave", src: "/assets/images/logo/wave.jpg" },
-  { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg" },
-];
-
 const CHART_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
 export default function Bento() {
@@ -112,17 +106,31 @@ export default function Bento() {
                       reverse
                       iconSize={40}
                     >
-                      {OUTER_ICONS.map((ch) => (
-                        <div key={ch.name} className="radar-icon" title={ch.name}>
-                          <Image
-                            src={ch.src}
-                            alt={ch.name}
-                            width={40}
-                            height={40}
-                            unoptimized
-                          />
-                        </div>
-                      ))}
+                      <div className="radar-icon" title="Appel vocal">
+                        <Image
+                          src="/assets/images/logo/phone.png"
+                          alt="Appel vocal"
+                          width={40}
+                          height={40}
+                          unoptimized
+                        />
+                      </div>
+                      <div className="radar-icon radar-icon-app" title="Mini app">
+                        <svg
+                          width="22"
+                          height="22"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#fff"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden
+                        >
+                          <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+                          <path d="M10.5 18.5h3" />
+                        </svg>
+                      </div>
                     </OrbitingCircles>
                   </div>
                   <div className="radar-center">
