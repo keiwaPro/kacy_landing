@@ -1876,6 +1876,16 @@ html.dark {
   justify-content: center;
   padding: 0 6%;
 }
+.hbeam-grid {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 5%, transparent 62%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 50% 50%,
+    black 5%,
+    transparent 62%
+  );
+}
 .hbeam-row {
   display: flex;
   width: 100%;
@@ -1918,7 +1928,6 @@ html.dark {
   height: 62px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
   overflow: hidden;
 }
 .hbeam-kacy img,

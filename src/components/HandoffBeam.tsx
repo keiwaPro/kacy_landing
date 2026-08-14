@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
 
 const BEAM_FROM = "#82BC46";
 const BEAM_TO = "#5A8F2E";
@@ -34,6 +35,15 @@ export default function HandoffBeam() {
 
   return (
     <div className="hbeam" ref={container}>
+      <FlickeringGrid
+        className="hbeam-grid"
+        squareSize={3}
+        gridGap={7}
+        flickerChance={0.24}
+        color="rgb(130, 188, 70)"
+        maxOpacity={0.35}
+      />
+
       <div className="hbeam-row">
         <div className="hbeam-col">
           <Channel
