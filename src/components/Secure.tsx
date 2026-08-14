@@ -1,137 +1,183 @@
+import { FlickeringGrid } from "@/components/ui/flickering-grid";
+import HandoffBeam from "@/components/HandoffBeam";
+
 export default function Secure() {
   return (
     <section id="confiance">
       <div className="wrap">
         <div className="sec-head-center">
-          <h2 className="reveal reveal-d-1">Conçu pour travailler serein.</h2>
+          <h2 className="reveal reveal-d-1">Encaissez sans y penser.</h2>
           <p className="section-lede reveal reveal-d-2">
-            Vos données restent les vôtres, et un humain n&apos;est jamais loin.
+            Les paiements passent par Paystack, et l&apos;argent arrive sur le
+            compte que vous avez choisi.
           </p>
         </div>
+      </div>
 
-        <div className="secure-grid">
-          <div className="secure-card reveal">
-            <div>
-              <h3>Vos données, protégées</h3>
+      <div className="bento-shell reveal reveal-d-2">
+        <div className="bento-rail" aria-hidden />
+        <div className="bento-grid">
+          <div className="bento-cell visual-top">
+            <div className="bento-text">
+              <h3>Paiements sécurisés par Paystack</h3>
               <p>
-                Conversations hébergées en conformité RGPD. Export et
-                suppression à tout moment. Aucune revente, jamais.
+                Vos clients règlent par Wave, Orange Money, MTN, Moov ou carte
+                bancaire. Kacy ne touche jamais aux fonds : ils vont
+                directement sur votre compte de règlement.
               </p>
             </div>
-            <div className="secure-visual">
-              <svg
-                width="200"
-                height="220"
-                viewBox="0 0 200 220"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M100 12 L176 44 V104 C176 156 144 192 100 208 C56 192 24 156 24 104 V44 Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.35"
+            <div className="bento-visual">
+              <div className="secu">
+                <FlickeringGrid
+                  className="secu-grid"
+                  squareSize={3}
+                  gridGap={7}
+                  flickerChance={0.24}
+                  color="rgb(130, 188, 70)"
+                  maxOpacity={0.35}
                 />
-                <path
-                  d="M100 34 L156 58 V104 C156 144 132 172 100 185 C68 172 44 144 44 104 V58 Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.6"
-                />
-                <path
-                  className="accent"
-                  d="M100 56 L136 72 V104 C136 132 120 152 100 162 C80 152 64 132 64 104 V72 Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <rect
-                  className="accent"
-                  x="88"
-                  y="100"
-                  width="24"
-                  height="20"
-                  rx="4"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  className="accent"
-                  d="M92 100 V94 A8 8 0 0 1 108 94 V100"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
-              <span className="secure-pill p1">
-                <span className="ok">✓</span> RGPD
-              </span>
-              <span className="secure-pill p2">
-                <span className="ok">✓</span> Export à tout moment
-              </span>
+                {/* Bouclier du modèle (masse pleine + pile d'ombres douces),
+                    avec le `lock` de Lucide posé dedans. */}
+                <svg
+                  className="secu-shield"
+                  viewBox="0 0 245 282"
+                  aria-hidden
+                >
+                  <defs>
+                    {/* Dégradé de volume : le bouclier reçoit la lumière en
+                        haut et se referme vers le bas. */}
+                    <linearGradient
+                      id="secuShieldFill"
+                      x1="0.25"
+                      y1="0"
+                      x2="0.75"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="var(--shield-top)" />
+                      <stop offset="55%" stopColor="var(--shield-mid)" />
+                      <stop offset="100%" stopColor="var(--shield-bottom)" />
+                    </linearGradient>
+                    <filter
+                      id="secuShieldShadow"
+                      x="0.217"
+                      y="0.041"
+                      width="244.066"
+                      height="292.917"
+                      filterUnits="userSpaceOnUse"
+                      colorInterpolationFilters="sRGB"
+                    >
+                      <feFlood floodOpacity="0" result="bg" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
+                      />
+                      <feOffset dy="3" />
+                      <feGaussianBlur stdDeviation="3.5" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"
+                      />
+                      <feBlend mode="normal" in2="bg" result="s1" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
+                      />
+                      <feOffset dy="12" />
+                      <feGaussianBlur stdDeviation="6" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"
+                      />
+                      <feBlend mode="normal" in2="s1" result="s2" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
+                      />
+                      <feOffset dy="27" />
+                      <feGaussianBlur stdDeviation="8" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0"
+                      />
+                      <feBlend mode="normal" in2="s2" result="s3" />
+                      <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
+                      />
+                      <feOffset dy="48" />
+                      <feGaussianBlur stdDeviation="9.5" />
+                      <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.01 0"
+                      />
+                      <feBlend mode="normal" in2="s3" result="s4" />
+                      <feBlend
+                        mode="normal"
+                        in="SourceGraphic"
+                        in2="s4"
+                        result="shape"
+                      />
+                    </filter>
+                  </defs>
+
+                  <g filter="url(#secuShieldShadow)">
+                    <path
+                      className="secu-shield-body"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M113.664 7.33065C116.025 5.21236 119.082 4.04126 122.25 4.04126C125.418 4.04126 128.475 5.21236 130.836 7.33065C154.045 28.2076 183.028 41.5233 213.948 45.5151C216.984 45.9065 219.781 47.3695 221.839 49.6419C223.897 51.9144 225.081 54.8476 225.178 57.916C226.339 92.0322 217.849 125.781 200.689 155.261C183.529 184.74 158.4 208.746 128.209 224.501C126.368 225.462 124.323 225.962 122.248 225.959C120.173 225.956 118.13 225.45 116.291 224.484C86.0997 208.728 60.971 184.723 43.811 155.244C26.6511 125.764 18.1608 92.015 19.322 57.8988C19.4235 54.8334 20.6091 51.9043 22.6666 49.6354C24.7242 47.3665 27.5195 45.906 30.5524 45.5151C61.4706 41.5281 90.4531 28.2186 113.664 7.34787V7.33065Z"
+                    />
+                  </g>
+
+                  {/* Cadenas plein : corps rempli, anse tracée en trait épais
+                      arrondi. Le trait est divisé par l'échelle du groupe. */}
+                  <g
+                    className="secu-shield-lock"
+                    transform="translate(78.8 74) scale(3.6)"
+                  >
+                    <path
+                      className="secu-lock-shackle"
+                      d="M7 11.5V7a5 5 0 0 1 10 0v4.5"
+                      fill="none"
+                      strokeLinecap="round"
+                    />
+                    <rect
+                      className="secu-lock-body"
+                      x="3.4"
+                      y="11"
+                      width="17.2"
+                      height="10.6"
+                      rx="2.6"
+                    />
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
 
-          <div className="secure-card reveal reveal-d-1">
-            <div>
+          <div className="bento-cell visual-top">
+            <div className="bento-text">
               <h3>Vous gardez toujours la main</h3>
               <p>
-                Kacy transfère à un humain dès qu&apos;il hésite, et vous suivez
-                chaque conversation depuis votre tableau de bord — un ou dix
-                établissements.
+                Dès que Kacy hésite ou qu&apos;un client insiste, il vous passe
+                la conversation et vous alerte. Vous reprenez le fil là où il
+                s&apos;est arrêté, sans rien relire.
               </p>
             </div>
-            <div className="secure-visual">
-              <svg
-                width="220"
-                height="220"
-                viewBox="0 0 220 220"
-                fill="none"
-                aria-hidden
-              >
-                <circle
-                  cx="110"
-                  cy="110"
-                  r="88"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.4"
-                />
-                <ellipse
-                  cx="110"
-                  cy="110"
-                  rx="88"
-                  ry="34"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.35"
-                />
-                <ellipse
-                  cx="110"
-                  cy="110"
-                  rx="34"
-                  ry="88"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.35"
-                />
-                <path
-                  d="M22 110 H198"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.35"
-                />
-                <circle className="accent" cx="110" cy="22" r="5" fill="currentColor" />
-                <circle className="accent" cx="176" cy="144" r="5" fill="currentColor" />
-                <circle className="accent" cx="44" cy="144" r="5" fill="currentColor" />
-              </svg>
-              <span className="secure-pill p1">
-                Transfert humain <span className="ok">instantané</span>
-              </span>
-              <span className="secure-pill p2">
-                <span className="ok">✓</span> Multi-établissements
-              </span>
+            <div className="bento-visual">
+              <HandoffBeam />
             </div>
           </div>
         </div>
+        <div className="bento-rail" aria-hidden />
       </div>
     </section>
   );

@@ -1805,104 +1805,94 @@ html.dark .sp-badge.info {
 }
 
 /* =========================================
-   SECURE — deux cartes de confiance
+   CONFIANCE — paiements & marché
    ========================================= */
-.secure-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+#confiance {
+  padding: 110px 0 0;
 }
-.secure-card {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 40px;
-  min-height: 420px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  overflow: hidden;
-  transition:
-    border-color 0.3s var(--ease),
-    transform 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+#confiance .wrap {
+  padding: 0 5%;
 }
-.secure-card:hover {
-  border-color: var(--green);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-card);
-}
-.secure-card h3 {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-bottom: 8px;
-}
-.secure-card > div:first-child p {
-  font-size: 14.5px;
-  color: var(--ink-soft);
-  line-height: 1.6;
-  max-width: 420px;
-}
-.secure-visual {
-  position: relative;
-  flex: 1;
-  min-height: 220px;
+.secu {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.secure-visual::before {
-  content: "";
+.secu-grid {
   position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--green-tint) 0%,
-    transparent 70%
+  inset: 0;
+  mask-image: radial-gradient(circle at 50% 45%, black 10%, transparent 62%);
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 45%,
+    black 10%,
+    transparent 62%
   );
 }
-.secure-visual svg {
+.secu-shield {
   position: relative;
-  color: var(--ink-muted);
+  width: 196px;
+  height: auto;
 }
-.secure-visual .accent {
-  color: var(--green);
+/* Rempli d'une couleur plate identique à la carte, le bouclier disparaissait.
+   Un dégradé lui donne du volume et le détache dans les deux thèmes. */
+:root {
+  --shield-top: #ffffff;
+  --shield-mid: #f4faea;
+  --shield-bottom: #e4f0d2;
 }
-.secure-pill {
+html.dark {
+  --shield-top: #2c3325;
+  --shield-mid: #242b1d;
+  --shield-bottom: #1c2117;
+}
+.secu-shield-body {
+  fill: url(#secuShieldFill);
+  stroke: var(--green-soft);
+  stroke-width: 1.2;
+}
+.secu-lock-body {
+  fill: var(--green-deep);
+}
+.secu-lock-shackle {
+  stroke: var(--green-deep);
+  stroke-width: 0.72;
+}
+/* Passage de relais Kacy → humain. */
+.hbeam {
   position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 8%;
+}
+.hbeam-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   z-index: 1;
-  padding: 7px 14px;
+}
+.hbeam-circle {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
   border: 1px solid var(--line);
-  border-radius: 100px;
   background: var(--white);
   box-shadow: var(--shadow-card);
+}
+.hbeam-circle.human {
+  color: var(--ink-soft);
+}
+.hbeam-node span {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  color: var(--ink-muted);
 }
-.secure-pill .ok {
-  color: var(--green-deep);
-}
-.secure-pill.p1 {
-  top: 18%;
-  left: 4%;
-  animation: float 7s ease-in-out infinite;
-}
-.secure-pill.p2 {
-  bottom: 14%;
-  right: 2%;
-  animation: float 8s ease-in-out 1.2s infinite;
-}
-
 /* =========================================
    BOUTONS — calés sur le CTA du header
    ========================================= */
