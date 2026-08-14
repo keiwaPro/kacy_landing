@@ -3,7 +3,39 @@
    Couche additive chargée après globals.css
    ============================================================= */
 
+/* Tokens shadcn — repris tels quels du dashboard pour que les bulles de
+   conversation soient identiques à celles de l'app. */
+:root {
+  --background: oklch(0.985 0.006 75);
+  --foreground: oklch(0.17 0.009 75);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.72 0.165 130);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.925 0.011 75);
+  --secondary-foreground: oklch(0.17 0.009 75);
+  --muted: oklch(0.965 0.009 75);
+  --muted-foreground: oklch(0.58 0.013 75);
+  --destructive: oklch(0.62 0.18 25);
+  --border: oklch(0.925 0.011 75);
+  --input: oklch(0.86 0.013 75);
+  --ring: oklch(0.72 0.165 130);
+}
+
 html.dark {
+  --background: #1a1714;
+  --foreground: #f4f1eb;
+  --card: #232019;
+  --primary: #82bc46;
+  --primary-foreground: #ffffff;
+  --secondary: #2b2722;
+  --secondary-foreground: #f4f1eb;
+  --muted: #2b2722;
+  --muted-foreground: #8a847a;
+  --destructive: oklch(0.62 0.18 25);
+  --border: #322e28;
+  --input: #322e28;
+  --ring: #82bc46;
+
   --ink: #f3f0ea;
   --ink-soft: #c9c3ba;
   --ink-muted: #8f8981;
@@ -638,83 +670,133 @@ html.dark .hero-wash {
   margin-bottom: -12px;
 }
 
-/* — cellule 1 : conversation — */
-.chatmock {
+/* — cellule 1 : conversations (bulles shadcn reprises du dashboard) — */
+.convo {
+  position: absolute;
+  inset: 0;
+  padding: 4px 40px 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-  margin: auto;
-  width: 100%;
-  padding: 12px 40px;
+  gap: 16px;
 }
-.cm-row {
+.convo-tabs {
   display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-.cm-row.client {
-  justify-content: flex-end;
-}
-.cm-avatar {
-  width: 26px;
-  height: 26px;
+  gap: 6px;
+  justify-content: center;
   flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--green-tint);
-  border: 1px solid var(--green-soft);
 }
-.cm-avatar img {
-  width: 15px;
-  height: 15px;
-}
-.cm-avatar.human {
-  background: var(--yellow);
+.convo-tab {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--white);
   font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  transition:
+    background 0.25s var(--ease),
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
 }
-.cm-bubble {
-  max-width: 78%;
-  padding: 10px 14px;
-  border-radius: 16px;
-  font-size: 13px;
-  line-height: 1.45;
-}
-.cm-row.client .cm-bubble {
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
-  color: #fff;
-  border-bottom-right-radius: 5px;
-  box-shadow: 0 6px 18px -6px rgba(90, 143, 46, 0.5);
-}
-.cm-row.bot .cm-bubble {
-  background: var(--canvas);
-  border: 1px solid var(--line);
+.convo-tab:hover {
   color: var(--ink);
-  border-bottom-left-radius: 5px;
 }
-.cm-typing {
-  display: inline-flex;
-  gap: 4px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
+.convo-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+/* Le fil défile comme une vraie conversation. Le padding bas garde le
+   dernier message au-dessus de la zone où le visuel se fond dans le texte. */
+.convo-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 96px;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 34px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34px);
+}
+.convo-thread::-webkit-scrollbar {
+  display: none;
+}
+/* Bulles plus aérées que le réglage compact du dashboard. */
+.convo [data-slot="bubble-content"] {
+  padding: 11px 15px;
   border-radius: 16px;
-  border-bottom-left-radius: 5px;
-  background: var(--canvas);
-  width: fit-content;
+  line-height: 1.5;
 }
-.cm-typing i {
-  width: 5px;
-  height: 5px;
+.convo .convo-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 16px;
+}
+.convo-typing i {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--ink-muted);
   animation: lg-dot 1.4s infinite;
 }
-.cm-typing i:nth-child(2) {
+.convo-typing i:nth-child(2) {
   animation-delay: 0.2s;
 }
-.cm-typing i:nth-child(3) {
+.convo-typing i:nth-child(3) {
   animation-delay: 0.4s;
+}
+.convo-line {
+  opacity: 0;
+  animation: convo-in 0.5s var(--ease) forwards;
+}
+@keyframes convo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .convo-line {
+    opacity: 1;
+    animation: none;
+  }
+}
+.convo-avatar {
+  width: 26px;
+  min-width: 26px;
+  height: 26px;
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
+}
+.convo-avatar-client {
+  background: var(--line-soft);
+  border-color: var(--line);
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+}
+.convo-chip {
+  align-self: flex-start;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border: 1px solid var(--green-soft);
+  background: var(--green-tint);
+  color: var(--green-deep);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* — cellule 2 : radar multicanal — anneaux concentriques, icônes en

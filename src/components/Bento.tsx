@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
+import ConversationDemo from "@/components/ConversationDemo";
 
 const CHART_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
@@ -37,33 +38,7 @@ export default function Bento() {
               </p>
             </div>
             <div className="bento-visual">
-              <div className="chatmock">
-                <div className="cm-row client">
-                  <div className="cm-bubble">
-                    Bonsoir ! Une table pour 4 vers 20h, c&apos;est possible ?
-                  </div>
-                  <div className="cm-avatar human">🧑🏾</div>
-                </div>
-                <div className="cm-row bot">
-                  <div className="cm-avatar">
-                    <Image src="/logo_2.svg" alt="" width={15} height={15} />
-                  </div>
-                  <div className="cm-bubble">
-                    Bien sûr ! Table pour 4 ce soir à 20h ✓ Je vous la réserve
-                    tout de suite.
-                  </div>
-                </div>
-                <div className="cm-row bot">
-                  <div className="cm-avatar">
-                    <Image src="/logo_2.svg" alt="" width={15} height={15} />
-                  </div>
-                  <div className="cm-typing">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                </div>
-              </div>
+              <ConversationDemo />
             </div>
           </div>
 

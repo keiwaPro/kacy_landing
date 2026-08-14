@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Tokens shadcn requis par les composants de chat repris du dashboard
+     (bubble, message). Valeurs définies dans v2.css, thème compris. */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
   --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
 
   @keyframes orbit {
