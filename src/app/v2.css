@@ -72,6 +72,10 @@ html.dark .site-nav.pill {
 html.dark .foot {
   background: linear-gradient(to bottom, var(--canvas) 0, #191613 100%);
 }
+/* Pas de halo vert derrière le pied de page. */
+.foot-aurora {
+  display: none;
+}
 
 /* Titres : Bricolage assume l'identité */
 .hero h1,
@@ -2004,6 +2008,9 @@ html.dark .price-card.featured .price-features li {
   display: none;
 }
 .cta-wrap {
+  /* globals.css plafonne .cta-wrap à 1180px : sans ça, la bande n'atteint
+     pas les bords du cadre et laisse une marge de chaque côté. */
+  max-width: none;
   background:
     radial-gradient(
       ellipse 80% 100% at 0% 100%,
@@ -2062,6 +2069,15 @@ html.dark .price-card.featured .price-features li {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(-8deg) scale(1);
 }
+/* Le contour se dessine pendant que la marque se met en place. */
+.cta-mark-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s var(--ease) 0.15s;
+}
+.cta-final.is-in .cta-mark-path {
+  stroke-dashoffset: 0;
+}
 
 /* Contenu qui se pose derrière la marque, dans l'ordre de lecture. */
 .cta-final .cta-anim {
@@ -2103,6 +2119,10 @@ html.dark .price-card.featured .price-features li {
   }
   .cta-watermark {
     transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+  }
+  .cta-mark-path {
+    stroke-dashoffset: 0;
+    transition: none;
   }
 }
 .cta-left {
