@@ -1832,25 +1832,19 @@ html.dark .sp-badge.info {
 }
 .secu-shield {
   position: relative;
-  width: 196px;
+  width: 268px;
   height: auto;
 }
-/* Rempli d'une couleur plate identique à la carte, le bouclier disparaissait.
-   Un dégradé lui donne du volume et le détache dans les deux thèmes. */
+/* Teinte verte plate : rempli de --white, le bouclier avait exactement la
+   couleur de la carte et disparaissait. */
 :root {
-  --shield-top: #ffffff;
-  --shield-mid: #f4faea;
-  --shield-bottom: #e4f0d2;
   --shield-inset: #5a8f2e;
 }
 html.dark {
-  --shield-top: #2c3325;
-  --shield-mid: #242b1d;
-  --shield-bottom: #1c2117;
   --shield-inset: #000000;
 }
 .secu-shield-body {
-  fill: url(#secuShieldFill);
+  fill: var(--green-tint);
   stroke: var(--green-soft);
   stroke-width: 1.2;
 }
@@ -1860,7 +1854,7 @@ html.dark {
 }
 .secu-lock-shackle {
   stroke: var(--white);
-  stroke-width: 1.05;
+  stroke-width: 1.44;
 }
 /* Passage de relais Kacy → humain. */
 .hbeam {

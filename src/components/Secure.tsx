@@ -44,19 +44,6 @@ export default function Secure() {
                   aria-hidden
                 >
                   <defs>
-                    {/* Dégradé de volume : le bouclier reçoit la lumière en
-                        haut et se referme vers le bas. */}
-                    <linearGradient
-                      id="secuShieldFill"
-                      x1="0.25"
-                      y1="0"
-                      x2="0.75"
-                      y2="1"
-                    >
-                      <stop offset="0%" stopColor="var(--shield-top)" />
-                      <stop offset="55%" stopColor="var(--shield-mid)" />
-                      <stop offset="100%" stopColor="var(--shield-bottom)" />
-                    </linearGradient>
                     {/* Ombre interne : le cadenas paraît creusé dans le
                         bouclier au lieu d'être posé dessus. */}
                     <filter
@@ -66,8 +53,8 @@ export default function Secure() {
                       width="180%"
                       height="180%"
                     >
-                      <feOffset dy="0.7" />
-                      <feGaussianBlur stdDeviation="0.7" result="blurred" />
+                      <feOffset dy="0.96" />
+                      <feGaussianBlur stdDeviation="0.96" result="blurred" />
                       <feComposite
                         operator="out"
                         in="SourceGraphic"
@@ -173,9 +160,11 @@ export default function Secure() {
 
                   {/* Cadenas plein : corps rempli, anse tracée en trait épais
                       arrondi. Le trait est divisé par l'échelle du groupe. */}
+                  {/* Échelle réduite quand le bouclier grandit, pour que le
+                      cadenas garde sa taille à l'écran. */}
                   <g
                     className="secu-shield-lock"
-                    transform="translate(78.8 74) scale(3.6)"
+                    transform="translate(90.4 91) scale(2.63)"
                     filter="url(#secuLockInset)"
                   >
                     <path
