@@ -715,7 +715,7 @@ html.dark .hero-wash {
 .radar-ring {
   position: absolute;
   left: 50%;
-  bottom: 40px;
+  bottom: 64px;
   transform: translate(-50%, 50%);
   border-radius: 50%;
 }
@@ -749,7 +749,7 @@ html.dark .hero-wash {
 .radar-core {
   position: absolute;
   left: 50%;
-  bottom: 40px;
+  bottom: 64px;
   transform: translate(-50%, 50%);
   width: 0;
   height: 0;
@@ -760,7 +760,7 @@ html.dark .hero-wash {
 .radar-center {
   position: absolute;
   left: 50%;
-  bottom: 40px;
+  bottom: 64px;
   transform: translate(-50%, 50%);
   width: 64px;
   height: 64px;
@@ -770,7 +770,7 @@ html.dark .hero-wash {
   background: linear-gradient(135deg, var(--green), #5a8f2e);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 12px 28px -8px rgba(90, 143, 46, 0.55);
+    0 10px 20px -10px rgba(90, 143, 46, 0.45);
   z-index: 1;
 }
 .radar-icon {
