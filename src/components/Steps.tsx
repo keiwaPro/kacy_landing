@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 /** Durée d'une étape. La barre verticale se remplit sur ce temps. */
 const STEP_MS = 7000;
@@ -8,7 +9,7 @@ const STEPS = [
   {
     num: "01",
     title: "Ajoutez vos produits",
-    body: "Plats, chambres ou prestations : nom, prix, catégorie, photo. Un interrupteur suffit à rendre un produit indisponible — Kacy arrête aussitôt de le proposer.",
+    body: "Plats, chambres, prestations ou articles de boutique : nom, prix, catégorie, photo. Un interrupteur suffit à rendre un produit indisponible — Kacy arrête aussitôt de le proposer.",
   },
   {
     num: "02",
@@ -114,15 +115,47 @@ function MockHead({
 
 function ProductsMock() {
   const rows = [
-    { name: "Poulet braisé", cat: "Grillades", price: "3 500", on: true },
-    { name: "Garba spécial", cat: "Plats", price: "1 500", on: true },
-    { name: "Jus de bissap", cat: "Boissons", price: "500", on: false },
+    {
+      name: "iPhone 17 Pro Max",
+      cat: "Smartphones",
+      price: "1 250 000",
+      on: true,
+      img: "/menu/iphone17promax.png",
+    },
+    {
+      name: "iPhone 17",
+      cat: "Smartphones",
+      price: "890 000",
+      on: true,
+      img: "/menu/iphone17.png",
+    },
+    {
+      name: "iPhone 17 · Vert",
+      cat: "Smartphones",
+      price: "890 000",
+      on: false,
+      img: "/menu/iphone17_vert.png",
+    },
+    {
+      name: "Apple Watch",
+      cat: "Montres",
+      price: "420 000",
+      on: true,
+      img: "/menu/iwatch.png",
+    },
+    {
+      name: "AirPods Pro",
+      cat: "Audio",
+      price: "185 000",
+      on: true,
+      img: "/menu/airpods.png",
+    },
   ];
   return (
     <>
       <MockHead
         title="Produits"
-        count="12 produit(s)"
+        count={`${rows.length} produit(s)`}
         action="Ajouter un produit"
       />
       <div className="sp-table">
@@ -135,7 +168,13 @@ function ProductsMock() {
         {rows.map((r) => (
           <div className="sp-tr" key={r.name}>
             <span className="sp-cell-name">
-              <i className="sp-thumb" />
+              <Image
+                className="sp-thumb"
+                src={r.img}
+                alt=""
+                width={26}
+                height={26}
+              />
               {r.name}
             </span>
             <span>
@@ -218,7 +257,11 @@ function OrdersMock() {
   ];
   return (
     <>
-      <MockHead title="Commandes" count="47 commande(s)" action="Export CSV" />
+      <MockHead
+        title="Commandes"
+        count={`${rows.length} commande(s)`}
+        action="Export CSV"
+      />
       <div className="sp-table">
         <div className="sp-tr sp-th orders">
           <span>Réf.</span>

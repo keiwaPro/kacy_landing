@@ -1469,8 +1469,10 @@ html.dark .hero-wash {
   height: 26px;
   flex-shrink: 0;
   border-radius: 7px;
-  background: var(--green-tint);
-  border: 1px solid var(--green-soft);
+  background: var(--line-soft);
+  border: 1px solid var(--line);
+  object-fit: contain;
+  padding: 2px;
 }
 .sp-badge {
   display: inline-flex;
