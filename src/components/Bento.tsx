@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import ConversationDemo from "@/components/ConversationDemo";
+import OrdersChart from "@/components/OrdersChart";
 
-const CHART_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
 const PAY_ICONS = [
   { name: "Wave", src: "/assets/images/logo/wave.jpg" },
@@ -139,44 +139,7 @@ export default function Bento() {
               </p>
             </div>
             <div className="bento-visual">
-              <div className="chart">
-                <div className="chart-days">
-                  {CHART_DAYS.map((d) => (
-                    <span key={d}>{d}</span>
-                  ))}
-                </div>
-                <svg
-                  className="chart-svg"
-                  viewBox="0 0 520 190"
-                  preserveAspectRatio="none"
-                  aria-hidden
-                >
-                  <defs>
-                    <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="0%"
-                        stopColor="var(--green)"
-                        stopOpacity="0.28"
-                      />
-                      <stop
-                        offset="100%"
-                        stopColor="var(--green)"
-                        stopOpacity="0"
-                      />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M0,150 C50,145 80,128 130,132 C180,136 210,110 260,100 C300,92 330,102 370,80 C420,53 470,48 520,30 L520,190 L0,190 Z"
-                    fill="url(#chartFill)"
-                  />
-                  <path
-                    className="chart-line"
-                    d="M0,150 C50,145 80,128 130,132 C180,136 210,110 260,100 C300,92 330,102 370,80 C420,53 470,48 520,30"
-                  />
-                </svg>
-                <div className="chart-tip">128 commandes</div>
-                <div className="chart-dot" />
-              </div>
+              <OrdersChart />
             </div>
           </div>
 
