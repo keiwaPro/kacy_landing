@@ -19,6 +19,10 @@
   --border: oklch(0.925 0.011 75);
   --input: oklch(0.86 0.013 75);
   --ring: oklch(0.72 0.165 130);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.17 0.009 75);
+  --accent: oklch(0.955 0.05 130);
+  --accent-foreground: oklch(0.34 0.08 130);
 }
 
 html.dark {
@@ -35,6 +39,10 @@ html.dark {
   --border: #322e28;
   --input: #322e28;
   --ring: #82bc46;
+  --popover: #232019;
+  --popover-foreground: #f4f1eb;
+  --accent: #26331a;
+  --accent-foreground: #c4e0a0;
 
   --ink: #f3f0ea;
   --ink-soft: #c9c3ba;
@@ -2392,15 +2400,63 @@ html.dark .price-card.featured .price-features li {
   border-color: #fff;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
 }
-.cta-form .field select option {
-  color: var(--ink);
+/* Le déclencheur shadcn reprend l'allure des champs sur la bande verte ;
+   la liste, elle, s'ouvre dans un portail et suit le thème de la page. */
+.cta-form .cta-select {
+  width: 100%;
+  height: auto;
+  padding: 11px 18px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13.5px;
 }
+.cta-form .cta-select:focus-visible {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+.cta-form .cta-select svg {
+  opacity: 0.75;
+}
+
+/* La liste s'ouvre dans un portail : on la peint avec les tokens de la
+   landing pour qu'elle suive clair/sombre. */
+[data-slot="select-content"] {
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: var(--shadow-pop);
+}
+[data-slot="select-content"] [role="option"] {
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+[data-slot="select-content"] [role="option"][data-highlighted] {
+  background: var(--green-tint);
+  color: var(--green-deep);
+  outline: none;
+}
+[data-slot="select-content"] [role="option"][data-state="checked"] {
+  font-weight: 600;
+}
+/* Le bouton reste blanc sur la bande verte dans les deux thèmes : son
+   texte est donc figé en sombre, sinon --ink l'éclaircit et il disparaît. */
 .cta-form .submit-btn {
   background: #fff;
-  color: var(--ink);
+  color: #1a1818;
 }
 .cta-form .submit-btn:hover {
   background: rgba(255, 255, 255, 0.88);
+  color: #1a1818;
 }
 .cta-form .form-trust {
   color: rgba(255, 255, 255, 0.75);
@@ -2416,7 +2472,7 @@ html.dark .price-card.featured .price-features li {
 }
 .cta-form .form-success .check {
   background: #fff;
-  color: var(--green-deep);
+  color: #5a8f2e;
 }
 
 /* =========================================

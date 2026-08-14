@@ -1,6 +1,13 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { onPrefillWhatsapp } from "@/lib/prefill";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TOTAL_PLACES = 100;
 
@@ -230,17 +237,18 @@ export default function CTAFinal() {
             </div>
             <div className="field">
               <label htmlFor="business-type">Type d&apos;activité</label>
-              <select
-                id="business-type"
-                value={businessType}
-                onChange={(e) => setBusinessType(e.target.value)}
-              >
-                {BUSINESS_TYPES.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
-                  </option>
-                ))}
-              </select>
+              <Select value={businessType} onValueChange={setBusinessType}>
+                <SelectTrigger id="business-type" className="cta-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {BUSINESS_TYPES.map((t) => (
+                    <SelectItem key={t.value} value={t.value}>
+                      {t.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             {error && step === 2 && <p className="form-error">{error}</p>}
             <button
