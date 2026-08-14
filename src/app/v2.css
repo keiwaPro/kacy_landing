@@ -472,7 +472,8 @@ html.dark .hero-wash {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
 }
 .hero-media-toast .toast-avatar img {
   width: 18px;
@@ -662,7 +663,8 @@ html.dark .hero-wash {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
 }
 .cm-avatar img {
   width: 15px;
@@ -737,17 +739,17 @@ html.dark .hero-wash {
 .radar-ring.r1 {
   width: 380px;
   height: 380px;
-  background: color-mix(in srgb, var(--ink) 4.5%, transparent);
+  background: color-mix(in srgb, var(--green) 9%, transparent);
 }
 .radar-ring.r2 {
   width: 272px;
   height: 272px;
-  background: color-mix(in srgb, var(--ink) 4.5%, transparent);
+  background: color-mix(in srgb, var(--green) 9%, transparent);
 }
 .radar-ring.r3 {
   width: 172px;
   height: 172px;
-  background: color-mix(in srgb, var(--ink) 4.5%, transparent);
+  background: color-mix(in srgb, var(--green) 9%, transparent);
 }
 .radar-core {
   width: 0;
@@ -756,14 +758,16 @@ html.dark .hero-wash {
   align-items: center;
   justify-content: center;
 }
+/* Le logo Kacy est déjà vert : il lui faut un fond clair, pas un fond vert. */
 .radar-center {
   width: 62px;
   height: 62px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
-  box-shadow: 0 10px 24px -10px rgba(90, 143, 46, 0.5);
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 26px -10px rgba(26, 24, 24, 0.28);
   z-index: 2;
 }
 .radar-icon {
@@ -1045,7 +1049,8 @@ html.dark .hero-wash {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  background: var(--white);
+  border: 1px solid var(--line);
 }
 .quote-avatar img {
   width: 24px;
