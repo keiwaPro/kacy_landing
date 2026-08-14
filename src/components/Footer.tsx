@@ -168,9 +168,6 @@ export default function Footer() {
 
       <div className="foot-mega-track">
         <div className="foot-mega" aria-hidden="true">
-          <span className="foot-mega-mark">
-            <Image src="/logo_2.svg" alt="" width={400} height={400} />
-          </span>
           {WORDMARK.map((letter, i) => (
             <span key={i}>{letter}</span>
           ))}
