@@ -51,6 +51,7 @@ jobs:
             --exclude '.github' \
             --exclude 'node_modules' \
             --exclude '.next' \
+            --exclude '.env*' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/kacy_landing/
 
       - name: Install, build and reload on VPS
