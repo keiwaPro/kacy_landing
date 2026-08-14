@@ -239,16 +239,213 @@ html.dark .hero-wash {
 }
 .hero-media-shot {
   position: relative;
-  aspect-ratio: 16 / 9.4;
+  aspect-ratio: 16 / 8;
   background: var(--line-soft);
+  overflow: hidden;
 }
-.hero-media-shot img {
+
+/* Mock du vrai dashboard Kacy, en HTML pour suivre les deux thèmes */
+.hm-app {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  background: var(--canvas);
+  text-align: left;
+  font-size: 12px;
+  color: var(--ink);
+}
+.hm-side {
+  border-right: 1px solid var(--line);
+  background: var(--white);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hm-side-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  padding-left: 6px;
+}
+.hm-side nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+.hm-nav-item::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--line);
+}
+.hm-nav-item.active {
+  background: var(--green-tint);
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.hm-nav-item.active::before {
+  background: var(--green);
+}
+.hm-badge {
+  margin-left: auto;
+  font-style: normal;
+  background: var(--green);
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 100px;
+}
+.hm-main {
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.hm-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hm-top strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.hm-day {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-muted);
+}
+.hm-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.hm-kpi {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.hm-kpi-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hm-kpi-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.hm-kpi-delta {
+  font-size: 10.5px;
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.hm-cols {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+.hm-panel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  overflow: hidden;
+}
+.hm-panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.hm-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line-soft);
+}
+.hm-avatar {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-deep);
+  font-weight: 700;
+  font-size: 11px;
+}
+.hm-row-body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.hm-row-body strong {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.hm-row-body em {
+  font-style: normal;
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hm-typing {
+  color: var(--green-deep) !important;
+  font-weight: 600;
+}
+.hm-pay-logo {
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.hm-card-ico {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.hm-ok {
+  color: var(--green-deep);
+  font-weight: 700;
+  font-size: 12px;
 }
 .hero-media-toast {
   position: absolute;
@@ -508,7 +705,8 @@ html.dark .hero-wash {
   animation-delay: 0.4s;
 }
 
-/* — cellule 2 : radar multicanal (arcs concentriques ancrés en bas) — */
+/* — cellule 2 : radar multicanal — anneaux concentriques ancrés en bas,
+     icônes en rotation lente sur les cercles — */
 .radar {
   position: absolute;
   inset: 0;
@@ -517,44 +715,39 @@ html.dark .hero-wash {
 .radar-ring {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  bottom: 40px;
+  transform: translate(-50%, 50%);
   border-radius: 50%;
   border: 1px solid var(--line);
-  background: linear-gradient(
-    to top,
-    rgba(26, 24, 24, 0.045),
-    rgba(26, 24, 24, 0.01) 55%,
-    transparent 80%
-  );
-}
-html.dark .radar-ring {
-  background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.012) 55%,
-    transparent 80%
-  );
 }
 .radar-ring.r1 {
-  width: 580px;
-  height: 580px;
-  bottom: -300px;
+  width: 520px;
+  height: 520px;
 }
 .radar-ring.r2 {
-  width: 430px;
-  height: 430px;
-  bottom: -225px;
+  width: 380px;
+  height: 380px;
 }
 .radar-ring.r3 {
-  width: 280px;
-  height: 280px;
-  bottom: -150px;
+  width: 240px;
+  height: 240px;
+}
+.radar-core {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translate(-50%, 50%);
+  width: 0;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .radar-center {
   position: absolute;
   left: 50%;
-  bottom: 14px;
-  transform: translateX(-50%);
+  bottom: 40px;
+  transform: translate(-50%, 50%);
   width: 64px;
   height: 64px;
   display: grid;
@@ -567,11 +760,10 @@ html.dark .radar-ring {
   z-index: 1;
 }
 .radar-icon {
-  position: absolute;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   background: var(--white);
   border: 1px solid var(--line);
@@ -579,42 +771,10 @@ html.dark .radar-ring {
   overflow: hidden;
 }
 .radar-icon img {
-  width: 26px;
-  height: 26px;
+  width: 60%;
+  height: 60%;
   object-fit: contain;
   border-radius: 50%;
-}
-.radar-icon.i1 {
-  left: 5%;
-  top: 38%;
-  width: 38px;
-  height: 38px;
-}
-.radar-icon.i2 {
-  left: 21%;
-  top: 22%;
-  width: 42px;
-  height: 42px;
-}
-.radar-icon.i3 {
-  left: 30%;
-  bottom: 22%;
-}
-.radar-icon.i4 {
-  right: 27%;
-  bottom: 27%;
-  width: 48px;
-  height: 48px;
-}
-.radar-icon.i5 {
-  right: 15%;
-  top: 30%;
-}
-.radar-icon.i6 {
-  right: 6%;
-  top: 10%;
-  width: 38px;
-  height: 38px;
 }
 
 /* — cellule 3 : graphe — */

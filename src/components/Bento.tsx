@@ -1,12 +1,16 @@
 import Image from "next/image";
+import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 
-const RADAR_ICONS = [
-  { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg", pos: "i1" },
-  { name: "Telegram", src: "/assets/images/logo/telegram.png", pos: "i2" },
-  { name: "Wave", src: "/assets/images/logo/wave.jpg", pos: "i3" },
-  { name: "WhatsApp", src: "/assets/images/logo/whatsapp.svg", pos: "i4" },
-  { name: "SMS", src: "/assets/images/logo/message.png", pos: "i5" },
-  { name: "Appel vocal", src: "/assets/images/logo/phone.png", pos: "i6" },
+const INNER_ICONS = [
+  { name: "WhatsApp", src: "/assets/images/logo/whatsapp.svg" },
+  { name: "Telegram", src: "/assets/images/logo/telegram.png" },
+  { name: "SMS", src: "/assets/images/logo/message.png" },
+];
+
+const OUTER_ICONS = [
+  { name: "Appel vocal", src: "/assets/images/logo/phone.png" },
+  { name: "Wave", src: "/assets/images/logo/wave.jpg" },
+  { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg" },
 ];
 
 const CHART_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
@@ -82,21 +86,45 @@ export default function Bento() {
                   <span className="radar-ring r1" aria-hidden />
                   <span className="radar-ring r2" aria-hidden />
                   <span className="radar-ring r3" aria-hidden />
-                  {RADAR_ICONS.map((ch) => (
-                    <div
-                      key={ch.name}
-                      className={`radar-icon ${ch.pos}`}
-                      title={ch.name}
+                  <div className="radar-core">
+                    <OrbitingCircles
+                      radius={120}
+                      duration={45}
+                      path={false}
+                      iconSize={44}
                     >
-                      <Image
-                        src={ch.src}
-                        alt={ch.name}
-                        width={26}
-                        height={26}
-                        unoptimized
-                      />
-                    </div>
-                  ))}
+                      {INNER_ICONS.map((ch) => (
+                        <div key={ch.name} className="radar-icon" title={ch.name}>
+                          <Image
+                            src={ch.src}
+                            alt={ch.name}
+                            width={26}
+                            height={26}
+                            unoptimized
+                          />
+                        </div>
+                      ))}
+                    </OrbitingCircles>
+                    <OrbitingCircles
+                      radius={190}
+                      duration={70}
+                      path={false}
+                      reverse
+                      iconSize={38}
+                    >
+                      {OUTER_ICONS.map((ch) => (
+                        <div key={ch.name} className="radar-icon" title={ch.name}>
+                          <Image
+                            src={ch.src}
+                            alt={ch.name}
+                            width={22}
+                            height={22}
+                            unoptimized
+                          />
+                        </div>
+                      ))}
+                    </OrbitingCircles>
+                  </div>
                   <div className="radar-center">
                     <Image src="/logo_2.svg" alt="Kacy" width={34} height={34} />
                   </div>
@@ -159,9 +187,9 @@ export default function Bento() {
               <div className="bento-text">
                 <h3>Des réservations qui se prennent toutes seules</h3>
                 <p>
-                  Kacy vérifie vos disponibilités, confirme, encaisse
-                  l&apos;acompte et relance — pendant que vous faites tourner la
-                  salle.
+                  Vos clients réservent dans la conversation ou depuis la
+                  mini-app. Kacy confirme, encaisse l&apos;acompte — Wave,
+                  Orange Money ou carte via Paystack — et relance tout seul.
                 </p>
               </div>
               <div className="bento-visual">

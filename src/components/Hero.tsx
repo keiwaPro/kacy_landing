@@ -57,7 +57,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="hero-meta reveal reveal-d-4">
+        {/*<div className="hero-meta reveal reveal-d-4">
           <span>
             <span className="bullet" />
             Installation offerte
@@ -74,7 +74,7 @@ export default function Hero() {
             <span className="bullet" />
             Déploiement 48h
           </span>
-        </div>
+        </div>*/}
 
         <div className="hero-media reveal reveal-d-5">
           <div className="hero-media-glow" aria-hidden />
@@ -89,14 +89,137 @@ export default function Hero() {
                 En service
               </span>
             </div>
-            <div className="hero-media-shot">
-              <Image
-                src="/screens/dashboard.png"
-                alt="Tableau de bord Kacy"
-                width={2160}
-                height={1350}
-                priority
-              />
+            <div className="hero-media-shot" aria-label="Tableau de bord Kacy">
+              <div className="hm-app" aria-hidden>
+                <aside className="hm-side">
+                  <div className="hm-side-brand">
+                    <Image src="/logo_2.svg" alt="" width={22} height={22} />
+                    <span>Kacy</span>
+                  </div>
+                  <nav>
+                    <span className="hm-nav-item active">Accueil</span>
+                    <span className="hm-nav-item">
+                      Conversations <em className="hm-badge">3</em>
+                    </span>
+                    <span className="hm-nav-item">Commandes</span>
+                    <span className="hm-nav-item">Réservations</span>
+                    <span className="hm-nav-item">Menu</span>
+                    <span className="hm-nav-item">Paiements</span>
+                    <span className="hm-nav-item">Statistiques</span>
+                  </nav>
+                </aside>
+                <div className="hm-main">
+                  <div className="hm-top">
+                    <strong>Bonjour Rita 👋</strong>
+                    <span className="hm-day">Aujourd&apos;hui · Maquis Chez Rita</span>
+                  </div>
+                  <div className="hm-kpis">
+                    <div className="hm-kpi">
+                      <span className="hm-kpi-label">Commandes</span>
+                      <span className="hm-kpi-num">43</span>
+                      <span className="hm-kpi-delta">+18 % vs hier</span>
+                    </div>
+                    <div className="hm-kpi">
+                      <span className="hm-kpi-label">Encaissé via Paystack</span>
+                      <span className="hm-kpi-num">486 500 F</span>
+                      <span className="hm-kpi-delta">Wave · OM · carte</span>
+                    </div>
+                    <div className="hm-kpi">
+                      <span className="hm-kpi-label">Réservations ce soir</span>
+                      <span className="hm-kpi-num">12</span>
+                      <span className="hm-kpi-delta">via mini-app &amp; chat</span>
+                    </div>
+                  </div>
+                  <div className="hm-cols">
+                    <div className="hm-panel">
+                      <div className="hm-panel-title">Conversations</div>
+                      <div className="hm-row">
+                        <span className="hm-avatar">A</span>
+                        <span className="hm-row-body">
+                          <strong>Aminata</strong>
+                          <em>Le garba est disponible ?</em>
+                        </span>
+                        <Image
+                          src="/assets/images/logo/whatsapp.svg"
+                          alt=""
+                          width={14}
+                          height={14}
+                          unoptimized
+                        />
+                      </div>
+                      <div className="hm-row">
+                        <span className="hm-avatar">K</span>
+                        <span className="hm-row-body">
+                          <strong>Koffi</strong>
+                          <em className="hm-typing">Kacy répond…</em>
+                        </span>
+                        <Image
+                          src="/assets/images/logo/telegram.png"
+                          alt=""
+                          width={14}
+                          height={14}
+                          unoptimized
+                        />
+                      </div>
+                      <div className="hm-row">
+                        <span className="hm-avatar">M</span>
+                        <span className="hm-row-body">
+                          <strong>Mariam</strong>
+                          <em>Table 4 confirmée ✓</em>
+                        </span>
+                        <Image
+                          src="/assets/images/logo/whatsapp.svg"
+                          alt=""
+                          width={14}
+                          height={14}
+                          unoptimized
+                        />
+                      </div>
+                    </div>
+                    <div className="hm-panel">
+                      <div className="hm-panel-title">Paiements récents</div>
+                      <div className="hm-row">
+                        <Image
+                          className="hm-pay-logo"
+                          src="/assets/images/logo/wave.jpg"
+                          alt=""
+                          width={18}
+                          height={18}
+                          unoptimized
+                        />
+                        <span className="hm-row-body">
+                          <strong>12 500 F</strong>
+                          <em>Wave · commande #214</em>
+                        </span>
+                        <span className="hm-ok">✓</span>
+                      </div>
+                      <div className="hm-row">
+                        <Image
+                          className="hm-pay-logo"
+                          src="/assets/images/logo/orange_money.jpg"
+                          alt=""
+                          width={18}
+                          height={18}
+                          unoptimized
+                        />
+                        <span className="hm-row-body">
+                          <strong>8 000 F</strong>
+                          <em>Orange Money · acompte résa</em>
+                        </span>
+                        <span className="hm-ok">✓</span>
+                      </div>
+                      <div className="hm-row">
+                        <span className="hm-card-ico">💳</span>
+                        <span className="hm-row-body">
+                          <strong>24 500 F</strong>
+                          <em>Carte ·· 4921 · mini-app</em>
+                        </span>
+                        <span className="hm-ok">✓</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="hero-media-toast">
