@@ -75,12 +75,13 @@ export default function Bento() {
                 messages, les commandes et les paiements mobile money.
               </p>
             </div>
-            <div className="bento-visual">
+            <div className="bento-visual bento-visual-radar">
               <div className="radar">
-                <span className="radar-ring r1" aria-hidden />
-                <span className="radar-ring r2" aria-hidden />
-                <span className="radar-ring r3" aria-hidden />
-                <div className="radar-core">
+                <div className="radar-masked">
+                  <span className="radar-ring r1" aria-hidden />
+                  <span className="radar-ring r2" aria-hidden />
+                  <span className="radar-ring r3" aria-hidden />
+                  <div className="radar-core">
                   <OrbitingCircles
                     radius={136}
                     duration={45}
@@ -145,6 +146,7 @@ export default function Bento() {
                       </div>
                     ))}
                   </OrbitingCircles>
+                  </div>
                 </div>
                 <div className="radar-center">
                   <Image src="/logo_2.svg" alt="Kacy" width={32} height={32} />

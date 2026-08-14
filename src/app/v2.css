@@ -724,13 +724,26 @@ html.dark .hero-wash {
   position: absolute;
   inset: 0;
 }
-/* Point d'ancrage commun : centre des anneaux, des orbites et du badge. */
+/* Le badge central reste net : seuls les anneaux et les orbites passent
+   sous le masque, ce qui laisse le logo se poser tout près du texte. */
+.bento-visual-radar {
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.radar-masked {
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+/* Point d'ancrage commun : centre des anneaux, des orbites et du badge.
+   Bas de la carte → les cercles se lisent en demi-arcs. */
 .radar-ring,
 .radar-core,
 .radar-center {
   position: absolute;
   left: 50%;
-  top: 66%;
+  top: 84%;
   transform: translate(-50%, -50%);
 }
 .radar-ring {
