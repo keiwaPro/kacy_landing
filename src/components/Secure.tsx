@@ -3,7 +3,6 @@ export default function Secure() {
     <section id="confiance">
       <div className="wrap">
         <div className="sec-head-center">
-          <span className="eyebrow reveal">Confiance</span>
           <h2 className="reveal reveal-d-1">Conçu pour travailler serein.</h2>
           <p className="section-lede reveal reveal-d-2">
             Vos données restent les vôtres, et un humain n&apos;est jamais loin.

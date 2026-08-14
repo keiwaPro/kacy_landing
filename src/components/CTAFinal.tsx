@@ -175,7 +175,6 @@ export default function CTAFinal() {
         </svg>
 
         <div className="cta-left">
-          <span className="eyebrow cta-anim">Accès anticipé</span>
           <h2 className="cta-anim">Réservez votre place.</h2>
         </div>
 

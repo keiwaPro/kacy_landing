@@ -2537,7 +2537,7 @@ h2 {
   position: sticky;
   top: calc(100vh - var(--mega-crop));
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   overflow: hidden;
   height: var(--mega-crop);
   font-family: var(--font-display);
@@ -2844,9 +2844,6 @@ h2 {
   .foot-nav {
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-  }
-  .foot-mega {
-    justify-content: center;
   }
   .foot-mega-track {
     font-size: clamp(105px, 48vw, 680px);

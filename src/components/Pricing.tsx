@@ -176,7 +176,6 @@ export default async function Pricing() {
     <section id="pricing">
       <div className="wrap">
         <div className="pricing-head">
-          <span className="eyebrow reveal">Tarifs</span>
           <h2 className="reveal reveal-d-1">Un tarif simple, qui grandit avec vous.</h2>
           <p className="section-lede reveal reveal-d-2">
             Choisissez le plan adapté à votre activité. Changez ou évoluez à tout moment.

@@ -17,7 +17,6 @@ export default function Calculator() {
       <div className="wrap">
         <div className="calc-head">
           <div className="reveal">
-            <span className="eyebrow">ROI</span>
             <h2>Combien vous coûtent vos réponses manuelles ?</h2>
           </div>
           <p className="section-lede reveal reveal-d-1">

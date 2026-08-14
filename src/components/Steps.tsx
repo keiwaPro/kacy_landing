@@ -31,7 +31,6 @@ export default function Steps() {
     <section id="comment">
       <div className="wrap">
         <div className="sec-head-center">
-          <span className="eyebrow reveal">Votre tableau de bord</span>
           <h2 className="reveal reveal-d-1">Tout se pilote au même endroit.</h2>
           <p className="section-lede reveal reveal-d-2">
             Vos produits, votre agent, vos commandes et vos crédits — depuis

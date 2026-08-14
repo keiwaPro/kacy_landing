@@ -15,7 +15,6 @@ export default function Bento() {
     <section className="features" id="product">
       <div className="wrap">
         <div className="sec-head-center">
-          <span className="eyebrow reveal">Produit</span>
           <h2 className="reveal reveal-d-1">
             Un agent configuré pour votre métier.
           </h2>

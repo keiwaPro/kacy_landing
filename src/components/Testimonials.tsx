@@ -93,7 +93,6 @@ export default function Testimonials() {
     <section className="testimonials" id="temoignages">
       <div className="wrap">
         <div className="sec-head-center">
-          <span className="eyebrow reveal">Témoignages</span>
           <h2 className="reveal reveal-d-1">
             Ils font tourner leur commerce avec Kacy.
           </h2>

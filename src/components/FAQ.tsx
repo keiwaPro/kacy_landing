@@ -43,7 +43,6 @@ export default function FAQ() {
   return (
     <section className="faq" id="faq">
       <div className="wrap">
-        <span className="eyebrow reveal">FAQ</span>
         <h2 className="reveal reveal-d-1">Questions fréquentes.</h2>
 
         <div className="faq-list reveal reveal-d-2">
