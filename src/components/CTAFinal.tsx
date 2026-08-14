@@ -23,6 +23,25 @@ export default function CTAFinal() {
 
   const [taken, setTaken] = useState<number | null>(null);
   const fillRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /* Observateur dédié : le useReveal global révèle tout au bout de 2 s,
+     ce qui déclencherait l'entrée avant même d'atteindre la section. */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.add("is-in");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     fetch("/api/waitlist")
@@ -103,7 +122,7 @@ export default function CTAFinal() {
   };
 
   return (
-    <section className="cta-final" id="reserver">
+    <section className="cta-final" id="reserver" ref={sectionRef}>
       <div className="cta-final-bg" />
 
       <div className="cta-wrap">
@@ -113,32 +132,39 @@ export default function CTAFinal() {
           fill="none"
           aria-hidden
         >
+          <defs>
+            <linearGradient id="ctaMarkStroke" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#fff" stopOpacity="0.75" />
+              <stop offset="45%" stopColor="#fff" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+            </linearGradient>
+          </defs>
           <path
             d="M200 0C240.83 0 275.943 24.4709 291.478 59.5459C298.716 57.8797 306.255 57 314 57C369.228 57 414 101.772 414 157C414 188.588 399.353 216.754 376.481 235.08C385.693 250.214 391 267.987 391 287C391 342.228 346.228 387 291 387C267.044 387 245.057 378.575 227.837 364.528C209.996 391.903 179.112 410 144 410C88.7715 410 44 365.228 44 310C44 301.339 45.1013 292.936 47.1709 284.922C18.848 267.265 0 235.834 0 200C0 144.772 44.7715 100 100 100C100 44.7715 144.772 0 200 0Z"
-            stroke="currentColor"
+            stroke="url(#ctaMarkStroke)"
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
           />
         </svg>
 
         <div className="cta-left">
-          <span className="eyebrow reveal">Accès anticipé</span>
-          <h2 className="reveal reveal-d-1">Réservez votre place.</h2>
+          <span className="eyebrow cta-anim">Accès anticipé</span>
+          <h2 className="cta-anim">Réservez votre place.</h2>
         </div>
 
-        <div className="cta-form reveal reveal-d-2">
-          <div className="cta-places">
+        <div className="cta-form">
+          <div className="cta-places cta-anim">
             <span className="cta-places-label">Places restantes</span>
             <span className="cta-places-count">{places}</span>
           </div>
-          <div className="cta-places-bar">
+          <div className="cta-places-bar cta-anim">
             <div className="cta-places-fill" ref={fillRef} />
           </div>
 
           <div
             className={`form-step${step === 1 && !success ? " active" : ""}`}
           >
-            <div className="field">
+            <div className="field cta-anim">
               <label htmlFor="whatsapp">Votre WhatsApp</label>
               <input
                 type="tel"
@@ -152,7 +178,10 @@ export default function CTAFinal() {
               />
             </div>
             {error && step === 1 && <p className="form-error">{error}</p>}
-            <button className="submit-btn" onClick={goToStep2}>
+            <button
+              className="submit-btn cta-anim"
+              onClick={goToStep2}
+            >
               Continuer →
             </button>
           </div>
