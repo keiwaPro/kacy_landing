@@ -26,6 +26,7 @@ const BUSINESS_TYPES = [
   { value: "restaurant", label: "Restaurant / Maquis" },
   { value: "hotel", label: "Hôtel / Auberge" },
   { value: "beauty", label: "Salon de coiffure / beauté" },
+  { value: "retail", label: "Commerce / boutique" },
   { value: "other", label: "Autre" },
 ] as const;
 
