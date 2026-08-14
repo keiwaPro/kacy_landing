@@ -100,7 +100,7 @@ export default function Bento() {
                     </div>
                   </OrbitingCircles>
                   <OrbitingCircles
-                    radius={214}
+                    radius={190}
                     duration={70}
                     path={false}
                     reverse
