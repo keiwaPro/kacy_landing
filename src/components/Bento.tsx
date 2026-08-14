@@ -88,37 +88,37 @@ export default function Bento() {
                   <span className="radar-ring r3" aria-hidden />
                   <div className="radar-core">
                     <OrbitingCircles
-                      radius={120}
+                      radius={140}
                       duration={45}
                       path={false}
-                      iconSize={44}
+                      iconSize={46}
                     >
                       {INNER_ICONS.map((ch) => (
                         <div key={ch.name} className="radar-icon" title={ch.name}>
                           <Image
                             src={ch.src}
                             alt={ch.name}
-                            width={26}
-                            height={26}
+                            width={46}
+                            height={46}
                             unoptimized
                           />
                         </div>
                       ))}
                     </OrbitingCircles>
                     <OrbitingCircles
-                      radius={190}
+                      radius={220}
                       duration={70}
                       path={false}
                       reverse
-                      iconSize={38}
+                      iconSize={40}
                     >
                       {OUTER_ICONS.map((ch) => (
                         <div key={ch.name} className="radar-icon" title={ch.name}>
                           <Image
                             src={ch.src}
                             alt={ch.name}
-                            width={22}
-                            height={22}
+                            width={40}
+                            height={40}
                             unoptimized
                           />
                         </div>
@@ -128,6 +128,7 @@ export default function Bento() {
                   <div className="radar-center">
                     <Image src="/logo_2.svg" alt="Kacy" width={34} height={34} />
                   </div>
+                  <span className="radar-fade" aria-hidden />
                 </div>
               </div>
             </div>
