@@ -3,6 +3,9 @@ import { useRef } from "react";
 import Image from "next/image";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
 
+const BEAM_FROM = "#82BC46";
+const BEAM_TO = "#5A8F2E";
+
 function Channel({
   src,
   name,
@@ -79,72 +82,41 @@ export default function HandoffBeam() {
         </div>
       </div>
 
+      {/* Réglages du modèle : tout par défaut, seul le dégradé passe au vert. */}
       <AnimatedBeam
         containerRef={container}
         fromRef={telegram}
         toRef={kacy}
-        pathWidth={1.5}
-        pathOpacity={0.12}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
+        gradientStartColor={BEAM_FROM}
+        gradientStopColor={BEAM_TO}
       />
       <AnimatedBeam
         containerRef={container}
         fromRef={whatsapp}
         toRef={kacy}
-        pathWidth={1.5}
-        pathOpacity={0.12}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-        delay={0.55}
+        gradientStartColor={BEAM_FROM}
+        gradientStopColor={BEAM_TO}
       />
       <AnimatedBeam
         containerRef={container}
         fromRef={sms}
         toRef={kacy}
-        pathWidth={1.5}
-        pathOpacity={0.12}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-        delay={1.1}
+        gradientStartColor={BEAM_FROM}
+        gradientStopColor={BEAM_TO}
       />
       <AnimatedBeam
         containerRef={container}
         fromRef={phone}
         toRef={kacy}
-        pathWidth={1.5}
-        pathOpacity={0.12}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-        delay={1.65}
-      />
-
-      <AnimatedBeam
-        containerRef={container}
-        fromRef={kacy}
-        toRef={human}
-        pathWidth={2}
-        pathOpacity={0.12}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.4}
-        delay={0.4}
+        gradientStartColor={BEAM_FROM}
+        gradientStopColor={BEAM_TO}
       />
       <AnimatedBeam
         containerRef={container}
         fromRef={kacy}
         toRef={human}
-        reverse
-        pathWidth={2}
-        pathOpacity={0}
-        gradientStartColor="#5A8F2E"
-        gradientStopColor="#82BC46"
-        duration={3.4}
-        delay={2.1}
+        gradientStartColor={BEAM_FROM}
+        gradientStopColor={BEAM_TO}
       />
     </div>
   );
