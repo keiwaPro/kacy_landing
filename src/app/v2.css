@@ -1385,6 +1385,39 @@ html.dark .hero-wash {
 }
 
 /* =========================================
+   PRICING — 5 plans réels
+   ========================================= */
+.pricing-grid {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.pricing-grid .price-card {
+  padding: 30px 20px;
+}
+.pricing-grid .price-num {
+  font-size: 32px;
+}
+.pricing-grid .price-plan {
+  margin-bottom: 14px;
+}
+.pricing-grid .price-features li {
+  font-size: 13px;
+}
+.pricing-grid .price-badge {
+  left: 20px;
+}
+@media (max-width: 1180px) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 820px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================
    TESTIMONIALS — colonnes en marquee vertical
    ========================================= */
 .testimonials {

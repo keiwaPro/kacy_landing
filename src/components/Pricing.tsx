@@ -40,23 +40,96 @@ const FEATURE_LABEL: Record<PlanFeature, string> = {
   api_access: "Accès API",
 };
 
+/**
+ * Copie de la grille 0043_tarifs_2026. Sert de repli : une API injoignable
+ * affichait une section Tarifs vide, y compris en production quand API_URL
+ * manquait au process PM2.
+ */
+const FALLBACK_PLANS: Plan[] = [
+  {
+    id: "starter",
+    name: "Démo",
+    price_monthly: 0,
+    max_restaurants: 1,
+    max_messages_per_month: 500,
+    max_products: 50,
+    features: { whatsapp: true },
+  },
+  {
+    id: "pro",
+    name: "Essentiel",
+    price_monthly: 20000,
+    max_restaurants: 1,
+    max_messages_per_month: 1000,
+    max_products: null,
+    features: { whatsapp: true, analytics: true, reservations: true },
+  },
+  {
+    id: "business",
+    name: "Standard",
+    price_monthly: 50000,
+    max_restaurants: 1,
+    max_messages_per_month: 3500,
+    max_products: null,
+    features: {
+      whatsapp: true,
+      analytics: true,
+      reservations: true,
+      export: true,
+    },
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    price_monthly: 100000,
+    max_restaurants: 1,
+    max_messages_per_month: 8000,
+    max_products: null,
+    features: {
+      whatsapp: true,
+      analytics: true,
+      reservations: true,
+      export: true,
+      copilot: true,
+      multi_vertical: true,
+    },
+  },
+  {
+    id: "corporate",
+    name: "Corporate",
+    price_monthly: null,
+    max_restaurants: null,
+    max_messages_per_month: null,
+    max_products: null,
+    features: {
+      whatsapp: true,
+      analytics: true,
+      reservations: true,
+      export: true,
+      copilot: true,
+      multi_vertical: true,
+      api_access: true,
+    },
+  },
+];
+
 async function getPlans(): Promise<Plan[]> {
   try {
     const res = await apiFetch("pricing", "/api/plans", {
       signal: AbortSignal.timeout(3000),
     });
     if (!res.ok) {
-      console.error(`[landing][pricing] HTTP ${res.status} → grille de tarifs VIDE`);
-      return [];
+      console.error(`[landing][pricing] HTTP ${res.status} → grille de REPLI`);
+      return FALLBACK_PLANS;
     }
     const plans: Plan[] = await res.json();
     console.log(
       `[landing][pricing] ${plans.length} plan(s) reçu(s): ${plans.map((p) => p.id).join(", ") || "aucun"}`,
     );
-    return plans;
+    return plans.length ? plans : FALLBACK_PLANS;
   } catch (err) {
-    console.error(`[landing][pricing] échec → grille de tarifs VIDE · ${describeError(err)}`);
-    return [];
+    console.error(`[landing][pricing] échec → grille de REPLI · ${describeError(err)}`);
+    return FALLBACK_PLANS;
   }
 }
 
