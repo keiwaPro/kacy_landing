@@ -45,7 +45,7 @@ export default function Bento() {
             <div className="bento-text">
               <h3>Un seul cerveau, tous vos canaux</h3>
               <p>
-                WhatsApp, Telegram, mini-app de commande : Kacy centralise les
+                Vos clients écrivent là où ils sont déjà. Kacy centralise les
                 messages, les commandes et les paiements mobile money.
               </p>
             </div>
@@ -57,7 +57,7 @@ export default function Bento() {
                   <span className="radar-ring r3" aria-hidden />
                   <div className="radar-core">
                   <OrbitingCircles
-                    radius={136}
+                    radius={118}
                     duration={45}
                     path={false}
                     iconSize={44}
@@ -73,32 +73,34 @@ export default function Bento() {
                     </div>
                     <div className="radar-icon" title="Telegram">
                       <Image
-                        src="/assets/images/logo/telegram.png"
+                        src="/assets/images/logo/telegram.svg"
                         alt="Telegram"
                         width={44}
                         height={44}
                         unoptimized
                       />
                     </div>
-                    <div className="radar-icon radar-icon-app" title="Mini-app">
-                      <svg
-                        width="22"
-                        height="22"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#fff"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden
-                      >
-                        <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
-                        <path d="M10.5 18.5h3" />
-                      </svg>
+                    <div className="radar-icon" title="SMS">
+                      <Image
+                        src="/assets/images/logo/message.png"
+                        alt="SMS"
+                        width={44}
+                        height={44}
+                        unoptimized
+                      />
+                    </div>
+                    <div className="radar-icon" title="Appel">
+                      <Image
+                        src="/assets/images/logo/phone.png"
+                        alt="Appel"
+                        width={44}
+                        height={44}
+                        unoptimized
+                      />
                     </div>
                   </OrbitingCircles>
                   <OrbitingCircles
-                    radius={190}
+                    radius={214}
                     duration={70}
                     path={false}
                     reverse

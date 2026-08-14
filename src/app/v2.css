@@ -1879,19 +1879,18 @@ html.dark {
   gap: 20px;
   z-index: 1;
 }
+/* Les logos portent déjà leur propre pastille : pas de cercle autour. */
 .hbeam-chan {
   width: 46px;
   height: 46px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
 }
-.hbeam-chan.mini {
-  background: linear-gradient(135deg, var(--green), #5a8f2e);
-  border-color: transparent;
+.hbeam-chan img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(26, 24, 24, 0.18));
 }
 .hbeam-node {
   display: flex;
@@ -1912,6 +1911,13 @@ html.dark {
 }
 .hbeam-circle.human {
   color: var(--ink-soft);
+  padding: 0;
+  overflow: hidden;
+}
+.hbeam-circle.human img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .hbeam-node span {
   font-family: var(--font-mono);

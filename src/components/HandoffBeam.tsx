@@ -10,44 +10,47 @@ export default function HandoffBeam() {
   const human = useRef<HTMLDivElement>(null);
   const whatsapp = useRef<HTMLDivElement>(null);
   const telegram = useRef<HTMLDivElement>(null);
-  const miniapp = useRef<HTMLDivElement>(null);
+  const sms = useRef<HTMLDivElement>(null);
+  const phone = useRef<HTMLDivElement>(null);
 
   return (
     <div className="hbeam" ref={container}>
       <div className="hbeam-col">
+        <div className="hbeam-chan" ref={telegram} title="Telegram">
+          <Image
+            src="/assets/images/logo/telegram.svg"
+            alt=""
+            width={46}
+            height={46}
+            unoptimized
+          />
+        </div>
         <div className="hbeam-chan" ref={whatsapp} title="WhatsApp">
           <Image
             src="/assets/images/logo/whatsapp.svg"
             alt=""
-            width={26}
-            height={26}
+            width={46}
+            height={46}
             unoptimized
           />
         </div>
-        <div className="hbeam-chan" ref={telegram} title="Telegram">
+        <div className="hbeam-chan" ref={sms} title="SMS">
           <Image
-            src="/assets/images/logo/telegram.png"
+            src="/assets/images/logo/message.png"
             alt=""
-            width={26}
-            height={26}
+            width={46}
+            height={46}
             unoptimized
           />
         </div>
-        <div className="hbeam-chan mini" ref={miniapp} title="Mini-app">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
-            <path d="M10.5 18.5h3" />
-          </svg>
+        <div className="hbeam-chan" ref={phone} title="Appel">
+          <Image
+            src="/assets/images/logo/phone.png"
+            alt=""
+            width={46}
+            height={46}
+            unoptimized
+          />
         </div>
       </div>
 
@@ -60,59 +63,32 @@ export default function HandoffBeam() {
 
       <div className="hbeam-node">
         <div className="hbeam-circle human" ref={human}>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
+          <Image src="/assets/images/logo/avatar.svg" alt="" width={74} height={74} />
         </div>
         <span>Vous</span>
       </div>
 
       {/* Les canaux convergent vers Kacy. */}
-      <AnimatedBeam
-        containerRef={container}
-        fromRef={whatsapp}
-        toRef={kacy}
-        curvature={-32}
-        pathWidth={1.5}
-        pathOpacity={0.1}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-      />
-      <AnimatedBeam
-        containerRef={container}
-        fromRef={telegram}
-        toRef={kacy}
-        pathWidth={1.5}
-        pathOpacity={0.1}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-        delay={0.8}
-      />
-      <AnimatedBeam
-        containerRef={container}
-        fromRef={miniapp}
-        toRef={kacy}
-        curvature={32}
-        pathWidth={1.5}
-        pathOpacity={0.1}
-        gradientStartColor="#82BC46"
-        gradientStopColor="#5A8F2E"
-        duration={3.2}
-        delay={1.6}
-      />
+      {[
+        { ref: telegram, curvature: -38, delay: 0 },
+        { ref: whatsapp, curvature: -14, delay: 0.6 },
+        { ref: sms, curvature: 14, delay: 1.2 },
+        { ref: phone, curvature: 38, delay: 1.8 },
+      ].map((b, i) => (
+        <AnimatedBeam
+          key={i}
+          containerRef={container}
+          fromRef={b.ref}
+          toRef={kacy}
+          curvature={b.curvature}
+          pathWidth={1.5}
+          pathOpacity={0.1}
+          gradientStartColor="#82BC46"
+          gradientStopColor="#5A8F2E"
+          duration={3.2}
+          delay={b.delay}
+        />
+      ))}
 
       {/* Puis Kacy vous passe la main, dans les deux sens. */}
       <AnimatedBeam
