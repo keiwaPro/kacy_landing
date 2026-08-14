@@ -508,47 +508,113 @@ html.dark .hero-wash {
   animation-delay: 0.4s;
 }
 
-/* — cellule 2 : orbite multicanal — */
-.bento-orbit {
+/* — cellule 2 : radar multicanal (arcs concentriques ancrés en bas) — */
+.radar {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
-.bento-orbit .orbit-ring {
-  stroke: var(--line);
+.radar-ring {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: linear-gradient(
+    to top,
+    rgba(26, 24, 24, 0.045),
+    rgba(26, 24, 24, 0.01) 55%,
+    transparent 80%
+  );
 }
-.orbit-center {
-  width: 58px;
-  height: 58px;
+html.dark .radar-ring {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.012) 55%,
+    transparent 80%
+  );
+}
+.radar-ring.r1 {
+  width: 580px;
+  height: 580px;
+  bottom: -300px;
+}
+.radar-ring.r2 {
+  width: 430px;
+  height: 430px;
+  bottom: -225px;
+}
+.radar-ring.r3 {
+  width: 280px;
+  height: 280px;
+  bottom: -150px;
+}
+.radar-center {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 12px 28px -8px rgba(90, 143, 46, 0.55);
+  z-index: 1;
+}
+.radar-icon {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--white);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-card);
-  z-index: 1;
+  overflow: hidden;
 }
-.orbit-center img {
-  width: 32px;
-  height: 32px;
-}
-.orbit-icon-light {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-card);
-}
-.orbit-icon-light img {
-  width: 24px;
-  height: 24px;
+.radar-icon img {
+  width: 26px;
+  height: 26px;
   object-fit: contain;
+  border-radius: 50%;
+}
+.radar-icon.i1 {
+  left: 5%;
+  top: 38%;
+  width: 38px;
+  height: 38px;
+}
+.radar-icon.i2 {
+  left: 21%;
+  top: 22%;
+  width: 42px;
+  height: 42px;
+}
+.radar-icon.i3 {
+  left: 30%;
+  bottom: 22%;
+}
+.radar-icon.i4 {
+  right: 27%;
+  bottom: 27%;
+  width: 48px;
+  height: 48px;
+}
+.radar-icon.i5 {
+  right: 15%;
+  top: 30%;
+}
+.radar-icon.i6 {
+  right: 6%;
+  top: 10%;
+  width: 38px;
+  height: 38px;
 }
 
 /* — cellule 3 : graphe — */

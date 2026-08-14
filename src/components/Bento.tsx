@@ -1,15 +1,12 @@
 import Image from "next/image";
-import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 
-const INNER_CHANNELS = [
-  { name: "WhatsApp", src: "/assets/images/logo/whatsapp.svg" },
-  { name: "Telegram", src: "/assets/images/logo/telegram.png" },
-  { name: "SMS", src: "/assets/images/logo/message.png" },
-];
-
-const OUTER_CHANNELS = [
-  { name: "Appel vocal", src: "/assets/images/logo/phone.png" },
-  { name: "Wave", src: "/assets/images/logo/wave.jpg" },
+const RADAR_ICONS = [
+  { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg", pos: "i1" },
+  { name: "Telegram", src: "/assets/images/logo/telegram.png", pos: "i2" },
+  { name: "Wave", src: "/assets/images/logo/wave.jpg", pos: "i3" },
+  { name: "WhatsApp", src: "/assets/images/logo/whatsapp.svg", pos: "i4" },
+  { name: "SMS", src: "/assets/images/logo/message.png", pos: "i5" },
+  { name: "Appel vocal", src: "/assets/images/logo/phone.png", pos: "i6" },
 ];
 
 const CHART_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
@@ -33,7 +30,7 @@ export default function Bento() {
       <div className="bento-shell reveal reveal-d-2">
           <div className="bento-rail" aria-hidden />
           <div className="bento-grid">
-            <div className="bento-cell">
+            <div className="bento-cell visual-top">
               <div className="bento-text">
                 <h3>Conversations naturelles, en temps réel</h3>
                 <p>
@@ -72,7 +69,7 @@ export default function Bento() {
               </div>
             </div>
 
-            <div className="bento-cell">
+            <div className="bento-cell visual-top">
               <div className="bento-text">
                 <h3>Tous vos canaux, un seul cerveau</h3>
                 <p>
@@ -81,76 +78,28 @@ export default function Bento() {
                 </p>
               </div>
               <div className="bento-visual">
-                <div className="bento-orbit">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="pointer-events-none absolute inset-0 size-full"
-                  >
-                    <circle
-                      className="orbit-ring"
-                      cx="50%"
-                      cy="50%"
-                      r={62}
-                      fill="none"
-                      strokeDasharray="3 6"
-                    />
-                    <circle
-                      className="orbit-ring"
-                      cx="50%"
-                      cy="50%"
-                      r={104}
-                      fill="none"
-                      strokeDasharray="3 6"
-                    />
-                  </svg>
-                  <div className="orbit-center">
-                    <Image src="/logo_2.svg" alt="Kacy" width={32} height={32} />
+                <div className="radar">
+                  <span className="radar-ring r1" aria-hidden />
+                  <span className="radar-ring r2" aria-hidden />
+                  <span className="radar-ring r3" aria-hidden />
+                  {RADAR_ICONS.map((ch) => (
+                    <div
+                      key={ch.name}
+                      className={`radar-icon ${ch.pos}`}
+                      title={ch.name}
+                    >
+                      <Image
+                        src={ch.src}
+                        alt={ch.name}
+                        width={26}
+                        height={26}
+                        unoptimized
+                      />
+                    </div>
+                  ))}
+                  <div className="radar-center">
+                    <Image src="/logo_2.svg" alt="Kacy" width={34} height={34} />
                   </div>
-                  <OrbitingCircles
-                    radius={62}
-                    duration={22}
-                    path={false}
-                    iconSize={40}
-                  >
-                    {INNER_CHANNELS.map((ch) => (
-                      <div
-                        key={ch.name}
-                        className="orbit-icon-light"
-                        title={ch.name}
-                      >
-                        <Image
-                          src={ch.src}
-                          alt={ch.name}
-                          width={24}
-                          height={24}
-                          unoptimized
-                        />
-                      </div>
-                    ))}
-                  </OrbitingCircles>
-                  <OrbitingCircles
-                    radius={104}
-                    duration={34}
-                    path={false}
-                    reverse
-                    iconSize={40}
-                  >
-                    {OUTER_CHANNELS.map((ch) => (
-                      <div
-                        key={ch.name}
-                        className="orbit-icon-light"
-                        title={ch.name}
-                      >
-                        <Image
-                          src={ch.src}
-                          alt={ch.name}
-                          width={24}
-                          height={24}
-                          unoptimized
-                        />
-                      </div>
-                    ))}
-                  </OrbitingCircles>
                 </div>
               </div>
             </div>
