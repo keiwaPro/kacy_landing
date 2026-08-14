@@ -1866,25 +1866,35 @@ html.dark {
   stroke: var(--white);
   stroke-width: 1.44;
 }
-/* Passage de relais Kacy → humain. */
+/* Passage de relais Kacy → humain, sur la structure du modèle Magic UI :
+   une rangée, les canaux à gauche, Kacy au centre, vous à droite. */
 .hbeam {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0 6%;
+}
+.hbeam-row {
+  display: flex;
+  width: 100%;
+  max-width: 460px;
+  flex-direction: row;
+  align-items: stretch;
   justify-content: space-between;
-  padding: 0 12%;
+  gap: 24px;
 }
 .hbeam-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  gap: 12px;
   z-index: 1;
 }
-/* Les logos portent déjà leur propre pastille : pas de cercle autour. */
 .hbeam-chan {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
 }
@@ -1894,38 +1904,39 @@ html.dark {
   object-fit: contain;
   filter: drop-shadow(0 6px 14px rgba(26, 24, 24, 0.18));
 }
+/* Le libellé sort du flux : sinon il décale le cercle vers le haut et
+   Kacy ne s'aligne plus sur le centre de la colonne des canaux. */
 .hbeam-node {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  z-index: 1;
 }
-.hbeam-circle {
-  width: 74px;
-  height: 74px;
+.hbeam-kacy,
+.hbeam-human {
+  width: 62px;
+  height: 62px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--white);
-  box-shadow: var(--shadow-card);
-}
-.hbeam-circle.human {
-  color: var(--ink-soft);
-  padding: 0;
   overflow: hidden;
 }
-.hbeam-circle.human img {
+.hbeam-kacy img,
+.hbeam-human img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(26, 24, 24, 0.2));
 }
 .hbeam-node span {
+  position: absolute;
+  top: calc(100% + 10px);
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--ink-muted);
 }
+/* Les logos portent déjà leur propre pastille : pas de cercle autour. */
 /* =========================================
    BOUTONS — calés sur le CTA du header
    ========================================= */
