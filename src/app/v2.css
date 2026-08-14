@@ -1704,6 +1704,30 @@ html.dark .sp-badge.info {
 }
 
 /* =========================================
+   BOUTONS — calés sur le CTA du header
+   ========================================= */
+.btn-primary,
+.btn-ghost,
+.price-cta,
+.submit-btn {
+  border-radius: 100px;
+  font-size: 13.5px;
+}
+.btn-primary {
+  padding: 10px 20px;
+}
+.btn-ghost {
+  padding: 10px 16px;
+}
+.price-cta,
+.submit-btn {
+  padding: 11px 18px;
+}
+.btn-primary::before {
+  border-radius: inherit;
+}
+
+/* =========================================
    PRICING — 5 plans réels
    ========================================= */
 .pricing-grid {
