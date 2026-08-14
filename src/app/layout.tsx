@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
+import "./v2.css";
 import "lenis/dist/lenis.css";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -36,8 +37,14 @@ export default function RootLayout({
     <html
       lang="fr"
       className={`${bricolage.variable} ${geist.variable}`}
+      suppressHydrationWarning
     >
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("kacy-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

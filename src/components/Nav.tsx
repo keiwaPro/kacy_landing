@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
@@ -29,8 +30,12 @@ export default function Nav() {
       </a>
       <div className="nav-links">
         <a href="#product">Produit</a>
+        <a href="#comment">Comment ça marche</a>
         <a href="#pricing">Tarifs</a>
         <a href="#faq">FAQ</a>
+      </div>
+      <div className="nav-actions">
+        <ThemeToggle />
         <a href="#reserver" className="nav-cta">
           Réserver ma place →
         </a>

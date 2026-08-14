@@ -1,31 +1,15 @@
 "use client";
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import PhoneChat from "./PhoneChat";
-import { Iphone } from "./ui/iphone";
 import { WordRotate } from "./ui/word-rotate";
 import { Highlighter } from "./ui/highlighter";
-import useParallax from "@/hooks/useParallax";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
 export default function Hero() {
-  const leftPhone = useParallax<HTMLDivElement>(90);
-  const rightPhone = useParallax<HTMLDivElement>(140);
-  const centerPhone = useParallax<HTMLDivElement>(40);
-
   return (
     <section className="hero">
+      <div className="hero-wash" aria-hidden />
       <div className="hero-grid-bg" />
-      <div className="hero-mark-float m1">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
-      <div className="hero-mark-float m2">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
-      <div className="hero-mark-float m3">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
 
       <div className="hero-wrap">
         <div className="hero-tag reveal">
@@ -75,7 +59,8 @@ export default function Hero() {
 
         <div className="hero-meta reveal reveal-d-4">
           <span>
-            <span className="bullet" />Installation offerte
+            <span className="bullet" />
+            Installation offerte
           </span>
           <span>
             <span className="bullet" />
@@ -91,84 +76,43 @@ export default function Hero() {
           </span>
         </div>
 
-        <div className="hero-stage">
-          <div className="hero-stage-side left reveal reveal-d-4" ref={leftPhone}>
-            <span className="hero-stage-tag">Votre tableau de bord</span>
-            <Iphone src="/screens/dashboard.png" />
+        <div className="hero-media reveal reveal-d-5">
+          <div className="hero-media-glow" aria-hidden />
+          <div className="hero-media-frame">
+            <div className="hero-media-bar">
+              <span className="hm-dot" />
+              <span className="hm-dot" />
+              <span className="hm-dot" />
+              <span className="hm-url">app.kacyai.co</span>
+              <span className="hm-live">
+                <span className="hm-live-dot" />
+                En service
+              </span>
+            </div>
+            <div className="hero-media-shot">
+              <Image
+                src="/screens/dashboard.png"
+                alt="Tableau de bord Kacy"
+                width={2160}
+                height={1350}
+                priority
+              />
+            </div>
           </div>
-
-          <div className="hero-stage-center reveal reveal-d-3" ref={centerPhone}>
-            <PhoneChat />
-          </div>
-
-          <div className="hero-stage-side right reveal reveal-d-5" ref={rightPhone}>
-            <span className="hero-stage-tag">Toutes vos conversations</span>
-            <Iphone src="/screens/conversations.png" />
-          </div>
-        </div>
-
-        <div className="hero-stats reveal reveal-d-2">
-          <div className="hero-phone-side">
-            <CounterNum target={24} />
-            <p>réponses traitées par Kacy pendant que vous lisez cette page.</p>
-          </div>
-          <div className="hero-phone-side">
-            <CounterNum target={98} suffix="%" />
-            <p>de questions clients résolues sans intervention humaine.</p>
+          <div className="hero-media-toast">
+            <div className="toast-avatar">
+              <Image src="/logo_2.svg" alt="" width={18} height={18} />
+            </div>
+            <div>
+              <div className="toast-name">Kacy · à l&apos;instant</div>
+              <div className="toast-body">
+                Commande confirmée <strong>✓</strong> — Table 4, deux poulets
+                braisés.
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function CounterNum({
-  target,
-  suffix = "",
-}: {
-  target: number;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const hasRun = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasRun.current) {
-          hasRun.current = true;
-          let start = 0;
-          const duration = 1400;
-          const step = (timestamp: number) => {
-            if (!start) start = timestamp;
-            const progress = Math.min((timestamp - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const val = Math.round(target * eased);
-            if (suffix === "%") {
-              el.innerHTML =
-                val +
-                '<small style="font-family:var(--font);font-size:.5em;">%</small>';
-            } else {
-              el.textContent = String(val);
-            }
-            if (progress < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [target, suffix]);
-
-  return (
-    <span className="num" ref={ref}>
-      0
-    </span>
   );
 }
