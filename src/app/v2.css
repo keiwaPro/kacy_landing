@@ -85,7 +85,7 @@ h2 {
    PAGE FRAME — colonne bordée façon modèle
    ========================================= */
 body {
-  background: var(--line-soft);
+  background: var(--canvas);
 }
 .page-frame {
   position: relative;
@@ -94,8 +94,52 @@ body {
   background: var(--canvas);
   border-inline: 1px solid var(--line);
 }
+/* Les séparateurs horizontaux débordent du cadre pour rejoindre les
+   filets extérieurs, au lieu de s'arrêter à la colonne de contenu. */
 .page-frame > * + * {
-  border-top: 1px solid var(--line);
+  position: relative;
+}
+.page-frame > * + *::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -35px;
+  right: -35px;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 2;
+}
+/* Seconde bordure : un filet à l'extérieur du cadre, qui ouvre une
+   gouttière entre le fond de page et la colonne de contenu. */
+.page-frame::before,
+.page-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 3;
+}
+.page-frame::before {
+  left: -35px;
+}
+.page-frame::after {
+  right: -35px;
+}
+
+/* Le SVG du logo porte son propre <style> : la couleur du texte ne peut
+   pas être héritée, d'où deux fichiers échangés selon le thème. */
+.logo-dark {
+  display: none;
+}
+html.dark .logo-light {
+  display: none;
+}
+html.dark .logo-dark {
+  display: block;
 }
 
 /* =========================================

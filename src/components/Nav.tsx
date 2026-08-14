@@ -26,7 +26,20 @@ export default function Nav() {
   return (
     <nav ref={navRef} className="site-nav" id="nav">
       <a href="#" className="logo" aria-label="Kacy">
-        <Image src="/logo_large.svg" alt="" width="150" height="40" />
+        <Image
+          className="logo-light"
+          src="/logo_large.svg"
+          alt=""
+          width="150"
+          height="40"
+        />
+        <Image
+          className="logo-dark"
+          src="/logo_large_dark.svg"
+          alt=""
+          width="150"
+          height="40"
+        />
       </a>
       <div className="nav-links">
         <a href="#product">Produit</a>

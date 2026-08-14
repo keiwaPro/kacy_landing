@@ -117,7 +117,14 @@ export default function Footer() {
               alt="Kacy"
               width={172}
               height={71}
-              className="foot-mark"
+              className="foot-mark logo-light"
+            />
+            <Image
+              src="/logo_large_dark.svg"
+              alt="Kacy"
+              width={172}
+              height={71}
+              className="foot-mark logo-dark"
             />
             <p className="foot-claim">
               Faire mieux,

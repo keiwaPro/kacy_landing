@@ -4,12 +4,12 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Channels from "@/components/Channels";
 import Bento from "@/components/Bento";
-import Quote from "@/components/Quote";
+// import Quote from "@/components/Quote";
 import Steps from "@/components/Steps";
 import Secure from "@/components/Secure";
 import Calculator from "@/components/Calculator";
 import Pricing from "@/components/Pricing";
-import Testimonials from "@/components/Testimonials";
+// import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import CTAFinal from "../components/CTAFinal";
 import Footer from "@/components/Footer";
@@ -27,12 +27,14 @@ export default function Home() {
         <Hero />
         <Channels />
         <Bento />
-        <Quote />
+        {/* Témoignages en pause : personas fictifs. À réactiver avec de
+            vrais retours des établissements pilotes. */}
+        {/* <Quote /> */}
         <Steps />
         <Secure />
         <Calculator />
         <Pricing />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <FAQ />
         <CTAFinal />
         <Footer />
