@@ -1,20 +1,29 @@
 import Image from "next/image";
 
-const CHANNELS: { name: string; src?: string; icon?: "miniapp" | "card" }[] = [
+type Channel = { name: string; src?: string; icon?: "miniapp" | "card" };
+
+const CHANNELS: Channel[] = [
   { name: "WhatsApp", src: "/assets/images/logo/whatsapp.svg" },
   { name: "Telegram", src: "/assets/images/logo/telegram.png" },
-  { name: "SMS", src: "/assets/images/logo/message.png" },
-  { name: "Appel vocal", src: "/assets/images/logo/phone.png" },
-  { name: "Mini app", icon: "miniapp" },
+  { name: "Mini-app", icon: "miniapp" },
+  { name: "Carte bancaire", icon: "card" },
   { name: "Wave", src: "/assets/images/logo/wave.jpg" },
   { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg" },
-  { name: "Paystack", icon: "card" },
+  { name: "MTN MoMo", src: "/assets/images/logo/mtn_money.jpg" },
+  { name: "Moov Money", src: "/assets/images/logo/moov_money.jpg" },
 ];
 
-function CellIcon({ c }: { c: (typeof CHANNELS)[number] }) {
+function CellIcon({ c }: { c: Channel }) {
   if (c.src) {
     return (
-      <Image src={c.src} alt={c.name} width={26} height={26} unoptimized />
+      <Image
+        className="channel-logo"
+        src={c.src}
+        alt={c.name}
+        width={26}
+        height={26}
+        unoptimized
+      />
     );
   }
   if (c.icon === "miniapp") {
@@ -58,7 +67,7 @@ export default function Channels() {
   return (
     <div className="channels">
       <p className="channels-caption reveal">
-        Kacy répond et encaisse partout où sont vos clients
+        Kacy discute et encaisse là où sont déjà vos clients
       </p>
       <div className="channels-grid reveal reveal-d-1">
         {CHANNELS.map((c) => (

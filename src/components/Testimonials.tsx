@@ -20,8 +20,8 @@ const COLUMNS: Quote[][] = [
       role: "Restaurant · Marcory",
     },
     {
-      text: "Les clients paient l'acompte par Wave sans quitter la conversation. ",
-      hl: "Les rendez-vous manqués ont chuté.",
+      text: "Les clientes règlent par Wave depuis la conversation. ",
+      hl: "Plus besoin de courir après les paiements.",
       name: "Fatou B.",
       role: "Salon de coiffure · Riviera",
     },

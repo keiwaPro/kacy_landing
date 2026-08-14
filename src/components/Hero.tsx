@@ -97,15 +97,16 @@ export default function Hero() {
                     <span>Kacy</span>
                   </div>
                   <nav>
-                    <span className="hm-nav-item active">Accueil</span>
+                    <span className="hm-nav-item active">Tableau de bord</span>
                     <span className="hm-nav-item">
                       Conversations <em className="hm-badge">3</em>
                     </span>
+                    <span className="hm-nav-item">Clients</span>
+                    <span className="hm-nav-item">Statistiques</span>
+                    <span className="hm-nav-item">Plats</span>
                     <span className="hm-nav-item">Commandes</span>
                     <span className="hm-nav-item">Réservations</span>
-                    <span className="hm-nav-item">Menu</span>
-                    <span className="hm-nav-item">Paiements</span>
-                    <span className="hm-nav-item">Statistiques</span>
+                    <span className="hm-nav-item">Mon agent</span>
                   </nav>
                 </aside>
                 <div className="hm-main">
@@ -120,14 +121,14 @@ export default function Hero() {
                       <span className="hm-kpi-delta">+18 % vs hier</span>
                     </div>
                     <div className="hm-kpi">
-                      <span className="hm-kpi-label">Encaissé via Paystack</span>
+                      <span className="hm-kpi-label">Encaissé aujourd&apos;hui</span>
                       <span className="hm-kpi-num">486 500 F</span>
                       <span className="hm-kpi-delta">Wave · OM · carte</span>
                     </div>
                     <div className="hm-kpi">
                       <span className="hm-kpi-label">Réservations ce soir</span>
                       <span className="hm-kpi-num">12</span>
-                      <span className="hm-kpi-delta">via mini-app &amp; chat</span>
+                      <span className="hm-kpi-delta">9 confirmées</span>
                     </div>
                   </div>
                   <div className="hm-cols">
@@ -204,7 +205,7 @@ export default function Hero() {
                         />
                         <span className="hm-row-body">
                           <strong>8 000 F</strong>
-                          <em>Orange Money · acompte résa</em>
+                          <em>Orange Money · commande #215</em>
                         </span>
                         <span className="hm-ok">✓</span>
                       </div>
@@ -212,7 +213,7 @@ export default function Hero() {
                         <span className="hm-card-ico">💳</span>
                         <span className="hm-row-body">
                           <strong>24 500 F</strong>
-                          <em>Carte ·· 4921 · mini-app</em>
+                          <em>Carte · mini-app Telegram</em>
                         </span>
                         <span className="hm-ok">✓</span>
                       </div>
