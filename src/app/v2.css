@@ -972,17 +972,24 @@ html.dark .hero-wash {
   flex-direction: column;
   gap: 3px;
 }
+/* Photos du menu : si le fichier manque, le dégradé de la seconde couche
+   prend le relais — aucune image cassée à l'écran. */
 .mapp-media {
   display: block;
   height: 56px;
   border-radius: 9px;
   margin-bottom: 3px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .mapp-media.m1 {
-  background: linear-gradient(135deg, #e8b448, #c8722c);
+  background-image: url("/menu/poulet-braise.jpg"),
+    linear-gradient(135deg, #e8b448, #c8722c);
 }
 .mapp-media.m2 {
-  background: linear-gradient(135deg, #9fc96a, #5a8f2e);
+  background-image: url("/menu/garba.jpg"),
+    linear-gradient(135deg, #9fc96a, #5a8f2e);
 }
 .mapp-cell strong {
   font-size: 11.5px;
