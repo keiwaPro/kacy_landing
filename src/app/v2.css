@@ -1995,7 +1995,7 @@ html.dark .price-card.featured .price-features li {
    ========================================= */
 .cta-final {
   background: var(--canvas);
-  padding: 30px 5% 120px;
+  padding: 0;
 }
 .cta-final-bg {
   display: none;
@@ -2017,7 +2017,7 @@ html.dark .price-card.featured .price-features li {
     ),
     linear-gradient(130deg, #5a8f2e 0%, #6ea83a 45%, #82bc46 100%);
   border-radius: 32px;
-  padding: 72px 64px;
+  padding: 96px 64px;
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow-pop);
