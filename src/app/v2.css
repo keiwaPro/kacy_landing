@@ -1870,8 +1870,28 @@ html.dark {
   inset: 0;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 0 8%;
+  justify-content: space-between;
+  padding: 0 12%;
+}
+.hbeam-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+}
+.hbeam-chan {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.hbeam-chan.mini {
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  border-color: transparent;
 }
 .hbeam-node {
   display: flex;
