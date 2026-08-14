@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { WordRotate } from "./ui/word-rotate";
-import { Highlighter } from "./ui/highlighter";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
@@ -13,7 +12,7 @@ export default function Hero() {
 
       <div className="hero-wrap">
         <div className="hero-tag reveal">
-          <span className="hero-tag-badge">BETA</span>
+          <span className="hero-tag-badge">Beta</span>
           Accès anticipé · 100 places pour Abidjan
           <span className="arrow">→</span>
         </div>
@@ -26,17 +25,7 @@ export default function Hero() {
               words={WORDS}
               duration={2600}
               renderWord={(word) => (
-                <Highlighter
-                  action="underline"
-                  color="#5a8f2e"
-                  strokeWidth={3}
-                  animationDuration={700}
-                  iterations={2}
-                  padding={4}
-                  isView={false}
-                >
-                  {word}
-                </Highlighter>
+                <span className="hero-word">{word}</span>
               )}
             />
           </span>

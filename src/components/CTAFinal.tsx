@@ -4,6 +4,9 @@ import { onPrefillWhatsapp } from "@/lib/prefill";
 
 const TOTAL_PLACES = 100;
 
+const MARK_PATH =
+  "M200 0C240.83 0 275.943 24.4709 291.478 59.5459C298.716 57.8797 306.255 57 314 57C369.228 57 414 101.772 414 157C414 188.588 399.353 216.754 376.481 235.08C385.693 250.214 391 267.987 391 287C391 342.228 346.228 387 291 387C267.044 387 245.057 378.575 227.837 364.528C209.996 391.903 179.112 410 144 410C88.7715 410 44 365.228 44 310C44 301.339 45.1013 292.936 47.1709 284.922C18.848 267.265 0 235.834 0 200C0 144.772 44.7715 100 100 100C100 44.7715 144.772 0 200 0Z";
+
 const BUSINESS_TYPES = [
   { value: "restaurant", label: "Restaurant / Maquis" },
   { value: "hotel", label: "Hôtel / Auberge" },
@@ -139,13 +142,21 @@ export default function CTAFinal() {
               <stop offset="100%" stopColor="#fff" stopOpacity="0" />
             </linearGradient>
           </defs>
-          {/* pathLength=1 : le tracé se pilote en 0→1, sans mesurer le path. */}
           <path
-            className="cta-mark-path"
-            pathLength={1}
-            d="M200 0C240.83 0 275.943 24.4709 291.478 59.5459C298.716 57.8797 306.255 57 314 57C369.228 57 414 101.772 414 157C414 188.588 399.353 216.754 376.481 235.08C385.693 250.214 391 267.987 391 287C391 342.228 346.228 387 291 387C267.044 387 245.057 378.575 227.837 364.528C209.996 391.903 179.112 410 144 410C88.7715 410 44 365.228 44 310C44 301.339 45.1013 292.936 47.1709 284.922C18.848 267.265 0 235.834 0 200C0 144.772 44.7715 100 100 100C100 44.7715 144.772 0 200 0Z"
+            d={MARK_PATH}
             stroke="url(#ctaMarkStroke)"
             strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+          />
+          {/* pathLength=1 : le segment lumineux se pilote en 0→1, sans avoir
+              à mesurer le tracé. Il boucle par-dessus le contour fixe. */}
+          <path
+            className="cta-mark-trail"
+            pathLength={1}
+            d={MARK_PATH}
+            stroke="#fff"
+            strokeWidth="2"
+            strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
           />
         </svg>
