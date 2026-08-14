@@ -2418,8 +2418,11 @@ html.dark .price-card.featured .price-features li {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
   outline: none;
 }
+/* Le chevron shadcn porte text-muted-foreground (un gris fixe) : sur la
+   bande verte il faut le repasser en blanc. */
 .cta-form .cta-select svg {
-  opacity: 0.75;
+  color: #fff;
+  opacity: 0.8;
 }
 
 /* La liste s'ouvre dans un portail : on la peint avec les tokens de la
