@@ -41,12 +41,11 @@ export default function Footer() {
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("is-in");
-          io.disconnect();
-        }
+        if (entry.intersectionRatio >= 0.2) el.classList.add("is-in");
+        else if (!entry.isIntersecting && entry.boundingClientRect.top >= 0)
+          el.classList.remove("is-in");
       },
-      { threshold: 0.2 },
+      { threshold: [0, 0.2] },
     );
 
     io.observe(el);
