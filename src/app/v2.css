@@ -1537,6 +1537,119 @@ html.dark .sp-badge.info {
   transform: translateX(12px);
 }
 
+/* Notification de nouvelle commande, en surimpression de la maquette. */
+.sp-toast {
+  position: absolute;
+  top: 62px;
+  right: 22px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-pop);
+  animation: sp-toast-in 0.4s var(--ease);
+}
+.sp-toast-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 4px var(--green-soft);
+}
+.sp-toast strong {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.sp-toast em {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+@keyframes sp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+}
+.sp-row-in {
+  animation: sp-row-in 0.45s var(--ease);
+}
+@keyframes sp-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Étape « Kacy note tout » : ce que dit le client → la fiche créée. */
+.sp-capture {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sp-cap-row {
+  display: grid;
+  grid-template-columns: 1fr 22px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.sp-cap-said {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  border-bottom-left-radius: 5px;
+  background: var(--line-soft);
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.sp-cap-avatar {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
+}
+.sp-cap-arrow {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
+  transform: rotate(-90deg);
+}
+.sp-cap-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.sp-cap-card strong {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.sp-cap-card .sp-badge {
+  align-self: flex-start;
+}
+.sp-cap-ok {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--green-deep);
+  font-weight: 600;
+}
+
 .sp-agent-hero {
   display: flex;
   align-items: center;

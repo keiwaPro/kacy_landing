@@ -14,17 +14,17 @@ const STEPS = [
   {
     num: "02",
     title: "Personnalisez votre agent",
-    body: "Son prénom, son ton, vos horaires, votre zone et vos frais de livraison. Ajoutez vos instructions maison : Kacy les applique à chaque conversation.",
+    body: "Son prénom, son ton, vos horaires, votre zone de livraison, vos instructions maison. Au même endroit, vous suivez vos crédits de conversation et rechargez quand vous le décidez.",
   },
   {
     num: "03",
-    title: "Gérez vos commandes",
-    body: "Chaque commande arrive avec son client, ses articles et son paiement. Vous la faites avancer d'un clic : confirmée, en livraison, livrée.",
+    title: "Kacy note tout pour vous",
+    body: "Il discute avec le client, comprend ce qu'il veut, puis enregistre la commande, la réservation ou la plainte. Vous n'avez rien à ressaisir : tout remonte au tableau de bord.",
   },
   {
     num: "04",
-    title: "Pilotez vos crédits",
-    body: "Une conversation = un crédit sur Telegram, cinq sur WhatsApp. Vous suivez ce qu'il reste et rechargez par pack quand vous le décidez.",
+    title: "Gérez vos commandes",
+    body: "Chaque commande tombe en direct avec son client, ses articles et son paiement. Vous la faites avancer d'un clic : confirmée, en livraison, livrée.",
   },
 ];
 
@@ -80,7 +80,9 @@ export default function Steps() {
                   className={`sp-slide${i === active ? " active" : ""}`}
                   aria-hidden={i !== active}
                 >
-                  <Mock />
+                  {/* Remonté à chaque activation : les maquettes animées
+                      rejouent leur séquence quand on arrive sur l'étape. */}
+                  <Mock key={i === active ? "on" : "off"} />
                 </div>
               ))}
             </div>
@@ -91,7 +93,60 @@ export default function Steps() {
   );
 }
 
-const MOCKS = [ProductsMock, AgentMock, OrdersMock, CreditsMock];
+const MOCKS = [ProductsMock, AgentMock, CaptureMock, OrdersMock];
+
+const CAPTURED = [
+  {
+    said: "Je voudrais 2 poulets braisés à Riviera 3",
+    kind: "Commande",
+    detail: "#218 · 12 500 XOF",
+    tone: "ok",
+  },
+  {
+    said: "Une table pour 4 samedi 20h",
+    kind: "Réservation",
+    detail: "Sam. 20h · 4 personnes",
+    tone: "info",
+  },
+  {
+    said: "Ma commande est arrivée froide",
+    kind: "Plainte",
+    detail: "Transférée au gérant",
+    tone: "warn",
+  },
+];
+
+/** Ce que dit le client, et la fiche que Kacy crée dans le dashboard. */
+function CaptureMock() {
+  return (
+    <>
+      <div className="sp-head">
+        <div>
+          <strong>Kacy écoute, comprend, enregistre</strong>
+          <em>Rien à ressaisir de votre côté</em>
+        </div>
+      </div>
+      <div className="sp-capture">
+        {CAPTURED.map((c) => (
+          <div className="sp-cap-row" key={c.kind}>
+            <span className="sp-cap-said">
+              <i className="sp-cap-avatar" />
+              {c.said}
+            </span>
+            <span className="sp-cap-arrow" aria-hidden>
+              ↓
+            </span>
+            <span className="sp-cap-card">
+              <em className={`sp-badge ${c.tone}`}>{c.kind}</em>
+              <strong>{c.detail}</strong>
+              <span className="sp-cap-ok">✓ enregistré</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
 
 function MockHead({
   title,
@@ -253,7 +308,6 @@ function AgentMock() {
     ["Personnalité", "chaleureux et professionnel"],
     ["Horaires", "10h - 22h, 7j/7"],
     ["Zone de livraison", "Cocody, Plateau"],
-    ["Frais de livraison", "1 000 FCFA"],
   ];
   return (
     <>
@@ -273,51 +327,101 @@ function AgentMock() {
           </div>
         ))}
       </div>
-      <div className="sp-instr">
-        <span>Instructions personnalisées</span>
-        <p>Propose toujours le plat du jour et le jus de bissap maison.</p>
+      <div className="sp-credits">
+        <div className="sp-bar-row">
+          <span>Crédits de conversation IA</span>
+          <strong className="green">1 240 restants</strong>
+        </div>
+        <em>3 500 inclus dans votre période · 240 achetés</em>
+      </div>
+      <div className="sp-pack">
+        <span>
+          <strong>Pack 1 500 crédits</strong> — 16 500 FCFA
+        </span>
+        <span className="sp-btn ghost">Acheter</span>
       </div>
     </>
   );
 }
 
+const ORDER_ROWS = [
+  {
+    ref: "a3f9c21b",
+    client: "Aminata",
+    total: "12 500",
+    status: "Confirmée",
+    sv: "info",
+    pay: "Réglée",
+    pv: "ok",
+  },
+  {
+    ref: "7d2e08a4",
+    client: "Koffi",
+    total: "8 000",
+    status: "En livraison",
+    sv: "warn",
+    pay: "Réglée",
+    pv: "ok",
+  },
+  {
+    ref: "b1c5f930",
+    client: "Mariam",
+    total: "3 500",
+    status: "En attente",
+    sv: "warn",
+    pay: "Non réglée",
+    pv: "",
+  },
+  {
+    ref: "5e8a13c7",
+    client: "Serge",
+    total: "21 000",
+    status: "En attente",
+    sv: "warn",
+    pay: "Réglée",
+    pv: "ok",
+  },
+];
+
+/** Les commandes tombent une à une, chacune annoncée par une notification. */
 function OrdersMock() {
-  const rows = [
-    {
-      ref: "a3f9c21b",
-      client: "Aminata",
-      total: "12 500",
-      status: "Confirmée",
-      sv: "info",
-      pay: "Réglée",
-      pv: "ok",
-    },
-    {
-      ref: "7d2e08a4",
-      client: "Koffi",
-      total: "8 000",
-      status: "En livraison",
-      sv: "warn",
-      pay: "Réglée",
-      pv: "ok",
-    },
-    {
-      ref: "b1c5f930",
-      client: "Mariam",
-      total: "3 500",
-      status: "En attente",
-      sv: "warn",
-      pay: "Non réglée",
-      pv: "",
-    },
-  ];
+  const [shown, setShown] = useState(1);
+  const [toast, setToast] = useState<(typeof ORDER_ROWS)[number] | null>(null);
+
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let at = 900;
+    ORDER_ROWS.slice(1).forEach((row, i) => {
+      timers.push(
+        setTimeout(() => {
+          setToast(row);
+          setShown(i + 2);
+        }, at),
+      );
+      timers.push(setTimeout(() => setToast(null), at + 1800));
+      at += 2300;
+    });
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   return (
     <>
       <MockHead
         title="Commandes"
-        count={`${rows.length} commande(s)`}
+        count={`${shown} commande(s)`}
         action="Export CSV"
       />
+      {toast && (
+        <div className="sp-toast">
+          <span className="sp-toast-dot" />
+          <span>
+            <strong>Nouvelle commande</strong>
+            <em>
+              {toast.client} · {toast.total} XOF
+            </em>
+          </span>
+        </div>
+      )}
       <div className="sp-table">
         <div className="sp-tr sp-th orders">
           <span>Réf.</span>
@@ -326,8 +430,8 @@ function OrdersMock() {
           <span>Statut</span>
           <span>Paiement</span>
         </div>
-        {rows.map((r) => (
-          <div className="sp-tr orders" key={r.ref}>
+        {ORDER_ROWS.slice(0, shown).map((r) => (
+          <div className="sp-tr orders sp-row-in" key={r.ref}>
             <span className="sp-mono muted">{r.ref}</span>
             <span>{r.client}</span>
             <span className="right sp-mono">{r.total} XOF</span>
@@ -346,44 +450,3 @@ function OrdersMock() {
   );
 }
 
-function CreditsMock() {
-  return (
-    <>
-      <div className="sp-head">
-        <div>
-          <strong>Consommation</strong>
-          <em>Plan Standard · se renouvelle le 14 sept.</em>
-        </div>
-      </div>
-      <div className="sp-bars">
-        <div className="sp-bar-row">
-          <span>Établissements</span>
-          <strong>1 / 1</strong>
-        </div>
-        <div className="sp-track">
-          <i style={{ width: "100%" }} />
-        </div>
-        <div className="sp-bar-row">
-          <span>Produits</span>
-          <strong>12 / Illimité</strong>
-        </div>
-        <div className="sp-track">
-          <i style={{ width: "22%" }} />
-        </div>
-      </div>
-      <div className="sp-credits">
-        <div className="sp-bar-row">
-          <span>Crédits de conversation IA</span>
-          <strong className="green">1 240 restants</strong>
-        </div>
-        <em>3 500 inclus dans votre période · 240 achetés</em>
-      </div>
-      <div className="sp-pack">
-        <span>
-          <strong>Pack 1 500 crédits</strong> — 16 500 FCFA
-        </span>
-        <span className="sp-btn ghost">Acheter</span>
-      </div>
-    </>
-  );
-}
