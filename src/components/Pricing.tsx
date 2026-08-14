@@ -167,6 +167,10 @@ function planFeatures(plan: Plan): string[] {
 
 export default async function Pricing() {
   const plans = await getPlans();
+  /* Corporate est sur devis et sans limites : il sort de la grille pour
+     ne pas être comparé colonne à colonne avec les plans chiffrés. */
+  const standard = plans.filter((p) => p.id !== "corporate");
+  const corporate = plans.find((p) => p.id === "corporate");
 
   return (
     <section id="pricing">
@@ -180,7 +184,7 @@ export default async function Pricing() {
         </div>
 
         <div className="pricing-grid">
-          {plans.map((p, i) => {
+          {standard.map((p, i) => {
             const price = formatPrice(p);
             const featured = p.id === "business";
             const hasPromo = Boolean(p.discount_percent && p.discount_percent > 0);
@@ -220,6 +224,27 @@ export default async function Pricing() {
             );
           })}
         </div>
+
+        {corporate && (
+          <div className="price-corp reveal">
+            <div className="price-corp-left">
+              <div className="price-plan">{corporate.name}</div>
+              <h3>Un déploiement sur mesure, à votre échelle.</h3>
+              <p>{PLAN_TAGLINE[corporate.id]}</p>
+            </div>
+            <ul className="price-corp-features">
+              {planFeatures(corporate).map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+            <div className="price-corp-right">
+              <span className="price-corp-amount">Sur devis</span>
+              <a href="#reserver" className="price-cta">
+                Parler à l&apos;équipe
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
