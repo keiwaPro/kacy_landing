@@ -1,5 +1,12 @@
+import Image from "next/image";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import HandoffBeam from "@/components/HandoffBeam";
+
+const PAYMENTS = [
+  { name: "Wave", src: "/assets/images/logo/wave.jpg", slot: "wave" },
+  { name: "Orange Money", src: "/assets/images/logo/orange_money.jpg", slot: "orange" },
+  { name: "MTN MoMo", src: "/assets/images/logo/mtn_money.jpg", slot: "mtn" },
+];
 
 export default function Secure() {
   return (
@@ -183,6 +190,18 @@ export default function Secure() {
                     />
                   </g>
                 </svg>
+
+                {PAYMENTS.map((p) => (
+                  <div className={`secu-pay secu-pay-${p.slot}`} key={p.slot}>
+                    <Image
+                      src={p.src}
+                      alt={p.name}
+                      width={46}
+                      height={46}
+                      unoptimized
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
