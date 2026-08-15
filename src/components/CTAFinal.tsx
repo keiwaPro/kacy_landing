@@ -1,13 +1,32 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import { onPrefillWhatsapp } from "@/lib/prefill";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TOTAL_PLACES = 100;
+
+/** [longueur du segment, opacité] — du plus long/discret au plus court/vif. */
+const TRAIL_SEGMENTS: [number, number][] = [
+  [0.16, 0.14],
+  [0.1, 0.2],
+  [0.055, 0.3],
+  [0.022, 0.5],
+];
+
+const MARK_PATH =
+  "M200 0C240.83 0 275.943 24.4709 291.478 59.5459C298.716 57.8797 306.255 57 314 57C369.228 57 414 101.772 414 157C414 188.588 399.353 216.754 376.481 235.08C385.693 250.214 391 267.987 391 287C391 342.228 346.228 387 291 387C267.044 387 245.057 378.575 227.837 364.528C209.996 391.903 179.112 410 144 410C88.7715 410 44 365.228 44 310C44 301.339 45.1013 292.936 47.1709 284.922C18.848 267.265 0 235.834 0 200C0 144.772 44.7715 100 100 100C100 44.7715 144.772 0 200 0Z";
 
 const BUSINESS_TYPES = [
   { value: "restaurant", label: "Restaurant / Maquis" },
   { value: "hotel", label: "Hôtel / Auberge" },
   { value: "beauty", label: "Salon de coiffure / beauté" },
+  { value: "retail", label: "Commerce / boutique" },
   { value: "other", label: "Autre" },
 ] as const;
 
@@ -23,15 +42,40 @@ export default function CTAFinal() {
 
   const [taken, setTaken] = useState<number | null>(null);
   const fillRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /* Observateur dédié : le useReveal global révèle tout au bout de 2 s,
+     ce qui déclencherait l'entrée avant même d'atteindre la section. */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio >= 0.25) el.classList.add("is-in");
+        else if (!e.isIntersecting && e.boundingClientRect.top >= 0)
+          el.classList.remove("is-in");
+      },
+      { threshold: [0, 0.25] },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     fetch("/api/waitlist")
-      .then((res) => res.json())
-      .then((data: { count: number | null }) => {
-        if (typeof data.count === "number") setTaken(data.count);
+      .then((res) => {
+        console.log(`[landing][cta] GET /api/waitlist → ${res.status}`);
+        return res.json();
       })
-      .catch(() => {});
+      .then((data: { count: number | null }) => {
+        console.log("[landing][cta] places:", data);
+        if (typeof data.count === "number") setTaken(data.count);
+        else console.error(`[landing][cta] count non numérique → affichage « — / ${TOTAL_PLACES} »`);
+      })
+      .catch((err) => console.error("[landing][cta] échec GET /api/waitlist:", err));
   }, []);
+
+  useEffect(() => onPrefillWhatsapp(setWhatsapp), []);
 
   useEffect(() => {
     const fill = fillRef.current;
@@ -80,88 +124,81 @@ export default function CTAFinal() {
           business_type: businessType,
         }),
       });
+      const data = await res.json().catch(() => ({}));
+      console.log(`[landing][cta] POST /api/waitlist → ${res.status}`, data);
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Une erreur est survenue, réessayez.");
       }
       setSuccess(true);
       setTaken((t) => (t === null ? null : t + 1));
     } catch (err) {
+      console.error("[landing][cta] échec POST /api/waitlist:", err);
       setError(err instanceof Error ? err.message : "Une erreur est survenue, réessayez.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const formTitle = success
-    ? ""
-    : step === 1
-      ? "Réservez en 2 minutes."
-      : "Presque terminé.";
-  const formSub = success
-    ? ""
-    : step === 1
-      ? "On vous rappelle sur WhatsApp."
-      : "Quelques infos pour mieux configurer Kacy.";
-
   return (
-    <section className="cta-final" id="reserver">
+    <section className="cta-final" id="reserver" ref={sectionRef}>
       <div className="cta-final-bg" />
-      <Image
-        src="/logo.png"
-        alt=""
-        width={320}
-        height={320}
-        className="cta-final-mark"
-      />
 
       <div className="cta-wrap">
+        <svg
+          className="cta-watermark"
+          viewBox="0 0 414 410"
+          fill="none"
+          aria-hidden
+        >
+          <defs>
+            <linearGradient id="ctaMarkStroke" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#fff" stopOpacity="0.75" />
+              <stop offset="45%" stopColor="#fff" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d={MARK_PATH}
+            stroke="url(#ctaMarkStroke)"
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+          />
+          {/* Comète : des segments de longueurs croissantes partant du même
+              point. Leur recouvrement fait une tête blanche qui s'estompe
+              vers la queue. pathLength=1 évite de mesurer le tracé. */}
+          {TRAIL_SEGMENTS.map(([length, opacity]) => (
+            <path
+              key={length}
+              className="cta-mark-trail"
+              pathLength={1}
+              d={MARK_PATH}
+              stroke="#fff"
+              strokeOpacity={opacity}
+              strokeWidth="2"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              style={{ strokeDasharray: `${length} ${1 - length}` }}
+            />
+          ))}
+        </svg>
+
         <div className="cta-left">
-          <span className="eyebrow reveal">Accès anticipé</span>
-          <h2 className="reveal reveal-d-1">
-            Réservez votre place.
-            <br />
-            Avant que Kacy soit complet.
-          </h2>
-          <p className="reveal reveal-d-2">
-            2 minutes pour vous inscrire. Pas de carte bancaire, pas
-            d&apos;engagement.
-          </p>
-          <div className="cta-meta reveal reveal-d-3">
-            <span>
-              <span className="bullet" />3 mois offerts
-            </span>
-            <span>
-              <span className="bullet" />
-              Tarif bloqué à vie
-            </span>
-            <span>
-              <span className="bullet" />
-              Déploiement prioritaire
-            </span>
-          </div>
+          <h2 className="cta-anim">Réservez votre place.</h2>
         </div>
 
-        <div className="cta-form reveal reveal-d-2">
-          <div className="cta-places">
+        <div className="cta-form">
+          <div className="cta-places cta-anim">
             <span className="cta-places-label">Places restantes</span>
             <span className="cta-places-count">{places}</span>
           </div>
-          <div className="cta-places-bar">
+          <div className="cta-places-bar cta-anim">
             <div className="cta-places-fill" ref={fillRef} />
           </div>
-
-          {!success && (
-            <>
-              <div className="cta-form-title">{formTitle}</div>
-              <p className="cta-form-sub">{formSub}</p>
-            </>
-          )}
 
           <div
             className={`form-step${step === 1 && !success ? " active" : ""}`}
           >
-            <div className="field">
+            <div className="field cta-anim">
               <label htmlFor="whatsapp">Votre WhatsApp</label>
               <input
                 type="tel"
@@ -175,10 +212,12 @@ export default function CTAFinal() {
               />
             </div>
             {error && step === 1 && <p className="form-error">{error}</p>}
-            <button className="submit-btn" onClick={goToStep2}>
+            <button
+              className="submit-btn cta-anim"
+              onClick={goToStep2}
+            >
               Continuer →
             </button>
-            <p className="form-trust">🔒 Aucun spam. Un seul appel.</p>
           </div>
 
           <div
@@ -199,17 +238,18 @@ export default function CTAFinal() {
             </div>
             <div className="field">
               <label htmlFor="business-type">Type d&apos;activité</label>
-              <select
-                id="business-type"
-                value={businessType}
-                onChange={(e) => setBusinessType(e.target.value)}
-              >
-                {BUSINESS_TYPES.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
-                  </option>
-                ))}
-              </select>
+              <Select value={businessType} onValueChange={setBusinessType}>
+                <SelectTrigger id="business-type" className="cta-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {BUSINESS_TYPES.map((t) => (
+                    <SelectItem key={t.value} value={t.value}>
+                      {t.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             {error && step === 2 && <p className="form-error">{error}</p>}
             <button
