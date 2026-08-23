@@ -53,6 +53,7 @@ export default function Nav() {
           alt=""
           width="150"
           height="40"
+          fetchPriority="high"
         />
         <Image
           className="logo-dark"
@@ -60,6 +61,7 @@ export default function Nav() {
           alt=""
           width="150"
           height="40"
+          fetchPriority="high"
         />
       </a>
       <div className="nav-links">

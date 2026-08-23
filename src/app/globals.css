@@ -2540,6 +2540,9 @@ h2 {
 .foot-mega {
   position: sticky;
   top: calc(100vh - var(--mega-crop));
+  /* dvh suit la barre d'outils mobile. En 100vh (hauteur barre rétractée),
+     le mot est poussé sous la zone visible et laisse un vide au-dessus. */
+  top: calc(100dvh - var(--mega-crop));
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -2705,6 +2708,7 @@ h2 {
 }
 .exit-mascot {
   width: 80px;
+  height: auto;
   margin: 0 auto 16px;
   animation: float 4s ease-in-out infinite;
 }
@@ -2734,6 +2738,15 @@ h2 {
   font-size: 14.5px;
   line-height: 1.55;
   margin-bottom: 20px;
+}
+.exit-field {
+  text-align: left;
+}
+.exit-card p.exit-note {
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
 }
 
 /* =========================================

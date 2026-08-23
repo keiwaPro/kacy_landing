@@ -56,7 +56,7 @@ export default function ExitModal() {
           Laissez votre WhatsApp, on vous envoie la démo vidéo et 1 mois offert
           supplémentaire.
         </p>
-        <div className="field" style={{ textAlign: "left" }}>
+        <div className="field exit-field">
           <input
             type="tel"
             placeholder="+225 07 00 00 00 00"
@@ -67,16 +67,7 @@ export default function ExitModal() {
         <button className="submit-btn" onClick={submit}>
           Recevoir la démo + 1 mois bonus
         </button>
-        <p
-          style={{
-            marginTop: 12,
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            color: "var(--ink-muted)",
-          }}
-        >
-          Pas de spam. Un seul message.
-        </p>
+        <p className="exit-note">Pas de spam. Un seul message.</p>
       </div>
     </div>
   );

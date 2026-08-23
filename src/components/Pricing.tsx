@@ -58,7 +58,7 @@ const FALLBACK_PLANS: Plan[] = [
   {
     id: "pro",
     name: "Essentiel",
-    price_monthly: 20000,
+    price_monthly: 10000,
     max_restaurants: 1,
     max_messages_per_month: 1000,
     max_products: null,
@@ -67,7 +67,7 @@ const FALLBACK_PLANS: Plan[] = [
   {
     id: "business",
     name: "Standard",
-    price_monthly: 50000,
+    price_monthly: 25000,
     max_restaurants: 1,
     max_messages_per_month: 3500,
     max_products: null,
@@ -81,7 +81,7 @@ const FALLBACK_PLANS: Plan[] = [
   {
     id: "premium",
     name: "Premium",
-    price_monthly: 100000,
+    price_monthly: 50000,
     max_restaurants: 1,
     max_messages_per_month: 8000,
     max_products: null,
