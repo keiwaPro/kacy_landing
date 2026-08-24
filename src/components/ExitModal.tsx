@@ -51,10 +51,10 @@ export default function ExitModal() {
           className="exit-mascot"
         />
         <span className="tag">Bonus de bienvenue</span>
-        <h3>1 mois offert en plus, juste pour vous.</h3>
+        <h3>30% de réduction sur votre premier abonnement !</h3>
         <p>
-          Laissez votre WhatsApp, on vous envoie la démo vidéo et 1 mois offert
-          supplémentaire.
+          Laissez votre WhatsApp, on vous envoie la démo vidéo et 30% de
+          réduction sur votre premier abonnement.
         </p>
         <div className="field exit-field">
           <input
@@ -65,7 +65,7 @@ export default function ExitModal() {
           />
         </div>
         <button className="submit-btn" onClick={submit}>
-          Recevoir la démo + 1 mois bonus
+          Recevoir la démo + 30% de réduction
         </button>
         <p className="exit-note">Pas de spam. Un seul message.</p>
       </div>
