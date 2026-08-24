@@ -17,7 +17,6 @@ export default function Calculator() {
       <div className="wrap">
         <div className="calc-head">
           <div className="reveal">
-            <span className="eyebrow">ROI</span>
             <h2>Combien vous coûtent vos réponses manuelles ?</h2>
           </div>
           <p className="section-lede reveal reveal-d-1">
@@ -59,7 +58,7 @@ export default function Calculator() {
             <div className="calc-result-value">{fmtFCFA(monthly)}</div>
             <div className="calc-result-sub">en temps de réponse manuel</div>
             <div className="calc-savings-row">
-              <span className="calc-savings-label">Économie avec Kacy Pro</span>
+              <span className="calc-savings-label">Économie avec Kacy Standard</span>
               <span className="calc-savings-val">
                 {savings > 0 ? `${fmtFCFA(savings)} / mois` : "Break-even"}
               </span>

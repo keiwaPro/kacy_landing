@@ -1,29 +1,19 @@
 "use client";
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import PhoneChat from "./PhoneChat";
 import { WordRotate } from "./ui/word-rotate";
-import { Highlighter } from "./ui/highlighter";
+import { scrollToId } from "@/lib/lenis";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
 export default function Hero() {
   return (
     <section className="hero">
+      <div className="hero-wash" aria-hidden />
       <div className="hero-grid-bg" />
-      <div className="hero-mark-float m1">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
-      <div className="hero-mark-float m2">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
-      <div className="hero-mark-float m3">
-        <Image src="/logo_2.svg" alt="" width={200} height={200} />
-      </div>
 
       <div className="hero-wrap">
-        <div className="hero-tag reveal">
-          <span className="hero-tag-badge">BETA</span>
+        <div className="hero-tag reveal" onClick={() => scrollToId("#reserver")}>
+          <span className="hero-tag-badge">Beta</span>
           Accès anticipé · 100 places pour Abidjan
           <span className="arrow">→</span>
         </div>
@@ -36,17 +26,7 @@ export default function Hero() {
               words={WORDS}
               duration={2600}
               renderWord={(word) => (
-                <Highlighter
-                  action="underline"
-                  color="#5a8f2e"
-                  strokeWidth={3}
-                  animationDuration={700}
-                  iterations={2}
-                  padding={4}
-                  isView={false}
-                >
-                  {word}
-                </Highlighter>
+                <span className="hero-word">{word}</span>
               )}
             />
           </span>
@@ -67,9 +47,10 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="hero-meta reveal reveal-d-4">
+        {/*<div className="hero-meta reveal reveal-d-4">
           <span>
-            <span className="bullet" />3 mois offerts
+            <span className="bullet" />
+            Installation offerte
           </span>
           <span>
             <span className="bullet" />
@@ -83,75 +64,28 @@ export default function Hero() {
             <span className="bullet" />
             Déploiement 48h
           </span>
-        </div>
+        </div>*/}
 
-        <div className="hero-phone-row">
-          <div className="hero-phone-side reveal reveal-d-2">
-            <CounterNum target={24} />
-            <p>réponses traitées par Kacy pendant que vous lisez cette page.</p>
-          </div>
-
-          <div className="reveal reveal-d-3">
-            <PhoneChat />
-          </div>
-
-          <div className="hero-phone-side right reveal reveal-d-4">
-            <CounterNum target={98} suffix="%" />
-            <p>de questions clients résolues sans intervention humaine.</p>
-          </div>
+        <div className="hero-media reveal reveal-d-5">
+          <Image
+            className="hm-shot hm-shot-light"
+            src="/screens/web_iphone.png"
+            alt="Tableau de bord et application mobile Kacy"
+            width={6338}
+            height={3644}
+            priority
+          />
+          <Image
+            className="hm-shot hm-shot-dark"
+            src="/screens/web_iphone_dark.png"
+            alt="Tableau de bord et application mobile Kacy"
+            width={6466}
+            height={3756}
+            loading="eager"
+            fetchPriority="low"
+          />
         </div>
       </div>
     </section>
-  );
-}
-
-function CounterNum({
-  target,
-  suffix = "",
-}: {
-  target: number;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const hasRun = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasRun.current) {
-          hasRun.current = true;
-          let start = 0;
-          const duration = 1400;
-          const step = (timestamp: number) => {
-            if (!start) start = timestamp;
-            const progress = Math.min((timestamp - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const val = Math.round(target * eased);
-            if (suffix === "%") {
-              el.innerHTML =
-                val +
-                '<small style="font-family:var(--font);font-size:.5em;">%</small>';
-            } else {
-              el.textContent = String(val);
-            }
-            if (progress < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [target, suffix]);
-
-  return (
-    <span className="num" ref={ref}>
-      0
-    </span>
   );
 }
