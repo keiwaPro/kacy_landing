@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { WordRotate } from "./ui/word-rotate";
+import { scrollToId } from "@/lib/lenis";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
@@ -11,7 +12,7 @@ export default function Hero() {
       <div className="hero-grid-bg" />
 
       <div className="hero-wrap">
-        <div className="hero-tag reveal">
+        <div className="hero-tag reveal" onClick={() => scrollToId("#reserver")}>
           <span className="hero-tag-badge">Beta</span>
           Accès anticipé · 100 places pour Abidjan
           <span className="arrow">→</span>

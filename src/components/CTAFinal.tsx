@@ -69,8 +69,13 @@ export default function CTAFinal() {
       })
       .then((data: { count: number | null }) => {
         console.log("[landing][cta] places:", data);
-        if (typeof data.count === "number") setTaken(data.count);
-        else console.error(`[landing][cta] count non numérique → affichage « — / ${TOTAL_PLACES} »`);
+        if (typeof data.count === "number") {
+          setTaken(data.count);
+        } else if (data.count === null) {
+          console.log(`[landing][cta] count indisponible (backend hors ligne) → affichage « — / ${TOTAL_PLACES} »`);
+        } else {
+          console.error(`[landing][cta] count non numérique → affichage « — / ${TOTAL_PLACES} »`, data);
+        }
       })
       .catch((err) => console.error("[landing][cta] échec GET /api/waitlist:", err));
   }, []);

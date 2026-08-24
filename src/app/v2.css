@@ -189,6 +189,19 @@ html.dark .logo-dark {
 .site-nav .logo {
   justify-self: start;
 }
+/* Chrome calcule la hauteur de ce SVG depuis son propre ratio interne
+   (1216x500) au lieu de l'attribut height de l'<img>, dès que le ratio
+   demandé ici (150x40) diverge du sien. Fixer les deux dimensions en CSS
+   court-circuite ce recalcul. Rejoué à l'identique pour le panneau mobile,
+   qui réutilise les mêmes classes à une autre taille. */
+.site-nav .logo img {
+  width: 150px;
+  height: 40px;
+}
+.nav-sheet-head .logo img {
+  width: 130px;
+  height: 35px;
+}
 .nav-links {
   justify-self: center;
   gap: 2px;
@@ -340,6 +353,14 @@ html.dark .theme-toggle .icon-moon {
   from {
     transform: translateY(calc(100% + 14px));
   }
+}
+
+/* Le bouton WhatsApp s'efface dès que le pied de page entre à l'écran, et
+   revient en remontant. */
+.wa-float.out {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
 }
 
 /* =========================================
