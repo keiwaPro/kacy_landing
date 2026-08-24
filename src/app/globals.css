@@ -398,6 +398,7 @@ a {
   color: var(--ink-soft);
   margin-bottom: 28px;
   transition: all 0.2s;
+  cursor: pointer;
 }
 .hero-tag:hover {
   border-color: var(--green);
