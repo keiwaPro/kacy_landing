@@ -260,7 +260,7 @@ export default function PrivacyPage() {
         RCCM : CI-ABJ-2018-B-27764<br />
         Siège social : Abidjan, République de Côte d&apos;Ivoire<br />
         Courriel dédié :{" "}
-        <a href="mailto:privacy@dothangroup.com">privacy@dothangroup.com</a>
+        <a href="mailto:contact@kacyai.co">contact@kacyai.co</a>
       </p>
     </LegalLayout>
   );

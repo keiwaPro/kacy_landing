@@ -1,0 +1,2442 @@
+/* =============================================================
+   Kacy — Landing v2 (structure SkyAgent, identité Kacy)
+   Couche additive chargée après globals.css
+   ============================================================= */
+
+/* Tokens shadcn — repris tels quels du dashboard pour que les bulles de
+   conversation soient identiques à celles de l'app. */
+:root {
+  --background: oklch(0.985 0.006 75);
+  --foreground: oklch(0.17 0.009 75);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.72 0.165 130);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.925 0.011 75);
+  --secondary-foreground: oklch(0.17 0.009 75);
+  --muted: oklch(0.965 0.009 75);
+  --muted-foreground: oklch(0.58 0.013 75);
+  --destructive: oklch(0.62 0.18 25);
+  --border: oklch(0.925 0.011 75);
+  --input: oklch(0.86 0.013 75);
+  --ring: oklch(0.72 0.165 130);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.17 0.009 75);
+  --accent: oklch(0.955 0.05 130);
+  --accent-foreground: oklch(0.34 0.08 130);
+}
+
+html.dark {
+  --background: #1a1714;
+  --foreground: #f4f1eb;
+  --card: #232019;
+  --primary: #82bc46;
+  --primary-foreground: #ffffff;
+  --secondary: #2b2722;
+  --secondary-foreground: #f4f1eb;
+  --muted: #2b2722;
+  --muted-foreground: #8a847a;
+  --destructive: oklch(0.62 0.18 25);
+  --border: #322e28;
+  --input: #322e28;
+  --ring: #82bc46;
+  --popover: #232019;
+  --popover-foreground: #f4f1eb;
+  --accent: #26331a;
+  --accent-foreground: #c4e0a0;
+
+  --ink: #f3f0ea;
+  --ink-soft: #c9c3ba;
+  --ink-muted: #8f8981;
+  --line: #2a2620;
+  --line-soft: #211d18;
+  --canvas: #141210;
+  --white: #1d1a17;
+  --green-deep: #97cd5c;
+  --green-soft: #26331a;
+  --green-tint: #1c2513;
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  --shadow-pop:
+    0 24px 60px -16px rgba(0, 0, 0, 0.6), 0 8px 20px -8px rgba(0, 0, 0, 0.4);
+}
+html.dark ::selection {
+  color: #141210;
+}
+
+html.dark .banner {
+  background: var(--white);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+html.dark .banner strong {
+  color: var(--green-deep);
+}
+html.dark .site-nav {
+  background: rgba(20, 18, 16, 0.85);
+}
+html.dark .site-nav.pill {
+  background: rgba(29, 26, 23, 0.95);
+}
+html.dark .foot {
+  background: linear-gradient(to bottom, var(--canvas) 0, #191613 100%);
+}
+/* Pas de halo vert derrière le pied de page. */
+.foot-aurora {
+  display: none;
+}
+
+/* Soulignement du mot qui tourne. En CSS plutôt qu'en annotation mesurée :
+   le mot est animé et remonté à chaque rotation, donc tout trait positionné
+   en absolu se retrouvait décalé au-dessus du texte. */
+.hero-word {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.06em;
+}
+.hero-word::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.055em;
+  border-radius: 100px;
+  background: var(--green-deep);
+}
+
+/* Titres : Bricolage assume l'identité */
+.hero h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+/* =========================================
+   PAGE FRAME — colonne bordée façon modèle
+   ========================================= */
+:root {
+  /* Écart entre le cadre et le filet extérieur. */
+  --frame-gutter: 22px;
+}
+body {
+  background: var(--canvas);
+}
+.page-frame {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  background: var(--canvas);
+  border-inline: 1px solid var(--line);
+}
+/* Les séparateurs horizontaux débordent du cadre pour rejoindre les
+   filets extérieurs, au lieu de s'arrêter à la colonne de contenu. */
+.page-frame > * + * {
+  position: relative;
+}
+.page-frame > * + *::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--frame-gutter));
+  right: calc(-1 * var(--frame-gutter));
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 2;
+}
+/* Seconde bordure : un filet à l'extérieur du cadre, qui ouvre une
+   gouttière entre le fond de page et la colonne de contenu. */
+.page-frame::before,
+.page-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 3;
+}
+.page-frame::before {
+  left: calc(-1 * var(--frame-gutter));
+}
+.page-frame::after {
+  right: calc(-1 * var(--frame-gutter));
+}
+
+/* Le SVG du logo porte son propre <style> : la couleur du texte ne peut
+   pas être héritée, d'où deux fichiers échangés selon le thème. */
+.logo-dark {
+  display: none;
+}
+html.dark .logo-light {
+  display: none;
+}
+html.dark .logo-dark {
+  display: block;
+}
+
+/* =========================================
+   NAV v2 — logo · liens centrés · actions
+   ========================================= */
+.site-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+.site-nav .logo {
+  justify-self: start;
+}
+/* Chrome calcule la hauteur de ce SVG depuis son propre ratio interne
+   (1216x500) au lieu de l'attribut height de l'<img>, dès que le ratio
+   demandé ici (150x40) diverge du sien. Fixer les deux dimensions en CSS
+   court-circuite ce recalcul. Rejoué à l'identique pour le panneau mobile,
+   qui réutilise les mêmes classes à une autre taille. */
+.site-nav .logo img {
+  width: 150px;
+  height: 40px;
+}
+.nav-sheet-head .logo img {
+  width: 130px;
+  height: 35px;
+}
+.nav-links {
+  justify-self: center;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--white);
+}
+.nav-links > a:not(.nav-cta) {
+  padding: 7px 14px;
+  border-radius: 100px;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.nav-links > a:not(.nav-cta):hover {
+  background: var(--line-soft);
+  color: var(--ink);
+}
+.nav-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink-soft);
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.3s var(--ease-spring);
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
+  transform: rotate(15deg);
+}
+.theme-toggle .icon-moon,
+html.dark .theme-toggle .icon-sun {
+  display: none;
+}
+html.dark .theme-toggle .icon-moon {
+  display: block;
+}
+
+/* Menu mobile : le burger remplace le CTA, le panneau s'ouvre par le bas.
+   Rendu en portail sur <body> — le backdrop-filter de la barre en fait un
+   bloc conteneur, un position: fixed posé dedans ne couvrirait pas l'écran. */
+.nav-burger {
+  display: none;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink-soft);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.nav-burger:hover {
+  color: var(--ink);
+  border-color: var(--ink-muted);
+}
+.nav-sheet-scrim {
+  position: fixed;
+  inset: 0;
+  /* Au-dessus du bouton WhatsApp flottant (999), qui sinon se pose sur le
+     CTA du panneau. */
+  z-index: 1000;
+  background: rgba(20, 18, 16, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s var(--ease),
+    visibility 0.3s;
+}
+.nav-sheet-scrim.active {
+  opacity: 1;
+  visibility: visible;
+}
+.nav-sheet {
+  position: fixed;
+  z-index: 1001;
+  left: 10px;
+  right: 10px;
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  padding: 18px 20px 20px;
+  border: 1px solid var(--line);
+  /* Bas plus arrondi que le haut : à 10px du bord, le coin se lit comme
+     concentrique à la courbure de l'écran. Aucune API n'expose ce rayon,
+     c'est une valeur calée sur les téléphones actuels (~45px d'écran). */
+  border-radius: 22px 22px 32px 32px;
+  background: var(--white);
+  box-shadow: var(--shadow-pop);
+  /* +14px : sortir aussi la gouttière et l'ombre hors de l'écran. */
+  transform: translateY(calc(100% + 14px));
+  visibility: hidden;
+  transition:
+    transform 0.34s var(--ease),
+    visibility 0.34s;
+}
+.nav-sheet.active {
+  transform: translateY(0);
+  visibility: visible;
+}
+.nav-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+}
+.nav-sheet-close {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink-soft);
+}
+.nav-sheet-links {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+.nav-sheet-links a {
+  padding: 16px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.nav-sheet-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+@keyframes sheetup {
+  from {
+    transform: translateY(calc(100% + 14px));
+  }
+}
+
+/* Le bouton WhatsApp s'efface dès que le pied de page entre à l'écran, et
+   revient en remontant. */
+.wa-float.out {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+/* =========================================
+   HERO — halo + carte média
+   ========================================= */
+.hero-wash {
+  position: absolute;
+  inset: -40% -10% auto;
+  height: 90%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 55% 60% at 50% 12%,
+      rgba(130, 188, 70, 0.22),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 72% 6%,
+      rgba(253, 195, 33, 0.1),
+      transparent 60%
+    );
+  filter: blur(30px);
+}
+html.dark .hero-wash {
+  background:
+    radial-gradient(
+      ellipse 55% 60% at 50% 12%,
+      rgba(130, 188, 70, 0.14),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 72% 6%,
+      rgba(253, 195, 33, 0.05),
+      transparent 60%
+    );
+}
+
+.hero-media {
+  position: relative;
+  max-width: 1080px;
+  margin: 72px auto 0;
+}
+/* Capture du dashboard : un fichier par thème, échangés comme le logo. */
+.hm-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hm-shot-dark {
+  display: none;
+}
+html.dark .hm-shot-light {
+  display: none;
+}
+html.dark .hm-shot-dark {
+  display: block;
+}
+
+/* =========================================
+   CHANNELS — « partout où sont vos clients »
+   ========================================= */
+.channels {
+  padding: 0;
+  background: var(--white);
+}
+.channels-band {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 44px 16px;
+  background: var(--white);
+}
+.channels-band::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: calc(-1 * var(--frame-gutter));
+  right: calc(-1 * var(--frame-gutter));
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 2;
+}
+.channels-band img {
+  width: 148px;
+  height: auto;
+}
+.channels-band span {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: -0.01em;
+}
+
+/* =========================================
+   EN-TÊTES DE SECTION centrés
+   ========================================= */
+.sec-head-center {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.sec-head-center h2 {
+  margin: 0 auto 16px;
+}
+.sec-head-center .section-lede {
+  margin: 0 auto;
+}
+.sec-head-center .eyebrow {
+  justify-content: center;
+}
+
+/* =========================================
+   BENTO — rails hachurés + 4 cellules
+   ========================================= */
+.features {
+  padding: 110px 0 0;
+}
+.features .wrap {
+  padding: 0 5%;
+}
+.bento-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  background: var(--white);
+}
+.bento-shell::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: calc(-1 * var(--frame-gutter));
+  right: calc(-1 * var(--frame-gutter));
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+  z-index: 2;
+}
+.bento-rail {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 7px,
+    var(--line) 7px 8px
+  );
+  opacity: 0.5;
+}
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.bento-cell {
+  background: var(--white);
+  padding: 40px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  overflow: hidden;
+}
+.bento-cell.visual-top {
+  flex-direction: column-reverse;
+}
+.bento-cell h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.bento-cell .bento-text p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 440px;
+}
+/* Le visuel se fond dans la carte : masque en dégradé, jamais de voile
+   opaque — sinon une barrière apparaît entre l'illustration et le texte. */
+.bento-visual {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  margin: 0 -40px;
+  mask-image: linear-gradient(to bottom, #000 64%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 64%, transparent 100%);
+}
+.bento-cell.visual-top .bento-visual {
+  margin-top: -12px;
+}
+.bento-cell:not(.visual-top) .bento-visual {
+  margin-bottom: -12px;
+}
+
+/* — cellule 1 : conversations (bulles shadcn reprises du dashboard) — */
+.convo {
+  position: absolute;
+  inset: 0;
+  padding: 4px 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.convo-tabs {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.convo-tab {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  transition:
+    background 0.25s var(--ease),
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.convo-tab:hover {
+  color: var(--ink);
+}
+.convo-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+/* Le fil défile comme une vraie conversation. Le padding bas garde le
+   dernier message au-dessus de la zone où le visuel se fond dans le texte. */
+.convo-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 104px;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 34px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34px);
+}
+.convo-thread::-webkit-scrollbar {
+  display: none;
+}
+/* Le fil est calé en bas : le premier message apparaît au milieu de la
+   carte et les suivants le poussent vers le haut, comme un vrai chat.
+   (margin-top auto plutôt que justify-content : ce dernier rend le haut
+   d'un conteneur scrollable inatteignable.) */
+.convo-thread > :first-child {
+  margin-top: auto;
+}
+/* Bulles plus aérées que le réglage compact du dashboard. */
+.convo [data-slot="bubble-content"] {
+  padding: 11px 15px;
+  border-radius: 16px;
+  line-height: 1.5;
+}
+.convo .convo-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 16px;
+}
+.convo-typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  animation: lg-dot 1.4s infinite;
+}
+.convo-typing i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.convo-typing i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.convo-line {
+  opacity: 0;
+  animation: convo-in 0.5s var(--ease) forwards;
+}
+@keyframes convo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .convo-line {
+    opacity: 1;
+    animation: none;
+  }
+}
+.convo-avatar {
+  width: 26px;
+  min-width: 26px;
+  height: 26px;
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
+}
+.convo-avatar-client {
+  background: var(--line-soft);
+  border-color: var(--line);
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+}
+.convo-chip {
+  align-self: flex-start;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border: 1px solid var(--green-soft);
+  background: var(--green-tint);
+  color: var(--green-deep);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* — cellule 2 : radar multicanal — anneaux concentriques, icônes en
+     rotation lente, l'ensemble se dissout dans la carte via le masque
+     partagé de .bento-visual — */
+.radar {
+  position: absolute;
+  inset: 0;
+}
+/* Le badge central reste net : seuls les anneaux et les orbites passent
+   sous le masque, ce qui laisse le logo se poser tout près du texte. */
+.bento-visual-radar {
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.radar-masked {
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+/* Point d'ancrage commun : centre des anneaux, des orbites et du badge.
+   Bas de la carte → les cercles se lisent en demi-arcs. */
+.radar-ring,
+.radar-core,
+.radar-center {
+  position: absolute;
+  left: 50%;
+  top: 84%;
+  transform: translate(-50%, -50%);
+}
+.radar-ring {
+  border-radius: 50%;
+}
+/* Les diamètres correspondent aux rayons d'orbite (190 et 118) : sans ça
+   les icônes tournent à côté des arcs au lieu de les suivre. */
+.radar-ring.r1 {
+  width: 380px;
+  height: 380px;
+  background: color-mix(in srgb, var(--green) 9%, transparent);
+}
+.radar-ring.r2 {
+  width: 236px;
+  height: 236px;
+  background: color-mix(in srgb, var(--green) 9%, transparent);
+}
+.radar-ring.r3 {
+  width: 140px;
+  height: 140px;
+  background: color-mix(in srgb, var(--green) 9%, transparent);
+}
+.radar-core {
+  width: 0;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Le logo Kacy est déjà vert : il lui faut un fond clair, pas un fond vert. */
+.radar-center {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 26px -10px rgba(26, 24, 24, 0.28);
+  z-index: 2;
+}
+.radar-icon {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.radar-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(26, 24, 24, 0.18));
+}
+.radar-icon-app {
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgba(26, 24, 24, 0.18);
+}
+/* Logos livrés en JPEG opaque : recadrés en pastille ronde, sinon ils
+   apparaissent comme une vignette carrée posée sur la carte. */
+.radar-icon-photo {
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(26, 24, 24, 0.18);
+}
+.radar-icon-photo img {
+  object-fit: cover;
+  filter: none;
+}
+
+/* — cellule 3 : commandes par jour — */
+.ochart {
+  position: absolute;
+  inset: 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+}
+.ochart-value {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.ochart-value strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.ochart-value span {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+.ochart-plot {
+  position: relative;
+  height: 180px;
+}
+.ochart-plot svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ochart-line {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.3s var(--ease);
+}
+.ochart-area {
+  opacity: 0;
+  transition: opacity 0.7s var(--ease) 0.5s;
+}
+.ochart.live .ochart-line {
+  stroke-dashoffset: 0;
+}
+.ochart.live .ochart-area {
+  opacity: 1;
+}
+/* Un seul repère, sur le pic : pas de valeur sur chaque point. */
+.ochart-marker {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px var(--white);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease) 1.1s;
+}
+.ochart.live .ochart-marker {
+  opacity: 1;
+}
+.ochart-days {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.ochart-days em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-muted);
+}
+.ochart-days em.on {
+  color: var(--ink);
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ochart-line,
+  .ochart-area,
+  .ochart-marker {
+    transition: none;
+  }
+}
+
+/* — cellule 4 : mini-app Telegram (catalogue → commande) — */
+.mapp {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 6px;
+}
+.mapp-frame {
+  width: 292px;
+  border: 1px solid var(--line);
+  border-radius: 22px 22px 0 0;
+  border-bottom: none;
+  background: var(--canvas);
+  box-shadow: var(--shadow-pop);
+  padding: 18px 16px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mapp-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mapp-logo {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+}
+.mapp-id {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.mapp-id strong {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.mapp-id em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.mapp-chips {
+  display: flex;
+  gap: 6px;
+}
+.mapp-chip {
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.mapp-chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+.mapp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mapp-cell {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+/* Photos du menu : si le fichier manque, le dégradé de la seconde couche
+   prend le relais — aucune image cassée à l'écran. */
+.mapp-media {
+  display: block;
+  height: 56px;
+  border-radius: 9px;
+  margin-bottom: 3px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.mapp-media.m1 {
+  background-image: url("/menu/poulet-braise.jpg"),
+    linear-gradient(135deg, #e8b448, #c8722c);
+}
+.mapp-media.m2 {
+  background-image: url("/menu/garba.jpg"),
+    linear-gradient(135deg, #9fc96a, #5a8f2e);
+}
+.mapp-cell strong {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.mapp-cell em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.mapp-add {
+  margin-top: 4px;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 8px;
+  background: var(--green-soft);
+  color: var(--green-deep);
+  font-size: 11px;
+  font-weight: 700;
+}
+.mapp-cta {
+  margin-top: 2px;
+  text-align: center;
+  padding: 11px 0;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  box-shadow: 0 10px 22px -10px rgba(90, 143, 46, 0.6);
+}
+
+/* =========================================
+   QUOTE — bande témoignage
+   ========================================= */
+.quote {
+  background: var(--line-soft);
+  padding: 96px 5%;
+}
+.quote-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+.quote-mark {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 0.5;
+  color: var(--green);
+  display: block;
+  margin-bottom: 26px;
+}
+.quote-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+  margin-bottom: 34px;
+}
+.quote-text em {
+  font-style: normal;
+  color: var(--green-deep);
+}
+.quote-who {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+.quote-avatar {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+.quote-avatar img {
+  width: 24px;
+  height: 24px;
+}
+.quote-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.quote-role {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+/* =========================================
+   STEPS — accordéon + écran
+   ========================================= */
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 72px;
+  align-items: center;
+}
+.step-item {
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.step-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+/* La barre de gauche sert de minuteur : elle descend pendant la durée de
+   l'étape, puis la suivante prend le relais. */
+.step-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  height: calc(100% + 1px);
+  width: 2px;
+  background: var(--green);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.step-item.active::before {
+  animation: step-fill var(--step-ms, 7000ms) linear forwards;
+}
+@keyframes step-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-item.active::before {
+    animation: none;
+    transform: scaleY(1);
+  }
+}
+.step-btn {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 22px 8px 22px 24px;
+  text-align: left;
+  transition: padding 0.3s var(--ease);
+}
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  transition: color 0.25s;
+}
+.step-item.active .step-num {
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.step-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  color: var(--ink-muted);
+  transition: color 0.25s;
+}
+.step-item.active .step-title,
+.step-btn:hover .step-title {
+  color: var(--ink);
+}
+.step-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease);
+}
+.step-item.active .step-body {
+  max-height: 140px;
+}
+.step-body p {
+  padding: 0 8px 24px 68px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+/* Panneau de droite : maquettes calquées sur les vraies pages du dashboard. */
+.steps-panel {
+  position: relative;
+}
+/* Les quatre maquettes sont superposées : on croise les opacités au lieu
+   de remplacer le contenu d'un coup. */
+.sp-frame {
+  position: relative;
+  min-height: 400px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: var(--shadow-pop);
+  font-size: 12.5px;
+  overflow: hidden;
+}
+.sp-slide {
+  position: absolute;
+  inset: 0;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+.sp-slide.active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-slide {
+    transition: none;
+  }
+}
+.sp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sp-head strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.sp-head em {
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+.sp-btn {
+  padding: 7px 13px;
+  border-radius: 9px;
+  background: var(--ink);
+  color: var(--canvas);
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sp-btn.ghost {
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.sp-table {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sp-tr {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 0.9fr 0.9fr;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+}
+.sp-tr.orders {
+  grid-template-columns: 0.9fr 0.8fr 0.9fr 1fr 0.9fr;
+}
+.sp-tr:first-child {
+  border-top: none;
+}
+.sp-th {
+  background: var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+.sp-tr .right {
+  text-align: right;
+}
+.sp-mono {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+.sp-mono.muted {
+  color: var(--ink-muted);
+}
+.sp-cell-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 500;
+  min-width: 0;
+}
+.sp-thumb {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  background: var(--line-soft);
+  border: 1px solid var(--line);
+  object-fit: contain;
+  padding: 2px;
+}
+.sp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-style: normal;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: var(--line-soft);
+  color: var(--ink-soft);
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sp-badge i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.sp-badge.ok {
+  background: var(--green-soft);
+  color: var(--green-deep);
+}
+.sp-badge.warn {
+  background: color-mix(in srgb, #d9a021 18%, transparent);
+  color: #a6761a;
+}
+.sp-badge.info {
+  background: color-mix(in srgb, #3b6fd4 16%, transparent);
+  color: #3b6fd4;
+}
+html.dark .sp-badge.warn {
+  color: #e0ad3c;
+}
+html.dark .sp-badge.info {
+  color: #7ea6f0;
+}
+.sp-switch {
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+  border-radius: 100px;
+  background: var(--line);
+  position: relative;
+}
+.sp-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--white);
+  transition: transform 0.2s var(--ease);
+}
+.sp-switch.on {
+  background: var(--green);
+}
+.sp-switch.on::after {
+  transform: translateX(12px);
+}
+
+/* Notification de nouvelle commande, en surimpression de la maquette. */
+.sp-toast {
+  position: absolute;
+  top: 62px;
+  right: 22px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-pop);
+  animation: sp-toast-in 0.4s var(--ease);
+}
+.sp-toast-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 4px var(--green-soft);
+}
+.sp-toast strong {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.sp-toast em {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+@keyframes sp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+}
+.sp-row-in {
+  animation: sp-row-in 0.45s var(--ease);
+}
+@keyframes sp-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Étape « Kacy note tout » : ce que dit le client → la fiche créée. */
+.sp-capture {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sp-cap-row {
+  display: grid;
+  grid-template-columns: 1fr 22px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.sp-cap-said {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  border-bottom-left-radius: 5px;
+  background: var(--line-soft);
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.sp-cap-avatar {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--green-tint);
+  border: 1px solid var(--green-soft);
+}
+.sp-cap-arrow {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
+  transform: rotate(-90deg);
+}
+.sp-cap-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.sp-cap-card strong {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.sp-cap-card .sp-badge {
+  align-self: flex-start;
+}
+.sp-cap-ok {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--green-deep);
+  font-weight: 600;
+}
+
+.sp-agent-hero {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.sp-agent-hero strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+.sp-agent-hero em {
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+.sp-agent-hero .sp-badge {
+  margin-left: auto;
+}
+.sp-avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.sp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.sp-field {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+.sp-field span {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+.sp-field strong {
+  font-weight: 500;
+}
+.sp-instr {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.sp-instr span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+.sp-instr p {
+  margin-top: 5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.sp-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.sp-bar-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sp-bar-row span {
+  color: var(--ink-soft);
+}
+.sp-bar-row strong {
+  font-weight: 600;
+}
+.sp-bar-row .green {
+  color: var(--green-deep);
+}
+.sp-track {
+  height: 8px;
+  border-radius: 100px;
+  background: var(--line-soft);
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.sp-track i {
+  display: block;
+  height: 100%;
+  border-radius: 100px;
+  background: var(--green);
+}
+.sp-credits {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.sp-credits em {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+.sp-pack {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.sp-pack strong {
+  font-weight: 600;
+}
+
+/* =========================================
+   CONFIANCE — paiements & marché
+   ========================================= */
+#confiance {
+  padding: 110px 0 0;
+}
+#confiance .wrap {
+  padding: 0 5%;
+}
+.secu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.secu-grid {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(circle at 50% 45%, black 10%, transparent 62%);
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 45%,
+    black 10%,
+    transparent 62%
+  );
+}
+.secu-shield {
+  position: relative;
+  width: 268px;
+  height: auto;
+}
+/* Teinte verte plate : rempli de --white, le bouclier avait exactement la
+   couleur de la carte et disparaissait. */
+:root {
+  --shield-inset: #5a8f2e;
+}
+html.dark {
+  --shield-inset: #000000;
+}
+.secu-shield-body {
+  fill: var(--green-tint);
+  stroke: var(--green-soft);
+  stroke-width: 1.2;
+}
+/* Cadenas à la couleur du fond : c'est l'ombre interne qui le dessine. */
+.secu-lock-body {
+  fill: var(--white);
+}
+.secu-lock-shackle {
+  stroke: var(--white);
+  stroke-width: 1.44;
+}
+/* Moyens de paiement en satellites du bouclier. Placés au-dessus de 64 % de
+   hauteur : plus bas, le masque de la carte les efface. */
+.secu-pay {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.secu-pay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.secu-pay-wave {
+  top: 13%;
+  left: 12%;
+}
+.secu-pay-orange {
+  top: 60%;
+  left: 19%;
+}
+.secu-pay-mtn {
+  top: 55%;
+  right: 13%;
+}
+/* Passage de relais Kacy → humain, sur la structure du modèle Magic UI :
+   une rangée, les canaux à gauche, Kacy au centre, vous à droite. */
+.hbeam {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6%;
+}
+.hbeam-grid {
+  position: absolute;
+  inset: 0;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 5%, transparent 62%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 50% 50%,
+    black 5%,
+    transparent 62%
+  );
+}
+.hbeam-row {
+  display: flex;
+  width: 100%;
+  max-width: 460px;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 24px;
+}
+.hbeam-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  z-index: 1;
+}
+.hbeam-chan {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+}
+.hbeam-chan img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(26, 24, 24, 0.18));
+}
+/* Le libellé sort du flux : sinon il décale le cercle vers le haut et
+   Kacy ne s'aligne plus sur le centre de la colonne des canaux. */
+.hbeam-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hbeam-kacy,
+.hbeam-human {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.hbeam-kacy img,
+.hbeam-human img {
+  width: 100%;
+  height: 100%;
+}
+.hbeam-node span {
+  position: absolute;
+  top: calc(100% + 10px);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+/* Les logos portent déjà leur propre pastille : pas de cercle autour. */
+/* =========================================
+   BOUTONS — calés sur le CTA du header
+   ========================================= */
+.btn-primary,
+.btn-ghost,
+.price-cta,
+.submit-btn {
+  border-radius: 100px;
+  font-size: 13.5px;
+}
+.btn-primary {
+  padding: 10px 20px;
+}
+.btn-ghost {
+  padding: 10px 16px;
+}
+.price-cta,
+.submit-btn {
+  padding: 11px 18px;
+}
+/* Les champs suivent la même pilule que les boutons. */
+.field input,
+.field select {
+  border-radius: 100px;
+  padding: 11px 18px;
+  font-size: 13.5px;
+}
+.btn-primary::before {
+  border-radius: inherit;
+}
+
+/* =========================================
+   PRICING — 5 plans réels
+   ========================================= */
+.pricing-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* Corporate : bande à part, sans prix à comparer colonne à colonne. */
+.price-corp {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.2fr auto;
+  gap: 36px;
+  align-items: center;
+  padding: 32px 34px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+}
+.price-corp h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.price-corp p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.price-corp-features {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 18px;
+}
+.price-corp-features li {
+  font-size: 13.5px;
+  padding: 4px 0;
+  display: flex;
+  gap: 9px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.price-corp-features li::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border-radius: 50%;
+  background-color: var(--green-soft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2 2 4-4' stroke='%235A8F2E' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.price-corp-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 190px;
+}
+.price-corp-amount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-align: center;
+}
+@media (max-width: 960px) {
+  .price-corp {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 26px 22px;
+  }
+}
+.pricing-grid .price-card {
+  padding: 30px 20px;
+}
+.pricing-grid .price-num {
+  font-size: 32px;
+}
+.pricing-grid .price-plan {
+  margin-bottom: 14px;
+}
+.pricing-grid .price-features li {
+  font-size: 13px;
+}
+.pricing-grid .price-badge {
+  left: 20px;
+}
+/* La carte mise en avant s'inverse (fond var(--ink), texte var(--white)).
+   En sombre elle devient claire : les textes codés en blanc dur doivent
+   suivre, sinon la carte la plus importante devient illisible. */
+html.dark .price-card.featured .price-plan,
+html.dark .price-card.featured .price-num .unit {
+  color: color-mix(in srgb, var(--white) 55%, transparent);
+}
+html.dark .price-card.featured .price-strike {
+  color: color-mix(in srgb, var(--white) 40%, transparent);
+}
+html.dark .price-card.featured .price-desc {
+  color: color-mix(in srgb, var(--white) 72%, transparent);
+  border-color: color-mix(in srgb, var(--white) 14%, transparent);
+}
+html.dark .price-card.featured .price-features li {
+  color: color-mix(in srgb, var(--white) 88%, transparent);
+}
+
+@media (max-width: 1060px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================
+   TESTIMONIALS — colonnes en marquee vertical
+   ========================================= */
+.testimonials {
+  background: var(--white);
+}
+.twall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  height: 560px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+.tcol {
+  overflow: hidden;
+}
+.tcol-track {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: twall-up 36s linear infinite;
+}
+.tcol-2 .tcol-track {
+  animation: twall-down 44s linear infinite;
+}
+.tcol-3 .tcol-track {
+  animation-duration: 50s;
+}
+.twall:hover .tcol-track {
+  animation-play-state: paused;
+}
+@keyframes twall-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-50% - 9px));
+  }
+}
+@keyframes twall-down {
+  from {
+    transform: translateY(calc(-50% - 9px));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcol-track {
+    animation: none !important;
+  }
+}
+.tcard {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  flex-shrink: 0;
+}
+.tcard blockquote {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+.tcard mark {
+  background: var(--green-soft);
+  color: var(--green-deep);
+  font-weight: 600;
+  padding: 1px 4px;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.tcard figcaption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tcard-avatar {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), #5a8f2e);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+.tcard-name {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tcard-role {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+/* =========================================
+   FAQ — centrée façon modèle
+   ========================================= */
+.faq .wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.faq h2 {
+  margin: 0 auto 8px;
+}
+.faq-list {
+  width: 100%;
+  text-align: left;
+}
+
+/* =========================================
+   CTA FINAL — bannière géante arrondie
+   ========================================= */
+.cta-final {
+  /* Même fond que la FAQ juste au-dessus : en --canvas, la bande se
+     détachait en gris sous une section blanche. */
+  background: var(--white);
+  padding: 0;
+}
+.cta-final-bg {
+  display: none;
+}
+.cta-final-mark {
+  display: none;
+}
+.cta-wrap {
+  /* globals.css plafonne .cta-wrap à 1180px : sans ça, la bande n'atteint
+     pas les bords du cadre et laisse une marge de chaque côté. */
+  max-width: none;
+  background:
+    radial-gradient(
+      ellipse 80% 100% at 0% 100%,
+      rgba(26, 24, 24, 0.32),
+      transparent 60%
+    ),
+    linear-gradient(130deg, #5a8f2e 0%, #6ea83a 45%, #82bc46 100%);
+  border-radius: 32px;
+  padding: 96px 64px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-pop);
+}
+.cta-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse at 70% 20%, black, transparent 65%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 70% 20%,
+    black,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+.cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 36px;
+}
+/* Marque géante au trait : elle grandit et pivote jusqu'à sa position de
+   base quand la section entre à l'écran. */
+.cta-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(760px, 108%);
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-52deg) scale(0.62);
+  transition:
+    transform 1.1s var(--ease),
+    opacity 0.8s var(--ease);
+}
+.cta-final.is-in .cta-watermark {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+}
+/* Le contour reste en place ; une comète en fait le tour en boucle. Les
+   segments partent tous du même point : l'offset croît, donc ce point est
+   la tête — d'où le blanc devant et l'estompe derrière. */
+.cta-mark-trail {
+  opacity: 0;
+}
+.cta-final.is-in .cta-mark-trail {
+  opacity: 1;
+  animation: cta-trail 7s linear infinite;
+  transition: opacity 0.8s var(--ease) 0.6s;
+}
+@keyframes cta-trail {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* Contenu qui se pose derrière la marque, dans l'ordre de lecture. */
+.cta-final .cta-anim {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+.cta-final.is-in .cta-anim {
+  opacity: 1;
+  transform: none;
+}
+.cta-final .cta-left .cta-anim:nth-child(1) {
+  transition-delay: 0.16s;
+}
+.cta-final .cta-left .cta-anim:nth-child(2) {
+  transition-delay: 0.28s;
+}
+.cta-final .cta-form > .cta-anim:nth-child(1) {
+  transition-delay: 0.42s;
+}
+.cta-final .cta-form > .cta-anim:nth-child(2) {
+  transition-delay: 0.5s;
+}
+.cta-final .field.cta-anim {
+  transition-delay: 0.6s;
+}
+.cta-final .submit-btn.cta-anim {
+  transition-delay: 0.7s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-watermark,
+  .cta-final .cta-anim {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cta-watermark {
+    transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+  }
+  .cta-mark-trail {
+    display: none;
+  }
+}
+.cta-left {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+.cta-left h2 {
+  margin-bottom: 0;
+}
+.cta-left .eyebrow,
+.cta-left .eyebrow::before {
+  color: rgba(255, 255, 255, 0.85);
+  background: none;
+}
+.cta-left .eyebrow::before {
+  background: rgba(255, 255, 255, 0.85);
+}
+.cta-left h2 {
+  color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-left p {
+  color: rgba(255, 255, 255, 0.82);
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-meta {
+  color: rgba(255, 255, 255, 0.75);
+  justify-content: center;
+}
+.cta-meta .bullet {
+  background: var(--yellow);
+}
+/* Formulaire posé à même la bande : ni carte, ni padding. */
+.cta-form {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: #fff;
+}
+.cta-form .cta-places-label,
+.cta-form .cta-places-count {
+  color: rgba(255, 255, 255, 0.9);
+}
+.cta-form .cta-places-bar {
+  background: rgba(255, 255, 255, 0.22);
+}
+.cta-form .cta-places-fill {
+  background: #fff;
+}
+.cta-form .field label {
+  color: rgba(255, 255, 255, 0.9);
+}
+.cta-form .field input,
+.cta-form .field select {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+.cta-form .field input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+.cta-form .field input:focus,
+.cta-form .field select:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+/* Le déclencheur shadcn reprend l'allure des champs sur la bande verte ;
+   la liste, elle, s'ouvre dans un portail et suit le thème de la page. */
+.cta-form .cta-select {
+  width: 100%;
+  height: auto;
+  padding: 11px 18px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+}
+.cta-form .cta-select:focus-visible {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+/* Le chevron shadcn porte text-muted-foreground (un gris fixe) : sur la
+   bande verte il faut le repasser en blanc. */
+.cta-form .cta-select svg {
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* La liste s'ouvre dans un portail : on la peint avec les tokens de la
+   landing pour qu'elle suive clair/sombre. */
+[data-slot="select-content"] {
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: var(--shadow-pop);
+}
+[data-slot="select-content"] [role="option"] {
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+[data-slot="select-content"] [role="option"][data-highlighted] {
+  background: var(--green-tint);
+  color: var(--green-deep);
+  outline: none;
+}
+[data-slot="select-content"] [role="option"][data-state="checked"] {
+  font-weight: 600;
+}
+/* Le bouton reste blanc sur la bande verte dans les deux thèmes : son
+   texte est donc figé en sombre, sinon --ink l'éclaircit et il disparaît. */
+.cta-form .submit-btn {
+  background: #fff;
+  color: #1a1818;
+}
+.cta-form .submit-btn:hover {
+  background: rgba(255, 255, 255, 0.88);
+  color: #1a1818;
+}
+.cta-form .form-trust {
+  color: rgba(255, 255, 255, 0.75);
+}
+.cta-form .form-error {
+  color: #ffdcd6;
+}
+.cta-form .form-success h3 {
+  color: #fff;
+}
+.cta-form .form-success p {
+  color: rgba(255, 255, 255, 0.85);
+}
+.cta-form .form-success .check {
+  background: #fff;
+  color: #5a8f2e;
+}
+
+/* =========================================
+   RESPONSIVE v2
+   ========================================= */
+@media (max-width: 960px) {
+  .site-nav {
+    grid-template-columns: auto 1fr;
+  }
+  .nav-links {
+    display: none;
+  }
+  .nav-actions {
+    gap: 8px;
+  }
+  .nav-cta {
+    display: none;
+  }
+  .nav-burger {
+    display: grid;
+  }
+  /* Modale de sortie en panneau bas, comme le menu. La gouttière vient du
+     padding du voile : la carte est en width: 100%, une marge la ferait
+     déborder. */
+  .exit-modal {
+    align-items: flex-end;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  }
+  .exit-card {
+    max-width: none;
+    padding: 32px 24px 28px;
+    border: 1px solid var(--line);
+    border-radius: 22px 22px 32px 32px;
+    animation: sheetup 0.34s var(--ease);
+  }
+  /* Tarifs en carrousel : les 4 plans ne tiennent pas côte à côte, et
+     empilés ils obligent à scroller la page entière pour comparer. */
+  .pricing-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* La pastille « Le plus choisi » déborde de 10px vers le haut : sans
+       cette gouttière, le scroller horizontal la rogne. */
+    margin-block: -14px;
+    padding-block: 14px;
+    margin-inline: -5%;
+    padding-inline: 5%;
+  }
+  .pricing-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .pricing-grid .price-card {
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+  }
+  .hero-media {
+    margin-top: 48px;
+  }
+  .features {
+    padding: 72px 0 0;
+  }
+  .bento-shell {
+    grid-template-columns: 16px 1fr 16px;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-cell {
+    padding: 28px 24px;
+    min-height: 0;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .step-body p {
+    padding-left: 48px;
+  }
+  .secure-grid {
+    grid-template-columns: 1fr;
+  }
+  .secure-card {
+    min-height: 0;
+  }
+  .secure-visual {
+    min-height: 240px;
+  }
+  .cta-wrap {
+    padding: 44px 28px;
+    border-radius: 0;
+  }
+  .quote {
+    padding: 72px 5%;
+  }
+}

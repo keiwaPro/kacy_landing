@@ -447,7 +447,7 @@ export default function CguPage() {
         RCCM : CI-ABJ-2018-B-27764<br />
         Siège social : Abidjan, République de Côte d&apos;Ivoire<br />
         Courriel :{" "}
-        <a href="mailto:contact@dothangroup.com">contact@dothangroup.com</a>
+        <a href="mailto:contact@kacyai.co">contact@kacyai.co</a>
       </p>
     </LegalLayout>
   );
