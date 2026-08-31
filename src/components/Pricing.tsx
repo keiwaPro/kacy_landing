@@ -117,6 +117,7 @@ const FALLBACK_PLANS: Plan[] = [
 async function getPlans(): Promise<Plan[]> {
   try {
     const res = await apiFetch("pricing", "/api/plans", {
+      cache: "no-store",
       signal: AbortSignal.timeout(3000),
     });
     if (!res.ok) {
