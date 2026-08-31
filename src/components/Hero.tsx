@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { WordRotate } from "./ui/word-rotate";
-import { scrollToId } from "@/lib/lenis";
+import { FRONTEND_LOGIN_URL } from "@/lib/links";
 
 const WORDS = ["restaurant", "hôtel", "salon"];
 
@@ -12,11 +12,11 @@ export default function Hero() {
       <div className="hero-grid-bg" />
 
       <div className="hero-wrap">
-        <div className="hero-tag reveal" onClick={() => scrollToId("#reserver")}>
-          <span className="hero-tag-badge">Beta</span>
-          Accès anticipé · 100 places pour Abidjan
+        <a href="#download" className="hero-tag reveal">
+          <span className="hero-tag-badge">App mobile</span>
+          Disponible sur iOS &amp; Android
           <span className="arrow">→</span>
-        </div>
+        </a>
 
         <h1 className="reveal reveal-d-1">
           L&apos;agent IA pour votre
@@ -38,8 +38,8 @@ export default function Hero() {
         </p>
 
         <div className="hero-cta reveal reveal-d-3">
-          <a href="#reserver" className="btn-primary">
-            <span>Réserver ma place</span>
+          <a href={FRONTEND_LOGIN_URL} className="btn-primary">
+            <span>Se connecter</span>
             <span className="arrow">→</span>
           </a>
           <a href="#product" className="btn-ghost">
