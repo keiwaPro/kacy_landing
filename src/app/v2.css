@@ -200,6 +200,9 @@ html.dark .logo-dark {
 .site-nav.pill .logo-mark {
   display: inline-flex;
 }
+.site-nav.pill .logo {
+  transform: none;
+}
 /* Chrome calcule la hauteur de ce SVG depuis son propre ratio interne
    (1216x500) au lieu de l'attribut height de l'<img>, dès que le ratio
    demandé ici (150x40) diverge du sien. Fixer les deux dimensions en CSS
@@ -212,6 +215,10 @@ html.dark .logo-dark {
 .site-nav .logo-mark img {
   width: 26px;
   height: 26px;
+}
+.site-nav.pill .logo-mark img {
+  width: 30px;
+  height: 30px;
 }
 .nav-sheet-head .logo img {
   width: 130px;
