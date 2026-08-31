@@ -1,4 +1,5 @@
 import { apiFetch, describeError } from "@/lib/api";
+import { FRONTEND_LOGIN_URL } from "@/lib/links";
 
 type PlanFeature =
   | "reservations"
@@ -185,19 +186,16 @@ export default async function Pricing() {
         <div className="pricing-grid">
           {standard.map((p, i) => {
             const price = formatPrice(p);
-            const featured = p.id === "business";
             const hasPromo = Boolean(p.discount_percent && p.discount_percent > 0);
             return (
               <div
                 key={p.id}
-                className={`price-card reveal${i > 0 ? ` reveal-d-${i}` : ""}${featured ? " featured" : ""}`}
+                className={`price-card reveal${i > 0 ? ` reveal-d-${i}` : ""}`}
               >
-                {hasPromo ? (
+                {hasPromo && (
                   <span className="price-badge">
                     {p.discount_label || `-${p.discount_percent}%`}
                   </span>
-                ) : (
-                  featured && <span className="price-badge">Le plus choisi</span>
                 )}
                 <div className="price-plan">{p.name}</div>
                 <div className="price-num" style={{ display: "flex", flexDirection: "column" }}>
@@ -216,7 +214,7 @@ export default async function Pricing() {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
-                <a href="#reserver" className="price-cta">
+                <a href={FRONTEND_LOGIN_URL} className="price-cta">
                   {p.price_monthly === null ? "Parler à l'équipe" : `Choisir ${p.name}`}
                 </a>
               </div>
@@ -238,7 +236,7 @@ export default async function Pricing() {
             </ul>
             <div className="price-corp-right">
               <span className="price-corp-amount">Sur devis</span>
-              <a href="#reserver" className="price-cta">
+              <a href={FRONTEND_LOGIN_URL} className="price-cta">
                 Parler à l&apos;équipe
               </a>
             </div>

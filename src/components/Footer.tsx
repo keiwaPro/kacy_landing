@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FRONTEND_LOGIN_URL } from "@/lib/links";
 
 const WORDMARK = ["k", "a", "c", "y"];
 
@@ -11,6 +12,7 @@ const NAV_GROUPS = [
     links: [
       { href: "#product", label: "Fonctionnalités" },
       { href: "#pricing", label: "Tarifs" },
+      { href: "#download", label: "Télécharger l’app" },
       { href: "#faq", label: "FAQ" },
     ],
   },
@@ -134,8 +136,8 @@ export default function Footer() {
               L&apos;agent IA qui répond à vos clients pendant que vous faites
               tourner votre commerce.
             </p>
-            <a href="#reserver" className="foot-cta">
-              <span>Réserver ma place</span>
+            <a href={FRONTEND_LOGIN_URL} className="foot-cta">
+              <span>Se connecter</span>
               <span className="foot-cta-arrow">→</span>
             </a>
           </div>

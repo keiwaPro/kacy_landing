@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
+import { FRONTEND_LOGIN_URL } from "@/lib/links";
 
 const LINKS = [
   { href: "#product", label: "Produit" },
   { href: "#comment", label: "Comment ça marche" },
   { href: "#pricing", label: "Tarifs" },
+  { href: "#download", label: "Télécharger" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -47,22 +49,40 @@ export default function Nav() {
   return (
     <nav ref={navRef} className="site-nav" id="nav">
       <a href="#" className="logo" aria-label="Kacy">
-        <Image
-          className="logo-light"
-          src="/logo_large.svg"
-          alt=""
-          width="150"
-          height="40"
-          fetchPriority="high"
-        />
-        <Image
-          className="logo-dark"
-          src="/logo_large_dark.svg"
-          alt=""
-          width="150"
-          height="40"
-          fetchPriority="high"
-        />
+        <span className="logo-full" aria-hidden="true">
+          <Image
+            className="logo-light"
+            src="/logo_large.svg"
+            alt=""
+            width="150"
+            height="40"
+            fetchPriority="high"
+          />
+          <Image
+            className="logo-dark"
+            src="/logo_large_dark.svg"
+            alt=""
+            width="150"
+            height="40"
+            fetchPriority="high"
+          />
+        </span>
+        <span className="logo-mark" aria-hidden="true">
+          <Image
+            className="logo-light"
+            src="/logo.svg"
+            alt=""
+            width="26"
+            height="26"
+          />
+          <Image
+            className="logo-dark"
+            src="/logo_2.svg"
+            alt=""
+            width="26"
+            height="26"
+          />
+        </span>
       </a>
       <div className="nav-links">
         {LINKS.map((l) => (
@@ -73,8 +93,8 @@ export default function Nav() {
       </div>
       <div className="nav-actions">
         <ThemeToggle />
-        <a href="#reserver" className="nav-cta">
-          Réserver ma place →
+        <a href={FRONTEND_LOGIN_URL} className="nav-cta">
+          Se connecter →
         </a>
         <button
           type="button"
@@ -160,11 +180,11 @@ export default function Nav() {
                 ))}
               </div>
               <a
-                href="#reserver"
+                href={FRONTEND_LOGIN_URL}
                 className="btn-primary nav-sheet-cta"
                 onClick={() => setMenuOpen(false)}
               >
-                <span>Réserver ma place</span>
+                <span>Se connecter</span>
                 <span className="arrow">→</span>
               </a>
             </div>
