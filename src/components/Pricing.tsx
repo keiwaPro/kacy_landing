@@ -41,6 +41,7 @@ async function getPlans(): Promise<Plan[]> {
   const apiUrl = process.env.API_URL ?? "http://localhost:3010";
   try {
     const res = await fetch(`${apiUrl}/api/plans`, {
+      cache: "no-store",
       signal: AbortSignal.timeout(3000),
     });
     if (!res.ok) return [];
