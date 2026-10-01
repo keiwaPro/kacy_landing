@@ -59,6 +59,10 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
             set -e
             cd /var/www/html/kacy_landing
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            node --version
+            npm --version
             npm ci
             npm run build
             command -v pm2 >/dev/null 2>&1 || npm install -g pm2
