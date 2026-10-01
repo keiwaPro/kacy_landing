@@ -157,19 +157,28 @@ function planFeatures(
     .map((c) => c.label);
   const lines: string[] = [];
   if (channelLabels.length > 0) lines.push(`Canaux : ${channelLabels.join(", ")}`);
-  lines.push(
-    plan.max_restaurants === null
-      ? "Établissements illimités"
-      : `${plan.max_restaurants} établissement(s)`,
-    plan.max_messages_per_month === null
-      ? "Volume de crédits négocié"
-      : `${plan.max_messages_per_month.toLocaleString("fr-FR")} crédits IA inclus / mois`,
-    plan.max_products === null ? "Produits illimités" : `${plan.max_products} produits`,
-  );
+  if (plan.max_restaurants !== 0) {
+    lines.push(
+      plan.max_restaurants === null
+        ? "Établissements illimités"
+        : `${plan.max_restaurants} établissement(s)`,
+    );
+  }
+  if (plan.max_messages_per_month !== 0) {
+    lines.push(
+      plan.max_messages_per_month === null
+        ? "Volume de crédits négocié"
+        : `${plan.max_messages_per_month.toLocaleString("fr-FR")} crédits IA inclus / mois`,
+    );
+  }
+  if (plan.max_products !== 0) {
+    lines.push(plan.max_products === null ? "Produits illimités" : `${plan.max_products} produits`);
+  }
   for (const feature of features) {
     if (CHANNEL_MANAGED_FEATURES.has(feature.key)) continue;
     if (feature.kind === "limit" && plan.limits?.[feature.key] !== undefined) {
       const value = plan.limits[feature.key];
+      if (value === 0) continue;
       lines.push(`${feature.name} : ${value === null ? "illimité" : value.toLocaleString("fr-FR")}`);
     } else if (feature.kind === "boolean" && plan.features?.[feature.key]) {
       lines.push(feature.name);
