@@ -1,13 +1,6 @@
 import { apiFetch, describeError } from "@/lib/api";
 
-type PlanFeature =
-  | "reservations"
-  | "analytics"
-  | "copilot"
-  | "multi_vertical"
-  | "whatsapp"
-  | "export"
-  | "api_access";
+type PlanFeature = "copilot" | "whatsapp";
 
 type Plan = {
   id: string;
@@ -31,13 +24,8 @@ const PLAN_TAGLINE: Record<string, string> = {
 };
 
 const FEATURE_LABEL: Record<PlanFeature, string> = {
-  reservations: "Réservations",
-  analytics: "Statistiques",
   copilot: "Copilote IA",
-  multi_vertical: "Multi-métier",
   whatsapp: "WhatsApp",
-  export: "Export des données",
-  api_access: "Accès API",
 };
 
 /**
@@ -62,7 +50,7 @@ const FALLBACK_PLANS: Plan[] = [
     max_restaurants: 1,
     max_messages_per_month: 1000,
     max_products: null,
-    features: { whatsapp: true, analytics: true, reservations: true },
+    features: { whatsapp: true },
   },
   {
     id: "business",
@@ -71,12 +59,7 @@ const FALLBACK_PLANS: Plan[] = [
     max_restaurants: 1,
     max_messages_per_month: 3500,
     max_products: null,
-    features: {
-      whatsapp: true,
-      analytics: true,
-      reservations: true,
-      export: true,
-    },
+    features: { whatsapp: true },
   },
   {
     id: "premium",
@@ -85,14 +68,7 @@ const FALLBACK_PLANS: Plan[] = [
     max_restaurants: 1,
     max_messages_per_month: 8000,
     max_products: null,
-    features: {
-      whatsapp: true,
-      analytics: true,
-      reservations: true,
-      export: true,
-      copilot: true,
-      multi_vertical: true,
-    },
+    features: { whatsapp: true, copilot: true },
   },
   {
     id: "corporate",
@@ -101,15 +77,7 @@ const FALLBACK_PLANS: Plan[] = [
     max_restaurants: null,
     max_messages_per_month: null,
     max_products: null,
-    features: {
-      whatsapp: true,
-      analytics: true,
-      reservations: true,
-      export: true,
-      copilot: true,
-      multi_vertical: true,
-      api_access: true,
-    },
+    features: { whatsapp: true, copilot: true },
   },
 ];
 
