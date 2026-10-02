@@ -22,7 +22,7 @@ const geist = localFont({
 export const metadata: Metadata = {
   title: "Kacy — L'agent IA pour restaurants, hôtels et salons",
   description:
-    "Réservez votre accès anticipé. Kacy gère vos commandes, réservations et FAQ sur WhatsApp 24/7.",
+    "Téléchargez l’application Kacy. Gérez vos commandes, réservations et FAQ sur WhatsApp 24/7.",
   icons: {
     icon: "/logo_2.png",
   },

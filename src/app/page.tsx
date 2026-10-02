@@ -1,5 +1,4 @@
 import RevealSetup from "@/components/RevealSetup";
-import Banner from "@/components/Banner";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Channels from "@/components/Channels";
@@ -11,17 +10,15 @@ import Calculator from "@/components/Calculator";
 import Pricing from "@/components/Pricing";
 // import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
-import CTAFinal from "../components/CTAFinal";
+import DownloadSection from "@/components/DownloadSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import BackToTop from "@/components/BackToTop";
-import ExitModal from "@/components/ExitModal";
 
 export default function Home() {
   return (
     <>
       <RevealSetup />
-      <Banner />
       <div className="page-frame">
         <Nav />
         <Hero />
@@ -36,12 +33,11 @@ export default function Home() {
         <Pricing />
         {/* <Testimonials /> */}
         <FAQ />
-        <CTAFinal />
+        <DownloadSection />
         <Footer />
       </div>
       <WhatsAppFloat />
       <BackToTop />
-      <ExitModal />
     </>
   );
 }
