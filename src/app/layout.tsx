@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import "./v2.css";
 import "lenis/dist/lenis.css";
 import SmoothScroll from "@/components/SmoothScroll";
 
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const bricolage = localFont({
+  src: "./fonts/bricolage-grotesque.woff2",
+  weight: "400 700",
   variable: "--font-bricolage",
   display: "swap",
 });
 
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const geist = localFont({
+  src: "./fonts/geist.woff2",
+  weight: "400 700",
   variable: "--font-geist",
   display: "swap",
 });
